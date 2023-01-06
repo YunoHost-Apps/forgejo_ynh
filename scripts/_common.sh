@@ -58,7 +58,7 @@ set_permission() {
     chown -R $app:$app "/var/log/$app"
 
     chmod u=rwX,g=rX,o= "$final_path"
-    chmod u=rwx,g=rx,o= "$final_path/gitea"
+    chmod u=rwx,g=rx,o= "$final_path/forgejo"
     chmod u=rw,g=r,o= "$final_path/custom/conf/app.ini"
     chmod u=rwX,g=rX,o= "$datadir"
     chmod u=rwX,g=rX,o= "/var/log/$app"

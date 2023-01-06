@@ -81,7 +81,7 @@ ynh_add_systemd_config
 ynh_script_progression --message="Configuring nginx..." --weight=1
 config_nginx
 
-# Configure gitea with app.ini file
+# Configure forgejo with app.ini file
 ynh_script_progression --message="Configuring application, step 1/2..."
 config_forgejo
 
@@ -96,7 +96,7 @@ set_permission
 
 ynh_script_progression --message="Configuring application, step 2/2..."
 
-# Start gitea for building mysql tables
+# Start forgejo for building mysql tables
 systemctl start "$app".service
 
 # Wait untill login_source mysql table is created
