@@ -54,7 +54,7 @@ systemctl enable "$app".service --quiet
 
 # SETUP FAIL2BAN
 ynh_script_progression --message="Configuring fail2ban..."
-ynh_add_fail2ban_config --logpath "/var/log/$app/gitea.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
+ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 #=================================================
 # GENERIC FINALIZATION
@@ -69,13 +69,13 @@ ynh_script_progression --message="Configuring log rotation..."
 ynh_use_logrotate --logfile "/var/log/$app"
 
 # Add gitea to YunoHost's monitored services
-ynh_script_progression --message="Register Gitea service..."
-yunohost service add "$app" --log=/var/log/$app/gitea.log
+ynh_script_progression --message="Register Forgejo service..."
+yunohost service add "$app" --log=/var/log/$app/forgejo.log
 
 # Reload services
 ynh_script_progression --message="Reloading services..."
 systemctl reload nginx.service
-ynh_systemd_action -l "Starting new Web server: tcp:127.0.0.1:" -p "/var/log/$app/gitea.log" -t 10
+ynh_systemd_action -l "Starting new Web server: tcp:127.0.0.1:" -p "/var/log/$app/forgejo.log" -t 10
 sleep 1
 
 ynh_script_progression --message="Restoration completed for $app" --last

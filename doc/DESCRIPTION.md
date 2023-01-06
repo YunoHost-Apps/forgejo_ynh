@@ -1,1 +1,1 @@
-Gitea is a fork of Gogs a self-hosted Git service written in Go. Alternative to GitHub.
+Forgejo is a Gitea fork (which is a Gogs fork). A self-hosted Git service written in Go. Alternative to GitHub / Gitlab.

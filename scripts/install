@@ -67,7 +67,7 @@ ynh_mysql_create_db "$dbname" "$db_user" "$db_password"
 # Add users
 ynh_script_progression --message="Configuring system user..."
 ynh_system_user_create --username=$app --home_dir=$datadir --use_shell
-# Add ssh permission for gitea user
+# Add ssh permission for forgejo user
 adduser $app ssh.app
 
 # create needed directories
@@ -83,11 +83,11 @@ config_nginx
 
 # Configure gitea with app.ini file
 ynh_script_progression --message="Configuring application, step 1/2..."
-config_gitea
+config_forgejo
 
 ynh_script_progression --message="Installing sources files..." --weight=10
 
-# Install gitea
+# Install forgejo
 ynh_setup_source $final_path source/$architecture
 
 # Set permissions
@@ -111,7 +111,7 @@ ynh_mysql_connect_as "$db_user" "$db_password" "$dbname" < ../conf/login_source.
 
 # SETUP FAIL2BAN
 ynh_script_progression --message="Configuring fail2ban..."
-ynh_add_fail2ban_config --logpath "/var/log/$app/gitea.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
+ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 #=================================================
 # GENERIC FINALIZATION
@@ -128,9 +128,9 @@ fi
 ynh_script_progression --message="Configuring permissions"
 ynh_permission_create --permission="admin" --allowed=$admin
 
-# Add gitea to YunoHost's monitored services
-ynh_script_progression --message="Register Gitea service..."
-yunohost service add "$app" --log="/var/log/$app/gitea.log"
+# Add forgejo to YunoHost's monitored services
+ynh_script_progression --message="Register Forgejo service..."
+yunohost service add "$app" --log="/var/log/$app/forgejo.log"
 
 # Configure logrotate
 ynh_script_progression --message="Configuring log rotation..."
@@ -140,9 +140,9 @@ ynh_use_logrotate --logfile "/var/log/$app"
 ynh_app_setting_set --app $app --key upstream_version --value $(ynh_app_upstream_version)
 
 # Reload services
-ynh_script_progression --message="Starting gitea services..." --weight=3
+ynh_script_progression --message="Starting forgejo services..." --weight=3
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/gitea.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
+ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
 
 # Store the checksum with the 'INTERNAL_TOKEN' value.
 # Should be removed when the issue https://github.com/go-gitea/gitea/issues/3246 is fixed

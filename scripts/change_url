@@ -51,12 +51,12 @@ fi
 config_nginx
 
 # Update gitea config
-ynh_script_progression --message="Updating gitea configuration..."
-config_gitea
+ynh_script_progression --message="Updating forgejo configuration..."
+config_forgejo
 
 # RELOAD services
 ynh_script_progression --message="Starting services..."
-ynh_systemd_action -l "Starting new Web server: tcp:127.0.0.1:" -p "/var/log/$app/gitea.log" -t 10 -a restart
+ynh_systemd_action -l "Starting new Web server: tcp:127.0.0.1:" -p "/var/log/$app/forgejo.log" -t 10 -a restart
 sleep 1
 
 # Store the checksum with the 'INTERNAL_TOKEN' value.

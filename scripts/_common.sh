@@ -18,10 +18,6 @@ if [ -n "$(uname -m | grep arm64)" ] || [ -n "$(uname -m | grep aarch64)" ]; the
     architecture="arm64"
 elif [ -n "$(uname -m | grep 64)" ]; then
     architecture="x86-64"
-elif [ -n "$(uname -m | grep 86)" ]; then
-    architecture="i386"
-elif [ -n "$(uname -m | grep armv7)" ]; then
-    architecture="armv7"
 elif [ -n "$(uname -m | grep arm)" ]; then
     architecture="arm"
 else
@@ -51,7 +47,7 @@ config_nginx() {
     ynh_add_nginx_config
 }
 
-config_gitea() {
+config_forgejo() {
     ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
     ynh_add_config --template="app.ini" --destination="$final_path/custom/conf/app.ini"
 }
@@ -63,7 +59,7 @@ set_permission() {
 
     chmod u=rwX,g=rX,o= "$final_path"
     chmod u=rwx,g=rx,o= "$final_path/gitea"
-    chmod u=rwx,g=rx,o= "$final_path/custom/conf/app.ini"
+    chmod u=rw,g=r,o= "$final_path/custom/conf/app.ini"
     chmod u=rwX,g=rX,o= "$datadir"
     chmod u=rwX,g=rX,o= "/var/log/$app"
     chmod u=rwx,g=,o= "$ssh_path"

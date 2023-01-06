@@ -2,7 +2,7 @@
 
 ### Notes on SSH usage
 
-If you want to use Gitea with SSH and be able to pull/push with your SSH key, your SSH daemon must be properly configured to use private/public keys. Here is a sample configuration `/etc/ssh/sshd_config` that works with Gitea:
+If you want to use Forgejo with SSH and be able to pull/push with your SSH key, your SSH daemon must be properly configured to use private/public keys. Here is a sample configuration `/etc/ssh/sshd_config` that works with Forgejo:
 
 ```bash
 PubkeyAuthentication yes
@@ -12,7 +12,7 @@ PasswordAuthentication no
 UsePAM no
 ```
 
-You must also add your public key to your Gitea profile.
+You must also add your public key to your Forgejo profile.
 
 When using SSH on any port other than 22, you need to add these lines to your SSH configuration `~/.ssh/config`:
 
@@ -24,53 +24,53 @@ Host domain.tld
 ### Upgrade
 
 By default, a backup is performed before upgrading. To avoid this, you have the following options:
-- Pass the `NO_BACKUP_UPGRADE` env variable with `1` at each upgrade. For example `NO_BACKUP_UPGRADE=1 yunohost app upgrade gitea`.
+- Pass the `NO_BACKUP_UPGRADE` env variable with `1` at each upgrade. For example `NO_BACKUP_UPGRADE=1 yunohost app upgrade forgejo`.
 - Set `disable_backup_before_upgrade` to `1`. You can set it with this command:
 
-`yunohost app setting gitea disable_backup_before_upgrade -v 1`
+`yunohost app setting forgejo disable_backup_before_upgrade -v 1`
 
 After that, the settings will be applied for **all** the next updates.
 
 From command line:
 
-`yunohost app upgrade gitea`
+`yunohost app upgrade forgejo`
 
 ### Backup
 
 This application now uses the core-only feature of the backup. To keep the integrity of the data and to have a better guarantee of the restoration it is recommended to proceed as follows:
 
-- Stop Gitea service with this command:
+- Stop Forgejo service with this command:
 
-`systemctl stop gitea.service`
+`systemctl stop forgejo.service`
 
-- Launch Gitea backup with this command:
+- Launch Forgejo backup with this command:
 
-`yunohost backup create --app gitea`
+`yunohost backup create --app forgejo`
 
-- Backup your data with your specific strategy (could be with rsync, borg backup or just cp). The data is generally stored in `/home/yunohost.app/gitea`.
-- Restart Gitea service with theses command:
+- Backup your data with your specific strategy (could be with rsync, borg backup or just cp). The data is generally stored in `/home/yunohost.app/forgejo`.
+- Restart Forgejo service with theses command:
 
-`systemctl start gitea.service`
+`systemctl start forgejo.service`
 
 ### Remove
 
-Due of the backup core only feature the data directory in `/home/yunohost.app/gitea` **is not removed**. It must be manually deleted to purge user data from the app.
+Due of the backup core only feature the data directory in `/home/yunohost.app/forgejo` **is not removed**. It must be manually deleted to purge user data from the app.
 
 ### LFS setup
-To use a repository with an `LFS` setup, you need to activate it on `/opt/gitea/custom/conf/app.ini`
+To use a repository with an `LFS` setup, you need to activate it on `/opt/forgejo/custom/conf/app.ini`
 
 ```ini
 [server]
 LFS_START_SERVER = true
 LFS_HTTP_AUTH_EXPIRY = 20m
 ```
-By default, NGINX is configured with a maximum value for uploading files at 200 MB. It's possible to change this value on `/etc/nginx/conf.d/my.domain.tld.d/gitea.conf`.
+By default, NGINX is configured with a maximum value for uploading files at 200 MB. It's possible to change this value on `/etc/nginx/conf.d/my.domain.tld.d/forgejo.conf`.
 ```
 client_max_body_size 200M;
 ```
-Don't forget to restart Gitea `sudo systemctl restart gitea.service`.
+Don't forget to restart Forgejo `sudo systemctl restart forgejo.service`.
 
-> These settings are restored to the default configuration when updating Gitea. Remember to restore your configuration after all updates.
+> These settings are restored to the default configuration when updating Forgejo. Remember to restore your configuration after all updates.
 
 ### Git command access with HTTPS
 

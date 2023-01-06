@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/go-gitea/gitea/releases/download/v1.17.2/gitea-1.17.2-linux-arm64
-SOURCE_SUM=3ab5ac9400d8b28a38ecd173c5e181c2521c381a65ac00043b2d579a449efa27
+SOURCE_URL=https://codeberg.org/attachments/e29c5083-9b3a-4ce2-abe0-2109922212a9
+SOURCE_SUM=0bc892a66a23a3322fe031cb060ac3c0d60d10a50be35c63ab049a23a58ecf47
 SOURCE_SUM_PRG=sha256sum
-SOURCE_FILENAME=gitea
+SOURCE_FILENAME=forgejo
 SOURCE_EXTRACT=false
