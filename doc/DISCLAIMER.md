@@ -6,10 +6,8 @@ If you want to use Forgejo with SSH and be able to pull/push with your SSH key, 
 
 ```bash
 PubkeyAuthentication yes
-AuthorizedKeysFile /home/yunohost.app/%u/.ssh/authorized_keys
 ChallengeResponseAuthentication no
 PasswordAuthentication no
-UsePAM no
 ```
 
 You must also add your public key to your Forgejo profile.
