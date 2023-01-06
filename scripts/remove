@@ -5,7 +5,6 @@
 #=================================================
 
 # Load common variables and helpers
-source ./experimental_helper.sh
 source ./_common.sh
 
 # IMPORT GENERIC HELPERS

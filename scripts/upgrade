@@ -5,7 +5,6 @@
 #=================================================
 
 # Load common variables and helpers
-source ./experimental_helper.sh
 source ./_common.sh
 
 # IMPORT GENERIC HELPERS
@@ -17,7 +16,7 @@ source /usr/share/yunohost/helpers
 ynh_script_progression --message="Loading installation settings..."
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_normalize_url_path --path_url $(ynh_app_setting_get --app $app --key path))
+path_url=$(ynh_app_setting_get --app $app --key path)
 db_password=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 admin=$(ynh_app_setting_get --app=$app --key=adminusername)
 key=$(ynh_app_setting_get --app=$app --key=secret_key)
@@ -61,51 +60,6 @@ if [ -z "$lfs_key" ]; then
    lfs_key=$(ynh_string_random)
    ynh_app_setting_set --app=$app --key=lfs_key --value=$lfs_key
 fi
-
-#=================================================
-# MIGRATION FROM GOGS
-#=================================================
-
-# [[ $YNH_APP_ID == "gogs" ]] \
-#     && [[ "$(cat "/opt/$app/templates/.VERSION")" != 0.11.79.1211 ]] \
-#     && ynh_die --message "It look like that you have an old Gogs install. You need first upgrade Gogs instance (id: $gogs_migrate_id) and after migrate to Gitea."
-# ynh_handle_app_migration --migration_id=gogs --migration_list=gogs_migrations
-# 
-# if [[ $migration_process -eq 1 ]]; then
-#     # Reload variables
-#     dbname=$app
-#     db_user=$app
-#     final_path="/opt/$app"
-#     datadir="/home/""$app"
-#     repos_path="$datadir/repositories"
-#     data_path="$datadir/data"
-# 
-#     # Replace the user
-#     ynh_system_user_delete $old_app
-#     test getent passwd "$app" &>/dev/null || \
-#         useradd -d "$datadir" --system --user-group "$app" --shell /bin/bash || \
-#             ynh_die --message "Unable to create $app system account"
-# 
-#     # Clean old binary
-#     ynh_secure_remove --file=$final_path/gogs
-#     ynh_secure_remove --file=$final_path/custom/conf/auth.d
-# 
-#     # Restore authentication from SQL database
-#     ynh_replace_string --match_string __APP__ --replace_string "$app" --target_file ../conf/login_source.sql
-#     ynh_mysql_connect_as "$db_user" "$db_password" "$dbname" < ../conf/login_source.sql
-# 
-#     # Fix hooks
-#     if [[ -e $repos_path ]];then
-#         ls $repos_path/*/*.git/hooks/pre-receive | while read p; do
-#             ynh_secure_remove --file=$p
-#         done
-#         ls $repos_path/*/*.git/hooks/post-receive | while read p; do
-#             ynh_secure_remove --file=$p
-#         done
-#     fi
-# 
-#     upstream_version="0.0.1"
-# fi
 
 # Move data directory
 if [ -e "/home/""$app" ] && [ ! -e $datadir ]; then
@@ -168,7 +122,7 @@ if ! ynh_permission_exists --permission admin; then
     ynh_app_setting_delete --app $app --key unprotected_uris
     ynh_permission_create --permission="admin" --allowed="$admin"
     # Update ldap config
-    ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_file="../conf/login_source.sql"
+    ynh_add_config --template="login_source.sql.template" --destination="../conf/login_source.sql"
     ynh_mysql_connect_as "$db_user" "$db_password" "$dbname" < ../conf/login_source.sql
 fi
 
@@ -199,21 +153,5 @@ ynh_store_file_checksum --file="$final_path/custom/conf/app.ini"
 #=================================================
 # FINISH MIGRATION PROCESS
 #=================================================
-
-# if [[ $migration_process -eq 1 ]]; then
-#     echo "Gogs has been successfully migrated to Gitea! \
-# A last scheduled operation will run in a couple of minutes to finish the \
-# migration in YunoHost side. Do not proceed any application operation while \
-# you don't see Gogs as installed." >&2
-# 
-#     # Execute a post migration script after the end of this upgrade.
-#     # Mainly for some cleaning
-#     script_post_migration=gogs_post_migration.sh
-#     ynh_replace_string --match_string __OLD_APP__ --replace_string "$old_app" --target_file ../conf/$script_post_migration
-#     ynh_replace_string --match_string __NEW_APP__ --replace_string "$app" --target_file ../conf/$script_post_migration
-#     cp ../conf/$script_post_migration /tmp
-#     chmod +x /tmp/$script_post_migration
-#     (cd /tmp; echo "/tmp/$script_post_migration > /tmp/$script_post_migration.log 2>&1" | at now + 2 minutes)
-# fi
 
 ynh_script_progression --message="Upgrade of $app completed" --last
