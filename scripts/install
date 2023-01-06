@@ -110,8 +110,9 @@ ynh_replace_string --match_string "__APP__" --replace_string "$app" --target_fil
 ynh_mysql_connect_as "$db_user" "$db_password" "$dbname" < ../conf/login_source.sql
 
 # SETUP FAIL2BAN
-ynh_script_progression --message="Configuring fail2ban..."
-ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
+## TODO fail2ban
+# ynh_script_progression --message="Configuring fail2ban..."
+# ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 #=================================================
 # GENERIC FINALIZATION
