@@ -3,57 +3,77 @@
 #=================================================
 # GENERIC START
 #=================================================
-
-# Load common variables and helpers
-source ./_common.sh
-
 # IMPORT GENERIC HELPERS
+#=================================================
+
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..."
+ynh_script_progression --message="Loading installation settings..." --weight=1
+
+app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app $app --key path)
-db_password=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
-admin=$(ynh_app_setting_get --app=$app --key=adminusername)
-key=$(ynh_app_setting_get --app=$app --key=secret_key)
+path_url=$(ynh_app_setting_get --app=$app --key=path)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+admin=$(ynh_app_setting_get --app=$app --key=admin)
+port=$(ynh_app_setting_get --app=$app --key=port)
+datadir=$(ynh_app_setting_get --app=$app --key=datadir)
+db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+db_user=$db_name
+db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+key=$(ynh_app_setting_get --app=$app --key=key)
 lfs_key=$(ynh_app_setting_get --app=$app --key=lfs_key)
-port=$(ynh_app_setting_get --app=$app --key=web_port)
-upstream_version=$(ynh_app_setting_get --app=$app --key=upstream_version)
 
+#=================================================
+# CHECK VERSION
+#=================================================
+
+upgrade_type=$(ynh_check_app_version_changed)
+
+#=================================================
+# STANDARD UPGRADE STEPS
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --weight=1
+ynh_script_progression --message="Stopping a systemd service..." --weight=2
 
-# We stop the service before to set ynh_clean_setup
-ynh_systemd_action --service_name=$app --action="stop"
+ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..."
+ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
 
-if [ "0$(ynh_app_setting_get --app=$app --key=disable_backup_before_upgrade)" -ne 1 ]
-then
-    ynh_backup_before_upgrade
-    ynh_clean_setup () {
-        # Clean installation remainings that are not handled by the remove script.
-        ynh_clean_check_starting
-        ynh_restore_upgradebackup
-    }
-fi
-
+# Backup the current version of the app
+ynh_backup_before_upgrade
+ynh_clean_setup () {
+    # Restore it if the upgrade fails
+    ynh_restore_upgradebackup
+}
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
+
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
+
+# If db_name doesn't exist, create it
+if [ -z "$db_name" ]; then
+    db_name=$(ynh_sanitize_dbid --db_name=$app)
+    ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+fi
+
+# If port doesn't exist, create it
+if [ -z "$port" ]; then
+    port=$(ynh_find_port --port=6000)
+    ynh_app_setting_set --app=$app --key=port --value=$port
+fi
 
 # If lfs_key doesn't exist, create it
 if [ -z "$lfs_key" ]; then
@@ -61,97 +81,120 @@ if [ -z "$lfs_key" ]; then
    ynh_app_setting_set --app=$app --key=lfs_key --value=$lfs_key
 fi
 
-# Move data directory
-if [ -e "/home/""$app" ] && [ ! -e $datadir ]; then
-    mv "/home/""$app" "$datadir"
+# If final_path doesn't exist, create it
+if [ -z "$final_path" ]; then
+    final_path=/opt/$app
+    ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 fi
 
-# Ensuring the user has the right home dir
-if [ ~$app != "$datadir" ]; then
-    usermod -d "$datadir" $app
+# If datadir doesn't exist, create it
+if [ -z "$datadir" ]; then
+    datadir=/home/yunohost.app/$app
+    ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+    mkdir -p $datadir
+    mkdir -p "$datadir/data/{repositories,avatars,attachments}"
+    mkdir -p "$datadir/.ssh"
+
+    chmod 750 "$datadir"
+    chmod -R o-rwx "$datadir"
+    chown -R $app:$app "$datadir"
+    chmod u=rwx,g=,o= "$datadir/.ssh"
 fi
 
 #=================================================
-# STANDARD UPGRADE STEPS
+# CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring application..."
+ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
 
-# Clean template to fix issue : https://github.com/gogits/gogs/issues/4585
-ynh_secure_remove --file="/opt/$app/templates"
+# Create a dedicated user (if not existing)
+ynh_system_user_create --username=$app --home_dir="$final_path" --groups ssh.app
 
-# Configure forgejo with app.ini file
-config_forgejo
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression --message="Setting up source files..." --weight=3
 
-# Configure init script
-ynh_script_progression --message="Updating systemd units..."
+ynh_setup_source --dest_dir=$final_path --source_id=$YNH_ARCH
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:$app "$final_path"
+chmod +x "$final_path/forgejo"
+
+#=================================================
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression --message="Adding a configuration file..." --weight=1
+
+ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
+ynh_add_config --template="app.ini" --destination="$final_path/custom/conf/app.ini"
+
+chmod 640 "$final_path/custom/conf/app.ini"
+chown $app:$app "$final_path/custom/conf/app.ini"
+
+#=================================================
+# SETUP SYSTEMD
+#=================================================
+ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
 ynh_add_systemd_config
 
-# Modify Nginx configuration file and copy it to NGINX conf directory
-ynh_script_progression --message="Configuring NGINX..." --weight=1
-config_nginx
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=2
+ynh_add_nginx_config
 
 #=================================================
-# DB migration
+# UPGRADE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Upgrading database and sources..." --weight=6
+ynh_script_progression --message="Upgrading dependencies..." --weight=10
 
-restart_forgejo() {
-    # Set permissions
-    set_permission
-    ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
-    # Leave the time to update the database schema
-    sleep 5
-    systemctl stop $app
-}
-
-# Install forgejo source
-ynh_setup_source $final_path source/$architecture
-restart_forgejo
-
-# SETUP FAIL2BAN
-ynh_script_progression --message="Configuring Fail2Ban..."
-ynh_add_fail2ban_config --logpath="/var/log/$app/forgejo.log" --failregex=".*Failed authentication attempt for .* from <HOST>" --max_retry 5
+ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
+# SETUP LOGROTATE
+#=================================================
+ynh_script_progression --message="Configuring log rotation..." --weight=1
 
-# Set all permissions
-ynh_script_progression --message="Update permission..."
-if ! ynh_permission_exists --permission admin; then
-    ynh_app_setting_delete --app $app --key unprotected_uris
-    ynh_permission_create --permission="admin" --allowed="$admin"
-    # Update ldap config
-    ynh_add_config --template="login_source.sql.template" --destination="../conf/login_source.sql"
-    ynh_mysql_connect_as "$db_user" "$db_password" "$dbname" < ../conf/login_source.sql
-fi
+# Use logrotate to manage application logfile(s)
+ynh_use_logrotate --logfile "/var/log/$app"
 
-# Add forgejo to YunoHost's monitored services
-ynh_script_progression --message="Register Forgejo service..."
-yunohost service add "$app" --log="/var/log/$app/forgejo.log"
-
-# Add ssh permission for forgejo user
-adduser $app ssh.app
-
-# Set permissions
-ynh_script_progression --message="Protecting directory"
-set_permission
-
-# Save Version
-ynh_app_setting_set --app=$app --key=upstream_version --value=$(ynh_app_upstream_version)
-
-# Reload services
-ynh_script_progression --message="Starting Forgejo services..." --weight=3
-#ynh_systemd_action -l "Starting new Web server: tcp:127.0.0.1:" -p "/var/log/$app/gitea.log" -t 10
-#sleep 1
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
-
-# Store the checksum with the 'INTERNAL_TOKEN' value.
-# Should be removed when the issue https://github.com/go-gitea/gitea/issues/3246 is fixed
-ynh_store_file_checksum --file="$final_path/custom/conf/app.ini"
+chown -R $app:$app "/var/log/$app"
+chmod u=rwX,g=rX,o= "/var/log/$app"
 
 #=================================================
-# FINISH MIGRATION PROCESS
+# INTEGRATE SERVICE IN YUNOHOST
+#=================================================
+ynh_script_progression --message="Integrating service in YunoHost..." --weight=2
+
+yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --weight=1
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
+
+#=================================================
+# SETUP FAIL2BAN
+#=================================================
+ynh_script_progression --message="Configuring Fail2Ban..." --weight=1
+
+ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
+
+
+#=================================================
+# RELOAD NGINX
+#=================================================
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+
+ynh_systemd_action --service_name=nginx --action=reload
+
+#=================================================
+# END OF SCRIPT
 #=================================================
 
 ynh_script_progression --message="Upgrade of $app completed" --last
