@@ -91,8 +91,11 @@ ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
 #=================================================
 ynh_script_progression --message="Configuring system user..." --weight=1
 
+datadir=/home/yunohost.app/$app
+ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+
 # Create a system user
-ynh_system_user_create --username=$app --home_dir=$final_path --groups ssh.app
+ynh_system_user_create --username=$app --home_dir=$datadir --groups ssh.app --use_shell
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -100,7 +103,7 @@ ynh_system_user_create --username=$app --home_dir=$final_path --groups ssh.app
 ynh_script_progression --message="Installing sources files..." --weight=10
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-ynh_setup_source --dest-dir=$final_path --source-id=$YNH_ARCH
+ynh_setup_source --dest_dir=$final_path --source_id=$YNH_ARCH
 
 mkdir -p "$final_path/custom/conf"
 
@@ -119,9 +122,6 @@ ynh_add_nginx_config
 # CREATE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Creating a data directory..." --weight=1
-
-datadir=/home/yunohost.app/$app
-ynh_app_setting_set --app=$app --key=datadir --value=$datadir
 
 if [ -e "$datadir" ]; then
     old_data_dir_path="$datadir$(date '+%Y%m%d.%H%M%S')"
@@ -164,7 +164,10 @@ ynh_add_systemd_config
 ynh_script_progression --message="Configuring log rotation..." --weight=1
 
 # Configure logrotate
-ynh_use_logrotate --logfile "/var/log/$app"
+ynh_use_logrotate --logfile "/var/log/$app/forgejo.log"
+
+chown $app:$app /var/log/$app
+chmod u=rwX,g=rX,o= "/var/log/$app"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
