@@ -6,10 +6,8 @@ If you want to use Forgejo with SSH and be able to pull/push with your SSH key, 
 
 ```bash
 PubkeyAuthentication yes
-AuthorizedKeysFile /home/yunohost.app/%u/.ssh/authorized_keys
 ChallengeResponseAuthentication no
 PasswordAuthentication no
-UsePAM no
 ```
 
 You must also add your public key to your Forgejo profile.
@@ -21,15 +19,11 @@ Host domain.tld
     port 2222 # change this with the port you use
 ```
 
+## Private Mode
+
+Actually it's possible to access to the Git repositories by the `git` command over HTTP also in private mode installation. It's important to know that in this mode the repository could be ALSO getted if you don't set the repository as private in the repos settings.
+
 ### Upgrade
-
-By default, a backup is performed before upgrading. To avoid this, you have the following options:
-- Pass the `NO_BACKUP_UPGRADE` env variable with `1` at each upgrade. For example `NO_BACKUP_UPGRADE=1 yunohost app upgrade forgejo`.
-- Set `disable_backup_before_upgrade` to `1`. You can set it with this command:
-
-`yunohost app setting forgejo disable_backup_before_upgrade -v 1`
-
-After that, the settings will be applied for **all** the next updates.
 
 From command line:
 
@@ -75,3 +69,4 @@ Don't forget to restart Forgejo `sudo systemctl restart forgejo.service`.
 ### Git command access with HTTPS
 
 If you want to use the Git command (like `git clone`, `git pull`, `git push`), you need to set this app as **public**.
+
