@@ -22,7 +22,7 @@
     "multi_instance": true,
     "services": [
         "nginx",
-        "mysql"
+        "postgres"
     ],
     "requirements": {
         "yunohost": ">= 11.0.9"
