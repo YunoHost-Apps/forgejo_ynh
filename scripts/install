@@ -27,10 +27,6 @@ path_url=$YNH_APP_ARG_PATH
 admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
 
-# Generate keys
-key=$(ynh_string_random --length=24)
-lfs_key=$(ynh_string_random --length=24)
-
 app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
@@ -54,8 +50,6 @@ ynh_script_progression --message="Storing installation settings..." --weight=1
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=admin --value=$admin
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=key --value=$key
-ynh_app_setting_set --app=$app --key=lfs_key --value=$lfs_key
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -113,6 +107,16 @@ chown -R $app:$app "$final_path"
 chmod +x "$final_path/forgejo"
 
 #=================================================
+# KEYS GENERATION
+#=================================================
+secret_key=$($final_path/forgejo generate secret SECRET_KEY)
+lfs_jwt_secret=$($final_path/forgejo generate secret JWT_SECRET)
+internal_token=$($final_path/forgejo generate secret INTERNAL_TOKEN)
+ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
+ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
+ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
+
+#=================================================
 # NGINX CONFIGURATION
 #=================================================
 ynh_script_progression --message="Configuring NGINX web server..." --weight=2
@@ -130,7 +134,6 @@ if [ -e "$datadir" ]; then
 fi
 
 mkdir -p $datadir
-# mkdir -p "$datadir/data/{repositories,avatars,attachments}" # TODO valider la création de ces répetoires
 mkdir -p "$datadir/.ssh"
 
 chmod 750 "$datadir"
