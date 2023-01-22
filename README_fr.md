@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # Forgejo pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/forgejo.svg)](https://dash.yunohost.org/appci/app/forgejo) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/forgejo.svg)](https://dash.yunohost.org/appci/app/forgejo) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
 [![Installer Forgejo avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
 *[Read this readme in english.](./README.md)*
@@ -31,7 +31,7 @@ Forgejo is a Gitea fork (which is a Gogs fork). A self-hosted Git service writte
 - Customize HTML templates, static files and many others.
 
 
-**Version incluse :** 1.18.0-1~ynh1
+**Version incluse :** 1.18.0-1~ynh2
 
 ## Captures d’écran
 
