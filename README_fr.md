@@ -15,7 +15,9 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 
 ## Vue d’ensemble
 
-Forgejo is a Gitea fork (which is a Gogs fork). A self-hosted Git service written in Go. Alternative to GitHub / Gitlab
+Forgejo is a self-hosted lightweight software forge. Easy to install and low maintenance, it just does the job.
+
+Brought to you by an inclusive community under the umbrella of Codeberg e.V., a democratic non-profit organization, Forgejo can be trusted to be exclusively Free Software. It is a "soft" fork of Gitea with a focus on scaling, federation and privacy. 
 
 ### Features
 
@@ -60,36 +62,14 @@ Host domain.tld
     port 2222 # change this with the port you use
 ```
 
-## Private Mode
+### Private Mode
 
 Actually it's possible to access to the Git repositories by the `git` command over HTTP also in private mode installation. It's important to know that in this mode the repository could be ALSO getted if you don't set the repository as private in the repos settings.
 
-### Upgrade
-
-From command line:
-
-`yunohost app upgrade forgejo`
-
-### Backup
-
-This application now uses the core-only feature of the backup. To keep the integrity of the data and to have a better guarantee of the restoration it is recommended to proceed as follows:
-
-- Stop Forgejo service with this command:
-
-`systemctl stop forgejo.service`
-
-- Launch Forgejo backup with this command:
-
-`yunohost backup create --app forgejo`
-
-- Backup your data with your specific strategy (could be with rsync, borg backup or just cp). The data is generally stored in `/home/yunohost.app/forgejo`.
-- Restart Forgejo service with theses command:
-
-`systemctl start forgejo.service`
-
 ### Remove
 
-Due of the backup core only feature the data directory in `/home/yunohost.app/forgejo` **is not removed**. It must be manually deleted to purge user data from the app.
+To remove the data directory in `/home/yunohost.app/forgejo`, use the `--purge` option:
+`sudo yunohost remove forgrjo --purge`.
 
 ### Uploaded files size
 By default, NGINX is configured with a maximum value for uploading files at 200 MB. It's possible to change this value on `/etc/nginx/conf.d/my.domain.tld.d/forgejo.conf`.
