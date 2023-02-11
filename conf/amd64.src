@@ -1,5 +1,5 @@
-SOURCE_URL=https://codeberg.org/attachments/81b83949-c44b-44ec-a74b-ff9cead25dac
-SOURCE_SUM=aec43bfee2ed0868ed478493f5bd94d0ba37b1b1926b2ef31cb00829475a1290
+SOURCE_URL=https://codeberg.org/attachments/be5952ea-6cfb-4be5-a593-3564c4bd8cc9
+SOURCE_SUM=d55d9b0e128892f69d6633fd5aa5de68b7885ca6794942eef0a1f85f496f8394
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FILENAME=forgejo
 SOURCE_EXTRACT=false
