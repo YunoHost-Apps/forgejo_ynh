@@ -31,7 +31,7 @@ Forgejo is a Gitea fork (which is a Gogs fork). A self-hosted Git service writte
 - Customize HTML templates, static files and many others.
 
 
-**Shipped version:** 1.18.2-1~ynh1
+**Shipped version:** 1.18.3-1~ynh1
 
 ## Screenshots
 
