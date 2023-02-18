@@ -14,7 +14,7 @@
     },
     "url": "https://forgejo.org",
     "license": "MIT",
-    "version": "1.18.3-1~ynh1",
+    "version": "1.18.3-2~ynh1",
     "maintainer": {
         "name": "Emmanuel Averty",
         "email": "emmanuel.averty@free.fr"
