@@ -15,103 +15,103 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 # Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
 # Retrieve arguments
-domain=$YNH_APP_ARG_DOMAIN
-path_url=$YNH_APP_ARG_PATH
-admin=$YNH_APP_ARG_ADMIN
-is_public=$YNH_APP_ARG_IS_PUBLIC
+#REMOVEME? domain=$YNH_APP_ARG_DOMAIN
+#REMOVEME? path=$YNH_APP_ARG_PATH
+#REMOVEME? admin=$YNH_APP_ARG_ADMIN
+#REMOVEME? is_public=$YNH_APP_ARG_IS_PUBLIC
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_script_progression --message="Validating installation parameters..." --weight=1
+#REMOVEME? ynh_script_progression --message="Validating installation parameters..." --weight=1
 
-final_path="/var/www/$app"
-test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
+#REMOVEME? install_dir="/var/www/$app"
+#REMOVEME? test ! -e "$install_dir" || ynh_die --message="This path already contains a folder"
 
 ynh_user_exists "$admin" || ynh_die --message "The chosen admin user does not exist."
 
 # Register (book) web path
-ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
+#REMOVEME? ynh_webpath_register --app=$app --domain=$domain --path=$path
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..." --weight=1
+#REMOVEME? ynh_script_progression --message="Storing installation settings..." --weight=1
 
-ynh_app_setting_set --app=$app --key=domain --value=$domain
-ynh_app_setting_set --app=$app --key=admin --value=$admin
-ynh_app_setting_set --app=$app --key=path --value=$path_url
+#REMOVEME? ynh_app_setting_set --app=$app --key=domain --value=$domain
+#REMOVEME? ynh_app_setting_set --app=$app --key=admin --value=$admin
+#REMOVEME? ynh_app_setting_set --app=$app --key=path --value=$path
 
 #=================================================
 # STANDARD MODIFICATIONS
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
-ynh_script_progression --message="Finding an available port..." --weight=1
+#REMOVEME? ynh_script_progression --message="Finding an available port..." --weight=1
 
 # Find an available port
-port=$(ynh_find_port --port=6000)
-ynh_app_setting_set --app=$app --key=port --value=$port
+#REMOVEME? port=$(ynh_find_port --port=6000)
+#REMOVEME? ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=20
+#REMOVEME? ynh_script_progression --message="Installing dependencies..." --weight=20
 
-ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+#REMOVEME? ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # CREATE A DATABASE
 #=================================================
 ynh_script_progression --message="Creating a database..." --weight=3
 
-db_name=$(ynh_sanitize_dbid --db_name=$app)
-db_user=$db_name
-ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-ynh_psql_test_if_first_run
-ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
+#REMOVEME? db_name=$(ynh_sanitize_dbid --db_name=$app)
+#REMOVEME? db_user=$db_name
+#REMOVEME? ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+#REMOVEME? ynh_psql_test_if_first_run
+#REMOVEME? ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --weight=1
+#REMOVEME? ynh_script_progression --message="Configuring system user..." --weight=1
 
-datadir=/home/yunohost.app/$app
-ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+#REMOVEME? data_dir=/home/yunohost.app/$app
+#REMOVEME? ynh_app_setting_set --app=$app --key=data_dir --value=$data_dir
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir=$datadir --groups ssh.app --use_shell
+#REMOVEME? ynh_system_user_create --username=$app --home_dir=$data_dir --groups ssh.app --use_shell
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Installing sources files..." --weight=10
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-ynh_setup_source --dest_dir=$final_path --source_id=$YNH_ARCH
+#REMOVEME? ynh_app_setting_set --app=$app --key=install_dir --value=$install_dir
+ynh_setup_source --dest_dir=$install_dir --source_id=$YNH_ARCH
 
-mkdir -p "$final_path/custom/conf"
+mkdir -p "$install_dir/custom/conf"
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:$app "$final_path"
-chmod +x "$final_path/forgejo"
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:$app "$install_dir"
+chmod +x "$install_dir/forgejo"
 
 #=================================================
 # KEYS GENERATION
 #=================================================
-secret_key=$($final_path/forgejo generate secret SECRET_KEY)
-lfs_jwt_secret=$($final_path/forgejo generate secret JWT_SECRET)
-internal_token=$($final_path/forgejo generate secret INTERNAL_TOKEN)
+secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
+lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
+internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
 ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
 ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
 ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
@@ -127,19 +127,19 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Creating a data directory..." --weight=1
 
-if [ -e "$datadir" ]; then
-    old_data_dir_path="$datadir$(date '+%Y%m%d.%H%M%S')"
+if [ -e "$data_dir" ]; then
+    old_data_dir_path="$data_dir$(date '+%Y%m%d.%H%M%S')"
     ynh_print_warn "A data directory already exist. Data was renamed to $old_data_dir_path"
-    mv "$datadir" "$old_data_dir_path"
+    mv "$data_dir" "$old_data_dir_path"
 fi
 
-mkdir -p $datadir
-mkdir -p "$datadir/.ssh"
+mkdir -p $data_dir
+mkdir -p "$data_dir/.ssh"
 
-chmod 750 "$datadir"
-chmod -R o-rwx "$datadir"
-chown -R $app:$app "$datadir"
-chmod u=rwx,g=,o= "$datadir/.ssh"
+chmod 750 "$data_dir"
+chmod -R o-rwx "$data_dir"
+chown -R $app:$app "$data_dir"
+chmod u=rwx,g=,o= "$data_dir/.ssh"
 
 #=================================================
 # ADD A CONFIGURATION
@@ -147,10 +147,10 @@ chmod u=rwx,g=,o= "$datadir/.ssh"
 ynh_script_progression --message="Adding a configuration file..." --weight=1
 
 ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
-ynh_add_config --template="app.ini" --destination="$final_path/custom/conf/app.ini"
+ynh_add_config --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
 
-chmod 640 "$final_path/custom/conf/app.ini"
-chown $app:$app "$final_path/custom/conf/app.ini"
+chmod 640 "$install_dir/custom/conf/app.ini"
+chown $app:$app "$install_dir/custom/conf/app.ini"
 
 #=================================================
 # SETUP SYSTEMD
@@ -196,30 +196,30 @@ ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Fai
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring permissions..." --weight=1
+#REMOVEME? ynh_script_progression --message="Configuring permissions..." --weight=1
 
 # Make app public if necessary or protect it
-if [ $is_public -eq 1 ]
+#REMOVEME? if [ $is_public -eq 1 ]
 then
-    ynh_permission_update --permission="main" --add="visitors"
+#REMOVEME?     ynh_permission_update --permission="main" --add="visitors"
 fi
 
 # Only the admin can access the admin panel of the app (if the app has an admin panel)
-ynh_permission_create --permission="admin" --allowed=$admin
+#REMOVEME? ynh_permission_create --permission="admin" --allowed=$admin
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
-ynh_systemd_action --service_name=nginx --action=reload
+#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # LDAP CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding LDAP configuration..." --weight=1
 
-pushd "$final_path"
+pushd "$install_dir"
 	ynh_exec_as $app ./forgejo admin auth add-ldap --security-protocol "Unencrypted" --name "YunoHost LDAP" --host "localhost" --port "389" --skip-tls-verify --user-search-base "ou=users,dc=yunohost,dc=org" --user-filter "(&(uid=%s)(objectClass=posixAccount)(permission=cn=$app.main,ou=permission,dc=yunohost,dc=org))" --firstname-attribute "givenName" --surname-attribute "sn" --email-attribute "mail" --admin-filter "(permission=cn=$app.admin,ou=permission,dc=yunohost,dc=org)"
 popd
 
