@@ -12,22 +12,22 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
+#REMOVEME? ynh_script_progression --message="Loading installation settings..." --weight=1
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-admin=$(ynh_app_setting_get --app=$app --key=admin)
-port=$(ynh_app_setting_get --app=$app --key=port)
-datadir=$(ynh_app_setting_get --app=$app --key=datadir)
-db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-db_user=$db_name
-db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
-secret_key=$(ynh_app_setting_get --app=$app --key=secret_key)
-lfs_jwt_secret=$(ynh_app_setting_get --app=$app --key=lfs_jwt_secret)
-internal_token=$(ynh_app_setting_get --app=$app --key=internal_token)
+#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
+#REMOVEME? path=$(ynh_app_setting_get --app=$app --key=path)
+#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
+#REMOVEME? admin=$(ynh_app_setting_get --app=$app --key=admin)
+#REMOVEME? port=$(ynh_app_setting_get --app=$app --key=port)
+#REMOVEME? data_dir=$(ynh_app_setting_get --app=$app --key=data_dir)
+#REMOVEME? db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+#REMOVEME? db_user=$db_name
+#REMOVEME? db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+#REMOVEME? secret_key=$(ynh_app_setting_get --app=$app --key=secret_key)
+#REMOVEME? lfs_jwt_secret=$(ynh_app_setting_get --app=$app --key=lfs_jwt_secret)
+#REMOVEME? internal_token=$(ynh_app_setting_get --app=$app --key=internal_token)
 
 #=================================================
 # CHECK VERSION
@@ -47,16 +47,16 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
+#REMOVEME? ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
 
 # Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
+#REMOVEME? ynh_backup_before_upgrade
+#REMOVEME? ynh_clean_setup () {
     # Restore it if the upgrade fails
-    ynh_restore_upgradebackup
+#REMOVEME?     ynh_restore_upgradebackup
 }
 # Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+#REMOVEME? ynh_abort_if_errors
 
 
 #=================================================
@@ -67,71 +67,71 @@ ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 # If db_name doesn't exist, create it
 if [ -z "$db_name" ]; then
     db_name=$(ynh_sanitize_dbid --db_name=$app)
-    ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+#REMOVEME?     ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 fi
 
 # If port doesn't exist, create it
 if [ -z "$port" ]; then
-    port=$(ynh_find_port --port=6000)
-    ynh_app_setting_set --app=$app --key=port --value=$port
+#REMOVEME?     port=$(ynh_find_port --port=6000)
+#REMOVEME?     ynh_app_setting_set --app=$app --key=port --value=$port
 fi
 
-# If final_path doesn't exist, create it
-if [ -z "$final_path" ]; then
-    final_path=/opt/$app
-    ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+# If install_dir doesn't exist, create it
+if [ -z "$install_dir" ]; then
+#REMOVEME?     install_dir=/opt/$app
+#REMOVEME?     ynh_app_setting_set --app=$app --key=install_dir --value=$install_dir
 fi
 
 # If secret_key doesn't exist, create it
 if [ -z "$secret_key" ]; then
-    secret_key=$($final_path/forgejo generate secret SECRET_KEY)
+    secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
     ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
 fi
 
 # If lfs_jwt_secret doesn't exist, create it
 if [ -z "$lfs_jwt_secret" ]; then
-    lfs_jwt_secret=$($final_path/forgejo generate secret JWT_SECRET)
+    lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
     ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
 fi
 
 # If internal_token doesn't exist, create it
 if [ -z "$internal_token" ]; then
-    internal_token=$($final_path/forgejo generate secret INTERNAL_TOKEN)
+    internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
     ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
 fi
 
-# If datadir doesn't exist, create it
-if [ -z "$datadir" ]; then
-    datadir=/home/yunohost.app/$app
-    ynh_app_setting_set --app=$app --key=datadir --value=$datadir
-    mkdir -p $datadir
-    mkdir -p "$datadir/data/{repositories,avatars,attachments}"
-    mkdir -p "$datadir/.ssh"
+# If data_dir doesn't exist, create it
+if [ -z "$data_dir" ]; then
+    data_dir=/home/yunohost.app/$app
+#REMOVEME?     ynh_app_setting_set --app=$app --key=data_dir --value=$data_dir
+    mkdir -p $data_dir
+    mkdir -p "$data_dir/data/{repositories,avatars,attachments}"
+    mkdir -p "$data_dir/.ssh"
 
-    chmod 750 "$datadir"
-    chmod -R o-rwx "$datadir"
-    chown -R $app:$app "$datadir"
-    chmod u=rwx,g=,o= "$datadir/.ssh"
+    chmod 750 "$data_dir"
+    chmod -R o-rwx "$data_dir"
+    chown -R $app:$app "$data_dir"
+    chmod u=rwx,g=,o= "$data_dir/.ssh"
 fi
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
+#REMOVEME? ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
 
 # Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path" --groups ssh.app
+#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir" --groups ssh.app
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=3
 
-ynh_setup_source --dest_dir=$final_path --source_id=$YNH_ARCH
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:$app "$final_path"
-chmod +x "$final_path/forgejo"
+ynh_setup_source --dest_dir=$install_dir --source_id=$YNH_ARCH
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:$app "$install_dir"
+chmod +x "$install_dir/forgejo"
 
 #=================================================
 # ADD A CONFIGURATION
@@ -139,10 +139,10 @@ chmod +x "$final_path/forgejo"
 ynh_script_progression --message="Adding a configuration file..." --weight=1
 
 ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
-ynh_add_config --template="app.ini" --destination="$final_path/custom/conf/app.ini"
+ynh_add_config --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
 
-chmod 640 "$final_path/custom/conf/app.ini"
-chown $app:$app "$final_path/custom/conf/app.ini"
+chmod 640 "$install_dir/custom/conf/app.ini"
+chown $app:$app "$install_dir/custom/conf/app.ini"
 
 #=================================================
 # SETUP SYSTEMD
@@ -159,9 +159,9 @@ ynh_add_nginx_config
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..." --weight=10
+#REMOVEME? ynh_script_progression --message="Upgrading dependencies..." --weight=10
 
-ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+#REMOVEME? ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # GENERIC FINALIZATION
@@ -202,9 +202,9 @@ ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Fai
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
-ynh_systemd_action --service_name=nginx --action=reload
+#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
