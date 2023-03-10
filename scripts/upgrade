@@ -10,26 +10,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-#REMOVEME? ynh_script_progression --message="Loading installation settings..." --weight=1
-
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
-#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
-#REMOVEME? path=$(ynh_app_setting_get --app=$app --key=path)
-#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
-#REMOVEME? admin=$(ynh_app_setting_get --app=$app --key=admin)
-#REMOVEME? port=$(ynh_app_setting_get --app=$app --key=port)
-#REMOVEME? data_dir=$(ynh_app_setting_get --app=$app --key=data_dir)
-#REMOVEME? db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-#REMOVEME? db_user=$db_name
-#REMOVEME? db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
-#REMOVEME? secret_key=$(ynh_app_setting_get --app=$app --key=secret_key)
-#REMOVEME? lfs_jwt_secret=$(ynh_app_setting_get --app=$app --key=lfs_jwt_secret)
-#REMOVEME? internal_token=$(ynh_app_setting_get --app=$app --key=internal_token)
-
-#=================================================
 # CHECK VERSION
 #=================================================
 
@@ -45,42 +25,10 @@ ynh_script_progression --message="Stopping a systemd service..." --weight=2
 ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
 
 #=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-#REMOVEME? ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
-
-# Backup the current version of the app
-#REMOVEME? ynh_backup_before_upgrade
-#REMOVEME? ynh_clean_setup () {
-    # Restore it if the upgrade fails
-#REMOVEME?     ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
-
-
-#=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
-# If db_name doesn't exist, create it
-if [ -z "$db_name" ]; then
-    db_name=$(ynh_sanitize_dbid --db_name=$app)
-#REMOVEME?     ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-fi
-
-# If port doesn't exist, create it
-if [ -z "$port" ]; then
-#REMOVEME?     port=$(ynh_find_port --port=6000)
-#REMOVEME?     ynh_app_setting_set --app=$app --key=port --value=$port
-fi
-
-# If install_dir doesn't exist, create it
-if [ -z "$install_dir" ]; then
-#REMOVEME?     install_dir=/opt/$app
-#REMOVEME?     ynh_app_setting_set --app=$app --key=install_dir --value=$install_dir
-fi
 
 # If secret_key doesn't exist, create it
 if [ -z "$secret_key" ]; then
@@ -100,35 +48,13 @@ if [ -z "$internal_token" ]; then
     ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
 fi
 
-# If data_dir doesn't exist, create it
-if [ -z "$data_dir" ]; then
-    data_dir=/home/yunohost.app/$app
-#REMOVEME?     ynh_app_setting_set --app=$app --key=data_dir --value=$data_dir
-    mkdir -p $data_dir
-    mkdir -p "$data_dir/data/{repositories,avatars,attachments}"
-    mkdir -p "$data_dir/.ssh"
-
-    chmod 750 "$data_dir"
-    chmod -R o-rwx "$data_dir"
-    chown -R $app:$app "$data_dir"
-    chmod u=rwx,g=,o= "$data_dir/.ssh"
-fi
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
-
-# Create a dedicated user (if not existing)
-#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir" --groups ssh.app
-
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=3
 
 ynh_setup_source --dest_dir=$install_dir --source_id=$YNH_ARCH
-chmod 750 "$install_dir"
+
 chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
 chmod +x "$install_dir/forgejo"
@@ -148,20 +74,15 @@ chown $app:$app "$install_dir/custom/conf/app.ini"
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
+
 ynh_add_systemd_config
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
 ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=2
+
 ynh_add_nginx_config
-
-#=================================================
-# UPGRADE DEPENDENCIES
-#=================================================
-#REMOVEME? ynh_script_progression --message="Upgrading dependencies..." --weight=10
-
-#REMOVEME? ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # GENERIC FINALIZATION
@@ -197,14 +118,6 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$ap
 ynh_script_progression --message="Configuring Fail2Ban..." --weight=1
 
 ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
-
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
