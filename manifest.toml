@@ -50,6 +50,7 @@ ram.runtime = "50M"
         amd64.sha256 = "3157da621960c32b6284aa55e9d3c3c0d3e7ff534e832e712a2eb7d92952aab8"
         armhf.url = "https://codeberg.org/attachments/14e7bdbb-a2e7-4065-885f-c5fd26d00940"
         armhf.sha256 = "1eb64795db5fd2fc94a1d8ea640f20cdf43d2667512c6f96a665605666d17d38"
+        rename = "forgejo"
 
     [resources.system_user]
 
