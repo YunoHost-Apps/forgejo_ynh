@@ -53,7 +53,7 @@ fi
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=3
 
-ynh_setup_source --dest_dir=$install_dir --source_id=$YNH_ARCH
+ynh_setup_source --dest_dir=$install_dir
 
 chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
