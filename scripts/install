@@ -19,7 +19,7 @@ ynh_system_user_create --username=$app --home_dir=$data_dir --groups ssh.app --u
 #=================================================
 ynh_script_progression --message="Installing sources files..." --weight=10
 
-ynh_setup_source --dest_dir=$install_dir --source_id=$YNH_ARCH
+ynh_setup_source --dest_dir=$install_dir
 
 mkdir -p "$install_dir/custom/conf"
 
