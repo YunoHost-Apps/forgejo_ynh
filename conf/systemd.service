@@ -7,7 +7,7 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__DATA_DIR__/
-ExecStart=__FINAL_PATH__/forgejo web -p __PORT__
+ExecStart=__INSTALL_DIR__/forgejo web -p __PORT__
 Restart=always
 Environment=USER=__APP__ HOME=__DATA_DIR__/
 
