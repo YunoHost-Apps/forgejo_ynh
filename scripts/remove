@@ -80,7 +80,7 @@ ynh_secure_remove --file="$final_path"
 # REMOVE DATA DIR
 #=================================================
 
-# Remove the app data directory with the command `yunohost app remove gogs --purge`
+# Remove the app data directory with the command `yunohost app remove forgejo --purge`
 if [ "${YNH_APP_PURGE:-0}" -eq 1 ]
 then
   ynh_script_progression --message="Removing app data directory..." --weight=2
