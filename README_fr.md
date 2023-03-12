@@ -6,6 +6,7 @@ It shall NOT be edited by hand.
 # Forgejo pour YunoHost
 
 [![Niveau d’intégration](https://dash.yunohost.org/integration/forgejo.svg)](https://dash.yunohost.org/appci/app/forgejo) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
+
 [![Installer Forgejo avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
 *[Read this readme in english.](./README.md)*
@@ -69,7 +70,7 @@ Actually it's possible to access to the Git repositories by the `git` command ov
 ### Remove
 
 To remove the data directory in `/home/yunohost.app/forgejo`, use the `--purge` option:
-`sudo yunohost remove forgrjo --purge`.
+`sudo yunohost remove forgejo --purge`.
 
 ### Uploaded files size
 By default, NGINX is configured with a maximum value for uploading files at 200 MB. It's possible to change this value on `/etc/nginx/conf.d/my.domain.tld.d/forgejo.conf`.
