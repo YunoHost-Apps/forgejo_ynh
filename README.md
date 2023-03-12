@@ -70,7 +70,7 @@ Actually it's possible to access to the Git repositories by the `git` command ov
 ### Remove
 
 To remove the data directory in `/home/yunohost.app/forgejo`, use the `--purge` option:
-`sudo yunohost remove forgrjo --purge`.
+`sudo yunohost remove forgejo --purge`.
 
 ### Uploaded files size
 By default, NGINX is configured with a maximum value for uploading files at 200 MB. It's possible to change this value on `/etc/nginx/conf.d/my.domain.tld.d/forgejo.conf`.
