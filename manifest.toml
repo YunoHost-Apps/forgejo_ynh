@@ -16,7 +16,7 @@ admindoc = "https://docs.gitea.io/"
 code = "https://codeberg.org/forgejo/forgejo"
 
 [integration]
-yunohost = ">= 11.1.15"
+yunohost = ">= 11.1.17"
 architectures = ["amd64", "arm64", "armhf"]
 multi_instance = true
 ldap = true
