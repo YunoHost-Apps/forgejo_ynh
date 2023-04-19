@@ -46,20 +46,6 @@ ynh_script_progression --message="Configuring NGINX web server..." --weight=2
 ynh_add_nginx_config
 
 #=================================================
-# CREATE DATA DIRECTORY
-#=================================================
-ynh_script_progression --message="Creating a data directory..." --weight=1
-
-#if [ -e "$data_dir" ]; then
-#    old_data_dir_path="$data_dir$(date '+%Y%m%d.%H%M%S')"
-#    ynh_print_warn "A data directory already exist. Data was renamed to $old_data_dir_path"
-#    mv "$data_dir" "$old_data_dir_path"
-#fi
-
-mkdir -p "$data_dir/.ssh"
-chmod u=rwx,g=,o= "$data_dir/.ssh"
-
-#=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
