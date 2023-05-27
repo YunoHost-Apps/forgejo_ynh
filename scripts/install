@@ -10,22 +10,19 @@ source ./_common.sh
 # IMPORT GENERIC HELPERS
 source /usr/share/yunohost/helpers
 
-
-# Create a system user
-ynh_system_user_create --username=$app --home_dir=$data_dir --groups ssh.app --use_shell
-
 #=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
+# Create install and data subdirs
 #=================================================
-ynh_script_progression --message="Installing sources files..." --weight=10
-
-ynh_setup_source --dest_dir=$install_dir
+ynh_setup_source --dest_dir="$install_dir"
+xz -d "$install_dir/forgejo.xz"
+chmod +x "$install_dir/forgejo"
 
 mkdir -p "$install_dir/custom/conf"
 
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
-chmod +x "$install_dir/forgejo"
+chmod -R o-rwx "$install_dir/custom"
+chown -R $app:$app "$install_dir/custom"
+
+chmod 700 $data_dir/.ssh
 
 #=================================================
 # KEYS GENERATION
@@ -37,13 +34,6 @@ internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
 ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
 ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
 ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --weight=2
-
-ynh_add_nginx_config
 
 #=================================================
 # ADD A CONFIGURATION
@@ -59,9 +49,16 @@ chown $app:$app "$install_dir/custom/conf/app.ini"
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..." --weight=1
+ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
 
 ynh_add_systemd_config
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=2
+
+ynh_add_nginx_config
 
 #=================================================
 # GENERIC FINALIZATION
@@ -70,24 +67,25 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Configuring log rotation..." --weight=1
 
-# Configure logrotate
-ynh_use_logrotate --logfile "/var/log/$app/forgejo.log"
+# Use logrotate to manage application logfile(s)
+ynh_use_logrotate --logfile "/var/log/$app" --nonappend
 
-chown $app:$app /var/log/$app
+chown -R $app:$app "/var/log/$app"
 chmod u=rwX,g=rX,o= "/var/log/$app"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
+ynh_script_progression --message="Integrating service in YunoHost..." --weight=2
 
-yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo.log"
+yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=3
 
+# Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
 
 #=================================================
