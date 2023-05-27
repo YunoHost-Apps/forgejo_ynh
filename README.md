@@ -34,7 +34,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Shipped version:** 1.19.0-3~ynh1
+**Shipped version:** 1.19.3-0~ynh1
 
 ## Screenshots
 
@@ -43,7 +43,8 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 ## Documentation and resources
 
 * Official app website: <https://forgejo.org>
-* Official admin documentation: <https://docs.gitea.io/>
+* Official user documentation: <https://forgejo.org/docs/latest/user/>
+* Official admin documentation: <https://forgejo.org/docs/latest/admin/>
 * Upstream app code repository: <https://codeberg.org/forgejo/forgejo>
 * YunoHost documentation for this app: <https://yunohost.org/app_forgejo>
 * Report a bug: <https://github.com/YunoHost-Apps/forgejo_ynh/issues>
