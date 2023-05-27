@@ -29,11 +29,8 @@ ynh_change_url_nginx_config
 # SPECIFIC MODIFICATIONS
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
-#REMOVEME? 
-domain=$new_domain
-path=$new_path
-ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
 
+ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
 ynh_exec_warn_less ynh_add_config --template="../conf/app.ini" --destination="$install_dir/custom/conf/app.ini"
 
 chmod 640 "$install_dir/custom/conf/app.ini"
