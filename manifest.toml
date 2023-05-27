@@ -5,14 +5,15 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "1.18.5-0~ynh3"
+version = "1.19.3-0~ynh1"
 
 maintainers = ["Emmanuel Averty"]
 
 [upstream]
 license = "MIT"
 website = "https://forgejo.org"
-admindoc = "https://docs.gitea.io/"
+admindoc = "https://forgejo.org/docs/latest/admin/"
+userdoc = "https://forgejo.org/docs/latest/user/"
 code = "https://codeberg.org/forgejo/forgejo"
 
 [integration]
@@ -20,10 +21,10 @@ yunohost = ">= 11.1.17"
 architectures = ["amd64", "arm64", "armhf"]
 multi_instance = true
 ldap = true
-sso = false
-disk = "50M"
+sso = true
+disk = "150M"
 ram.build = "50M"
-ram.runtime = "50M"
+ram.runtime = "2G"
 
 [install]
     [install.domain]
@@ -43,23 +44,27 @@ ram.runtime = "50M"
     default = "visitors"
 
 [resources]
-        [resources.sources.main]
-        arm64.url = "https://codeberg.org/attachments/64d9189e-edb5-4d8e-9886-6d7b733fb146"
-        arm64.sha256 = "a463f0c160a3769d27a1b1e5cff8fbb75d0d04fd6fda481bcd9e083c8fd8d175"
-        amd64.url = "https://codeberg.org/attachments/415526b5-e483-45b6-9d46-a7078dcea461"
-        amd64.sha256 = "3157da621960c32b6284aa55e9d3c3c0d3e7ff534e832e712a2eb7d92952aab8"
-        armhf.url = "https://codeberg.org/attachments/14e7bdbb-a2e7-4065-885f-c5fd26d00940"
-        armhf.sha256 = "1eb64795db5fd2fc94a1d8ea640f20cdf43d2667512c6f96a665605666d17d38"
-        rename = "forgejo"
+    [resources.sources.main]
+    amd64.url = "https://codeberg.org/attachments/8dc303a9-8a4e-416c-8d6c-62e0d3e289e8"
+    amd64.sha256 = "84ad6db129c491c9e4b935cdb6ad7003a804d27fb70e9bc3c653d931cf62d92d"
+    arm64.url = "https://codeberg.org/attachments/dc0a8d51-e2f9-4395-a286-e5f6cbbc20bc"
+    arm64.sha256 = "e1514b0075223aef8d7992cef0b30cb9869171d4fbec4651693305ad724a530d"
+    armhf.url = "https://codeberg.org/attachments/b1643658-7394-45c8-9fad-9d286ec29c7d"
+    armhf.sha256 = "b8265436d3af7a46ffbf306917aacbe5ee00fd74dc1eee79f1d4b4cba97ec395"
+    format = "xz"
+    extract = false # will be extracted during install script
+    rename = "forgejo.xz"
 
     [resources.system_user]
+    allow_ssh = true
 
     [resources.ports]
+    main.default = 6000
 
     [resources.install_dir]
 
     [resources.data_dir]
-    subdirs = ".ssh"
+    subdirs = ['.ssh']
 
     [resources.permissions]
     main.url = "/"
