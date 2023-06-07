@@ -28,6 +28,12 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
+# forgejo home directory has changed (yunohost packaging v2)
+# .ssh directory should move from old home dir (data_dir) to new one
+# (/var/www/$app is the default value for home in resources.system_user)
+if [ -d "$data_dir/.ssh" ]; then
+    mv "$data_dir/.ssh" /var/www/$app
+fi
 
 # If secret_key doesn't exist, create it
 if [ -z "$secret_key" ]; then
