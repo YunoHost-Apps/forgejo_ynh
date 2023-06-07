@@ -22,8 +22,6 @@ mkdir -p "$install_dir/custom/conf"
 chmod -R o-rwx "$install_dir/custom"
 chown -R $app:$app "$install_dir/custom"
 
-chmod 700 $data_dir/.ssh
-
 #=================================================
 # KEYS GENERATION
 #=================================================
