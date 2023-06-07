@@ -64,7 +64,6 @@ ram.runtime = "2G"
     [resources.install_dir]
 
     [resources.data_dir]
-    subdirs = ['.ssh']
 
     [resources.permissions]
     main.url = "/"
