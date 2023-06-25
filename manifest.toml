@@ -39,8 +39,10 @@ ram.runtime = "2G"
     default = "visitors"
 
     [install.init_admin_permission]
-    help.en = "Users of this group should have access to Forgejo admin page (but the won't : see application description in yunohost admin)"
-    help.fr = "Les utilisateurs de ce groupe devrait avoir accès à la page d'administration de Forgejo (mais cela ne fonctionne pas : voir la description de l'application dans l'administration de yunohost"
+    ask.en = "Which group will have access to forgejo admin page (broken feature : see appliction description)"
+    ask.fr = "Quel groupe aura accès à l'administration de forgejo (ne fonctionne pas : voir la description de l'application)"
+    help.en = "Users of this group should have access to Forgejo admin page"
+    help.fr = "Les utilisateurs de ce groupe devrait avoir accès à la page d'administration de Forgejo"
     type = "group"
     default = "admins"
 
