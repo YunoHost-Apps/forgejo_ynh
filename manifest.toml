@@ -5,7 +5,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "1.19.3-0~ynh1"
+version = "1.19.3-0~ynh2"
 
 maintainers = ["Emmanuel Averty"]
 
@@ -34,14 +34,15 @@ ram.runtime = "2G"
     type = "path"
     default = "/forgejo"
 
-    [install.admin]
-    type = "user"
-
     [install.init_main_permission]
-    help.en = "If enabled, Forgejo will be accessible by people who do not have an account. This can be changed later via the webadmin."
-    help.fr = "Si cette case est cochée, Forgejo sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
     type = "group"
     default = "visitors"
+
+    [install.init_admin_permission]
+    help.en = "Users of this group should have access to Forgejo admin page (but the won't : see application description in yunohost admin)"
+    help.fr = "Les utilisateurs de ce groupe devrait avoir accès à la page d'administration de Forgejo (mais cela ne fonctionne pas : voir la description de l'application dans l'administration de yunohost"
+    type = "group"
+    default = "admins"
 
 [resources]
     [resources.sources.main]
@@ -67,6 +68,11 @@ ram.runtime = "2G"
 
     [resources.permissions]
     main.url = "/"
+
+    admin.allowed = "admins"
+    admin.show_tile = false
+    admin.auth_header = false
+    admin.protected = true
 
     [resources.apt]
     packages = "postgresql"
