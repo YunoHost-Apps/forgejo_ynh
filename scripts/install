@@ -99,7 +99,7 @@ ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Fai
 ynh_script_progression --message="Adding LDAP configuration..." --weight=1
 
 pushd "$install_dir"
-	ynh_exec_as $app ./forgejo admin auth add-ldap --security-protocol "Unencrypted" --name "YunoHost LDAP" --host "localhost" --port "389" --skip-tls-verify --user-search-base "ou=users,dc=yunohost,dc=org" --user-filter "(&(uid=%s)(objectClass=posixAccount)(permission=cn=$app.main,ou=permission,dc=yunohost,dc=org))" --firstname-attribute "givenName" --surname-attribute "sn" --email-attribute "mail" --admin-filter "(permission=cn=$app.admin,ou=permission,dc=yunohost,dc=org)"
+	ynh_exec_as $app ./forgejo admin auth add-ldap-simple --security-protocol "Unencrypted" --name "YunoHost LDAP" --host "localhost" --port "389" --skip-tls-verify --user-search-base "ou=users,dc=yunohost,dc=org" --user-dn "uid=%s,ou=Users,dc=yunohost,dc=org" --user-filter "(&(objectclass=posixAccount)(uid=%s)(permission=cn=$app.main,ou=permission,dc=yunohost,dc=org))" --admin-filter "(permission=cn=forgejo.admin,ou=permission,dc=yunohost,dc=org)" --username-attribute "uid" --firstname-attribute "givenName" --surname-attribute "sn" --email-attribute "mail"
 popd
 
 #=================================================

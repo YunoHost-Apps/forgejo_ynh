@@ -1,5 +1,15 @@
 ## Additional informations
 
+### Known issue about admin access
+This package ask during its installation which group of users should be considered as forgejo administrators. These users should be able to access the admin page of forgejo. But they won't :(
+Two forgejo features are not yet compatible :
+- the reverse proxy authentication (which allows yunohost user to be automatically logged in forgejo)
+- the login source (which tells forgejo to check yunohost users base to know if it is an admin or not)
+
+The choice have been done to keep the reverse proxy authentication. But an [issue](https://codeberg.org/forgejo/forgejo/issues/930) is created to have both features.
+
+In conclusion, this forgejo installation does not (yet) allow to access the forgejo admin page.
+
 ### Notes on SSH usage
 
 If you want to use Forgejo with SSH and be able to pull/push with your SSH key, your SSH daemon must be properly configured to use private/public keys. Here is a sample configuration `/etc/ssh/sshd_config` that works with Forgejo:

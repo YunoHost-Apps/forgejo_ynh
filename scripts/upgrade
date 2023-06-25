@@ -28,6 +28,18 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
+# Update forgejo login source
+pushd "$install_dir"
+    old_login_source_id=$(ynh_exec_as $app ./forgejo admin auth list | grep "YunoHost LDAP" | grep "via BindDN" | cut -f 1)
+    if [ ! -z $old_login_source_id ]; then
+        # Delete old login source
+        ynh_exec_as $app ./forgejo admin auth delete --id $old_login_source_id
+
+        # Create new login source
+	    ynh_exec_as $app ./forgejo admin auth add-ldap-simple --security-protocol "Unencrypted" --name "YunoHost LDAP" --host "localhost" --port "389" --skip-tls-verify --user-search-base "ou=users,dc=yunohost,dc=org" --user-dn "uid=%s,ou=Users,dc=yunohost,dc=org" --user-filter "(&(objectclass=posixAccount)(uid=%s)(permission=cn=$app.main,ou=permission,dc=yunohost,dc=org))" --admin-filter "(permission=cn=forgejo.admin,ou=permission,dc=yunohost,dc=org)" --username-attribute "uid" --firstname-attribute "givenName" --surname-attribute "sn" --email-attribute "mail"
+    fi
+popd
+
 # forgejo home directory has changed (yunohost packaging v2)
 # .ssh directory should move from old home dir (data_dir) to new one
 # (/var/www/$app is the default value for home in resources.system_user)
