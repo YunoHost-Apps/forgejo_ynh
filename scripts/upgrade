@@ -28,7 +28,7 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
-# Update forgejo login source
+# Update forgejo login source (1.19.3-0~ynh2)
 pushd "$install_dir"
     old_login_source_id=$(ynh_exec_as $app ./forgejo admin auth list | grep "YunoHost LDAP" | grep "via BindDN" | cut -f 1)
     if [ ! -z $old_login_source_id ]; then
@@ -40,6 +40,16 @@ pushd "$install_dir"
     fi
 popd
 
+# Update login source synchronization flag (1.19.3-0~ynh3)
+enable_login_source_sync
+
+if [ -z ${forgejo_api_user:-} ]; then
+    create_forgejo_api_user
+fi
+
+# Update users login source (1.19.3-0~ynh3)
+set_users_login_source
+
 # forgejo home directory has changed (yunohost packaging v2)
 # .ssh directory should move from old home dir (data_dir) to new one
 # (/var/www/$app is the default value for home in resources.system_user)
@@ -48,19 +58,19 @@ if [ -d "$data_dir/.ssh" ]; then
 fi
 
 # If secret_key doesn't exist, create it
-if [ -z "$secret_key" ]; then
+if [ -z ${secret_key:-} ]; then
     secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
     ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
 fi
 
 # If lfs_jwt_secret doesn't exist, create it
-if [ -z "$lfs_jwt_secret" ]; then
+if [ -z ${lfs_jwt_secret:-} ]; then
     lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
     ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
 fi
 
 # If internal_token doesn't exist, create it
-if [ -z "$internal_token" ]; then
+if [ -z ${internal_token:-} ]; then
     internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
     ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
 fi
@@ -129,6 +139,12 @@ ynh_script_progression --message="Starting a systemd service..." --weight=3
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
+
+
+#=================================================
+# Synchronize users (backward compatibility 1.19.3-0~ynh3)
+#=================================================
+synchronize_users
 
 #=================================================
 # SETUP FAIL2BAN

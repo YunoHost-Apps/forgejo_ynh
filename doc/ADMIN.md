@@ -1,14 +1,10 @@
 ## Additional informations
 
-### Known issue about admin access
-This package ask during its installation which group of users should be considered as forgejo administrators. These users should be able to access the admin page of forgejo. But they won't :(
-Two forgejo features are not yet compatible :
-- the reverse proxy authentication (which allows yunohost user to be automatically logged in forgejo)
-- the login source (which tells forgejo to check yunohost users base to know if it is an admin or not)
+### User synchronization
+In order to allow access to Forgejo admin section, YunoHost users are automaticaly synchronized with Forgejo's.  
+You can use «Forgejo (admin)» permission to manage which user is considered as forgejo admin.
 
-The choice have been done to keep the reverse proxy authentication. But an [issue](https://codeberg.org/forgejo/forgejo/issues/930) is created to have both features.
-
-In conclusion, this forgejo installation does not (yet) allow to access the forgejo admin page.
+**Known issue** : when a user is added to a group (e.g. the one with «Forgejo (admin)» permission), the synchronization is not triggered by YunoHost. You have to update a user (without any modification) to trigger it. (https://github.com/YunoHost/issues/issues/2213)
 
 ### Notes on SSH usage
 
