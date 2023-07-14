@@ -4,6 +4,8 @@
 In order to allow access to Forgejo admin section, YunoHost users are automaticaly synchronized with Forgejo's.  
 You can use «Forgejo (admin)» permission to manage which user is considered as forgejo admin.
 
+The «forgejo (api)» permission must be set to «Visitors» group to allow user synchronization via an API call.
+
 **Known issue** : when a user is added to a group (e.g. the one with «Forgejo (admin)» permission), the synchronization is not triggered by YunoHost. You have to update a user (without any modification) to trigger it. (https://github.com/YunoHost/issues/issues/2213)
 
 ### Notes on SSH usage
