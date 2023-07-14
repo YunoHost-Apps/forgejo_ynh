@@ -5,7 +5,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "1.19.3-0~ynh4"
+version = "1.19.3-0~ynh5"
 
 maintainers = ["Emmanuel Averty"]
 
@@ -71,10 +71,14 @@ ram.runtime = "2G"
     [resources.permissions]
     main.url = "/"
 
-    admin.allowed = "admins"
     admin.show_tile = false
     admin.auth_header = false
     admin.protected = true
+
+    api.url = "/api"
+    api.show_tile = false
+    api.allowed = "visitors"
+    api.auth_header = false
 
     [resources.apt]
     packages = "postgresql"
