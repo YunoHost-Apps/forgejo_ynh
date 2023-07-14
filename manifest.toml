@@ -5,7 +5,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "1.19.3-0~ynh3"
+version = "1.19.3-0~ynh4"
 
 maintainers = ["Emmanuel Averty"]
 
