@@ -29,9 +29,11 @@ chown -R $app:$app "$install_dir/custom"
 secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
 lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
 internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
+oauth2_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
 ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
 ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
 ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
+ynh_app_setting_set --app=$app --key=oauth2_jwt_secret --value=$oauth2_jwt_secret
 
 #=================================================
 # ADD A CONFIGURATION
