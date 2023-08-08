@@ -25,7 +25,7 @@ function create_forgejo_api_user() {
     ynh_app_setting_set --app=$app --key=forgejo_api_pwd --value=$forgejo_api_pwd 
     pushd "$install_dir"
     ynh_exec_as $app ./forgejo admin user create --username $forgejo_api_user --password $forgejo_api_pwd --email admin@${domain} --admin --must-change-password=false
-    forgejo_api_token=$(ynh_exec_as $app ./forgejo admin user generate-access-token --username $forgejo_api_user --token-name "admin" --scopes "sudo" --raw | tail -1)
+    forgejo_api_token=$(ynh_exec_as $app ./forgejo admin user generate-access-token --username $forgejo_api_user --token-name "admin" --scopes "write:admin" --raw | tail -1)
     ynh_app_setting_set --app=$app --key=forgejo_api_token --value=$forgejo_api_token 
     popd
 }
