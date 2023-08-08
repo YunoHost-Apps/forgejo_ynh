@@ -5,7 +5,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "1.19.3-0~ynh5"
+version = "1.20.2-0~ynh1"
 
 maintainers = ["Emmanuel Averty"]
 
@@ -48,12 +48,12 @@ ram.runtime = "2G"
 
 [resources]
     [resources.sources.main]
-    amd64.url = "https://codeberg.org/attachments/8dc303a9-8a4e-416c-8d6c-62e0d3e289e8"
-    amd64.sha256 = "84ad6db129c491c9e4b935cdb6ad7003a804d27fb70e9bc3c653d931cf62d92d"
-    arm64.url = "https://codeberg.org/attachments/dc0a8d51-e2f9-4395-a286-e5f6cbbc20bc"
-    arm64.sha256 = "e1514b0075223aef8d7992cef0b30cb9869171d4fbec4651693305ad724a530d"
-    armhf.url = "https://codeberg.org/attachments/b1643658-7394-45c8-9fad-9d286ec29c7d"
-    armhf.sha256 = "b8265436d3af7a46ffbf306917aacbe5ee00fd74dc1eee79f1d4b4cba97ec395"
+    amd64.url = "https://codeberg.org/attachments/483cbc17-b31a-4401-b4a0-773a8b975e2f"
+    amd64.sha256 = "ef7849e02e4ad56512eabe280e956913483d87228de21f3dd37ec77e40fe1f0e"
+    arm64.url = "https://codeberg.org/attachments/345cc669-751d-48fb-afac-e7cdbf5a827a"
+    arm64.sha256 = "0cf891efb6101329e5154209e5d250e6d74492a8b637efc4cbd77af587c189b0"
+    armhf.url = "https://codeberg.org/attachments/ceec6963-e20c-49e0-87a4-0fd531bd9ef8"
+    armhf.sha256 = "8c7e7d3e62021d3cdb0837e42c55bb5ff088c8765cb01faa54309ec52e40d045"
     format = "xz"
     extract = false # will be extracted during install script
     rename = "forgejo.xz"
