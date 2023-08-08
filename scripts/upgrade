@@ -80,6 +80,12 @@ if [ -z ${internal_token:-} ]; then
     ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
 fi
 
+# If oauth2_jwt_secret doesn't exist, create it
+if [ -z ${oauth2_jwt_secret:-} ]; then
+    oauth2_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
+    ynh_app_setting_set --app=$app --key=oauth2_jwt_secret --value=$oauth2_jwt_secret
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
