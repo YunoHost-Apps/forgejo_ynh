@@ -8,6 +8,7 @@ filename=$(basename $0)
 
 # Set vars for following script
 
+# TODO : app should be fetch from arguments
 # The file name is <priority>-<app>
 app=${filename#*-}
 
