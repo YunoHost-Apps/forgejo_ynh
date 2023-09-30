@@ -46,7 +46,6 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 * Official user documentation: <https://forgejo.org/docs/latest/user/>
 * Official admin documentation: <https://forgejo.org/docs/latest/admin/>
 * Upstream app code repository: <https://codeberg.org/forgejo/forgejo>
-* YunoHost documentation for this app: <https://yunohost.org/app_forgejo>
 * Report a bug: <https://github.com/YunoHost-Apps/forgejo_ynh/issues>
 
 ## Developer info
