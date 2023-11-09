@@ -31,7 +31,6 @@ chown -R $app:$app "$install_dir/custom"
 # KEYS GENERATION
 #=================================================
 
-generate-secret
 secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
 lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
 internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
