@@ -21,6 +21,7 @@ upgrade_type=$(ynh_check_app_version_changed)
 # STOP SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..." --weight=2
+
 ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
 
 #=================================================
@@ -115,20 +116,9 @@ chown $app:$app "$install_dir/custom/conf/app.ini"
 ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
 
 ynh_add_systemd_config
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=2
+ynh_add_systemd_config --service=${app}_runner --template="runner.service"
 
 ynh_add_nginx_config
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Configuring log rotation..." --weight=1
 
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate --logfile "/var/log/$app" --nonappend
@@ -136,12 +126,10 @@ ynh_use_logrotate --logfile "/var/log/$app" --nonappend
 chown -R $app:$app "/var/log/$app"
 chmod u=rwX,g=rX,o= "/var/log/$app"
 
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=2
+ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
+yunohost service add ${app}_runner --description="Forgejo runner"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -150,19 +138,12 @@ ynh_script_progression --message="Starting a systemd service..." --weight=3
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
-
+ynh_systemd_action --service_name=${app}_runner --action="start" --log_path="systemd"
 
 #=================================================
 # Synchronize users (backward compatibility 1.19.3-0~ynh3)
 #=================================================
 synchronize_users
-
-#=================================================
-# SETUP FAIL2BAN
-#=================================================
-ynh_script_progression --message="Configuring Fail2Ban..." --weight=1
-
-ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 #=================================================
 # END OF SCRIPT

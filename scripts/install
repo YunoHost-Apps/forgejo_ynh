@@ -13,9 +13,14 @@ source /usr/share/yunohost/helpers
 #=================================================
 # Create install and data subdirs
 #=================================================
+ynh_script_progression --message="Setting up source files..." --weight=1
+
 ynh_setup_source --dest_dir="$install_dir"
+ynh_setup_source --dest_dir="$install_dir" --source_id="runner"
+
 xz -d "$install_dir/forgejo.xz"
 chmod +x "$install_dir/forgejo"
+chmod +x "$install_dir/forgejo-runner"
 
 mkdir -p "$install_dir/custom/conf"
 
@@ -26,10 +31,12 @@ chown -R $app:$app "$install_dir/custom"
 # KEYS GENERATION
 #=================================================
 
+secret=$($install_dir/forgejo generate secret SECRET)
 secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
 lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
 internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
 oauth2_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
+ynh_app_setting_set --app=$app --key=secret --value=$secret
 ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
 ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
 ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
@@ -52,20 +59,9 @@ chown $app:$app "$install_dir/custom/conf/app.ini"
 ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
 
 ynh_add_systemd_config
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=2
+ynh_add_systemd_config --service=${app}_runner --template="runner.service"
 
 ynh_add_nginx_config
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Configuring log rotation..." --weight=1
 
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate --logfile "/var/log/$app" --nonappend
@@ -73,12 +69,20 @@ ynh_use_logrotate --logfile "/var/log/$app" --nonappend
 chown -R $app:$app "/var/log/$app"
 chmod u=rwX,g=rX,o= "/var/log/$app"
 
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=2
+ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
+yunohost service add ${app}_runner --description="Forgejo runner"
+
+#=================================================
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression --message="Adding a configuration file..." --weight=1
+
+pushd $install_dir
+	./forgejo forgejo-cli actions register --name runner --scope $domain --secret $secret
+	./forgejo-runner create-runner-file --instance https://$domain$path --secret $secret
+popd
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -87,13 +91,7 @@ ynh_script_progression --message="Starting a systemd service..." --weight=3
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
-
-#=================================================
-# SETUP FAIL2BAN
-#=================================================
-ynh_script_progression --message="Configuring Fail2Ban..." --weight=1
-
-ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
+ynh_systemd_action --service_name=${app}_runner --action="start" --log_path="systemd"
 
 #=================================================
 # LDAP CONFIGURATION

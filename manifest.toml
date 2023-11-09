@@ -58,6 +58,15 @@ ram.runtime = "2G"
     extract = false # will be extracted during install script
     rename = "forgejo.xz"
 
+    [resources.sources.runner]
+    amd64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v3.0.3/forgejo-runner-3.0.3-linux-amd64"
+    amd64.sha256 = "f95fd971e1429b1e1eb24c5364e24ee695db0298d13ef5f7ee40c810ecac4797"
+    arm64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v3.0.3/forgejo-runner-3.0.3-linux-arm64"
+    arm64.sha256 = "224e4043f98a1eb05cacf8d6a6c8ee6eff95c955478406634b7109a5a43834a6"
+    in_subdir = false
+    extract = false
+    rename = "forgejo-runner"
+
     [resources.system_user]
     allow_ssh = true
 
@@ -81,7 +90,11 @@ ram.runtime = "2G"
     api.auth_header = false
 
     [resources.apt]
-    packages = "postgresql"
+    packages = "postgresql, ca-certificates, git, curl, tar"
+
+    extras.docker.repo = "https://download.docker.com/linux/debian bullseye stable"
+    extras.docker.key = "https://download.docker.com/linux/debian/gpg"
+    extras.docker.packages = "docker-ce, docker-ce-cli, containerd.io"
 
     [resources.database]
     type = "postgresql"

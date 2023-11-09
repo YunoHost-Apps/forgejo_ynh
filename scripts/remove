@@ -21,25 +21,26 @@ then
 	ynh_script_progression --message="Removing $app service integration..." --weight=1
 	yunohost service remove $app
 fi
+if ynh_exec_warn_less yunohost service status ${app}_runner >/dev/null
+then
+	ynh_script_progression --message="Removing ${app}_runner service integration..." --weight=1
+	yunohost service remove ${app}_runner
+fi
 
 # Remove the dedicated systemd config
-ynh_script_progression --message="Removing systemd configuration..." --weight=1
 ynh_remove_systemd_config
+ynh_remove_systemd_config --service=${app}_runner
 
 # Remove the app-specific logrotate config
-ynh_script_progression --message="Removing logrotate configuration..." --weight=1
 ynh_remove_logrotate
 
 # Remove the dedicated NGINX config
-ynh_script_progression --message="Removing NGINX web server configuration..." --weight=1
 ynh_remove_nginx_config
 
 # Remove the dedicated Fail2Ban config
-ynh_script_progression --message="Removing Fail2Ban configuration..." --weight=1
 ynh_remove_fail2ban_config
 
 # Remove logs
-ynh_script_progression --message="Removing logs..." --weight=2
 ynh_secure_remove --file="/var/log/$app"
 
 #=================================================

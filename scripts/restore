@@ -10,15 +10,6 @@ source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# STANDARD RESTORATION STEPS
-#=================================================
-# RESTORE THE NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Restoring the NGINX configuration..." --weight=1
-
-ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
-
-#=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
 ynh_script_progression --message="Restoring $app main directory..." --weight=10
@@ -32,24 +23,9 @@ chown -R $app:$app "$install_dir"
 # RESTORE THE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Restoring the data directory..." --weight=1
+
 ynh_restore_file --origin_path="$data_dir" --not_mandatory
 chown -R $app:$app "$data_dir"
-
-#=================================================
-# RESTORE THE LOG DIRECTORY
-#=================================================
-ynh_restore_file --origin_path="/var/log/$app"
-chown -R $app:$app "/var/log/$app"
-chmod u=rwX,g=rX,o= "/var/log/$app"
-
-#=================================================
-# RESTORE FAIL2BAN CONFIGURATION
-#=================================================
-ynh_script_progression --message="Restoring the Fail2Ban configuration..." --weight=1
-
-ynh_restore_file --origin_path="/etc/fail2ban/jail.d/$app.conf"
-ynh_restore_file --origin_path="/etc/fail2ban/filter.d/$app.conf"
-ynh_systemd_action --action=restart --service_name=fail2ban
 
 #=================================================
 # RESTORE THE DATABASE
@@ -63,22 +39,24 @@ ynh_psql_execute_file_as_root --file="./db.sql" --database=$db_name
 #=================================================
 ynh_script_progression --message="Restoring the systemd configuration..." --weight=5
 
+ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
+
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
+ynh_restore_file --origin_path="/etc/systemd/system/${app}_runner.service"
 systemctl enable $app.service --quiet
 
-#=================================================
-# RESTORE THE LOGROTATE CONFIGURATION
-#=================================================
-ynh_script_progression --message="Restoring the logrotate configuration..." --weight=1
+ynh_restore_file --origin_path="/var/log/$app"
+chown -R $app:$app "/var/log/$app"
+chmod u=rwX,g=rX,o= "/var/log/$app"
 
 ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
+ynh_restore_file --origin_path="/etc/fail2ban/jail.d/$app.conf"
+ynh_restore_file --origin_path="/etc/fail2ban/filter.d/$app.conf"
+ynh_systemd_action --action=restart --service_name=fail2ban
 
 yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
+yunohost service add ${app}_runner --description="Forgejo runner" --log="/var/log/$app/forgejo.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -86,13 +64,7 @@ yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.l
 ynh_script_progression --message="Starting a systemd service..." --weight=3
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# RELOAD NGINX
-#=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+ynh_systemd_action --service_name=${app}_runner --action="start" --log_path="systemd"
 
 ynh_systemd_action --service_name=nginx --action=reload
 
