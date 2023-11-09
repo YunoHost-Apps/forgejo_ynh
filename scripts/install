@@ -100,6 +100,7 @@ ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Fai
 # LDAP CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding LDAP configuration..." --weight=1
+
 set_forgejo_login_source
 enable_login_source_sync
 
