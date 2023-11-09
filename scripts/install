@@ -78,8 +78,8 @@ ynh_script_progression --message="Adding a configuration file..." --weight=1
 secret=$(ynh_string_random --length=24)
 
 pushd $install_dir
-	./forgejo forgejo-cli actions register --name runner --scope $domain --secret $secret
-	./forgejo-runner create-runner-file --instance https://$domain$path --secret $secret
+	ynh_exec_warn_less ./forgejo forgejo-cli actions register --name runner --scope $domain --secret $secret
+	ynh_exec_warn_less ./forgejo-runner create-runner-file --instance https://$domain$path --secret $secret
 popd
 
 #=================================================
