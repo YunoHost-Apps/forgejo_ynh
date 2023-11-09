@@ -60,6 +60,7 @@ ram.runtime = "2G"
 
     [resources.system_user]
     allow_ssh = true
+    allow_email = true
 
     [resources.ports]
     main.default = 6000
