@@ -98,6 +98,7 @@ xz -f -d "$install_dir/forgejo.xz"
 chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
 chmod +x "$install_dir/forgejo"
+chmod +x "$install_dir/forgejo-runner"
 
 #=================================================
 # ADD A CONFIGURATION
