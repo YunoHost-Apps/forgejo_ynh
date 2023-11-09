@@ -31,6 +31,7 @@ chown -R $app:$app "$install_dir/custom"
 # KEYS GENERATION
 #=================================================
 
+generate-secret
 secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
 lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
 internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
@@ -75,9 +76,7 @@ yunohost service add ${app}_runner --description="Forgejo runner" --log="/var/lo
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
 
-#secret=$(ynh_string_random --length=40 | base64)
-
-secret=$(hexdump -n 40 -e '4/4 "%08X"' /dev/random)
+secret=$($install_dir/forgejo generate-secret)
 
 pushd $install_dir
 	ynh_exec_warn_less ynh_exec_as $app ./forgejo forgejo-cli actions register --name runner --scope $domain --secret $secret
