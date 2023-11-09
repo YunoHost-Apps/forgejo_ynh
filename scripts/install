@@ -31,12 +31,10 @@ chown -R $app:$app "$install_dir/custom"
 # KEYS GENERATION
 #=================================================
 
-secret=$($install_dir/forgejo generate secret SECRET)
 secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
 lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
 internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
 oauth2_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
-ynh_app_setting_set --app=$app --key=secret --value=$secret
 ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
 ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
 ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
@@ -72,12 +70,14 @@ chmod u=rwX,g=rX,o= "/var/log/$app"
 ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
-yunohost service add ${app}_runner --description="Forgejo runner"
+yunohost service add ${app}_runner --description="Forgejo runner" --log="/var/log/$app/forgejo.log"
 
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
+
+secret=$(ynh_string_random --length=24)
 
 pushd $install_dir
 	./forgejo forgejo-cli actions register --name runner --scope $domain --secret $secret

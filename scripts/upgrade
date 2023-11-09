@@ -132,7 +132,7 @@ chmod u=rwX,g=rX,o= "/var/log/$app"
 ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
-yunohost service add ${app}_runner --description="Forgejo runner"
+yunohost service add ${app}_runner --description="Forgejo runner" --log="/var/log/$app/forgejo.log"
 
 #=================================================
 # START SYSTEMD SERVICE
