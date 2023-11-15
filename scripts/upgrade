@@ -48,13 +48,6 @@ popd
 # Update login source synchronization flag (1.19.3-0~ynh3)
 enable_login_source_sync
 
-if [ -z ${forgejo_api_user:-} ]; then
-    create_forgejo_api_user
-fi
-
-# Update users login source (1.19.3-0~ynh3)
-set_users_login_source
-
 # forgejo home directory has changed (yunohost packaging v2)
 # .ssh directory should move from old home dir (data_dir) to new one
 # (/var/www/$app is the default value for home in resources.system_user)
@@ -155,6 +148,12 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$ap
 #=================================================
 # Synchronize users (backward compatibility 1.19.3-0~ynh3)
 #=================================================
+if [ -z ${forgejo_api_user:-} ]; then
+    create_forgejo_api_user
+fi
+
+set_users_login_source
+
 synchronize_users
 
 #=================================================
