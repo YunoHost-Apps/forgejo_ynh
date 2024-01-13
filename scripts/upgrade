@@ -39,10 +39,11 @@ pushd "$install_dir"
 
         # Delete old login source
         ynh_exec_as $app ./forgejo admin auth delete --id $old_login_source_id
-
-        # Create new login source
-        set_forgejo_login_source
     fi
+
+    ynh_exec_as $app ./forgejo admin auth list | grep "YunoHost LDAP" | grep -q "LDAP (simple auth)" ||
+        # create new login source if not existing
+        set_forgejo_login_source
 popd
 
 # Update login source synchronization flag (1.19.3-0~ynh3)
