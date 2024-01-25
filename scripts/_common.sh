@@ -41,6 +41,8 @@ function set_users_login_source() {
 
 function synchronize_users() {
     ynh_print_info --message="Synchronizing forgejo users"
+    # Fetch the token independently such that it's redacted by Yunohost logging mechanism
+    forgejo_api_token=$(ynh_app_setting_get --app=$app --key=forgejo_api_token)
     # User synchronization must be launched using API : no cli exists for this purpose (https://codeberg.org/forgejo/forgejo/issues/953)
-    curl --url https://${domain}${path}/api/v1/admin/cron/sync_external_users -X POST -H "Authorization: token $(ynh_app_setting_get --app=$app --key=forgejo_api_token)" -kfsS
+    curl --url https://${domain}${path}/api/v1/admin/cron/sync_external_users -X POST -H "Authorization: token $forgejo_api_token" -kfsS
 }
