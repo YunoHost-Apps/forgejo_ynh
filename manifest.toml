@@ -7,7 +7,7 @@ description.fr = "Forge logiciel légère"
 
 version = "1.21.5-0~ynh1"
 
-maintainers = ["Emmanuel Averty"]
+maintainers = [ "Emmanuel Averty" ]
 
 [upstream]
 license = "MIT"
@@ -18,7 +18,7 @@ code = "https://codeberg.org/forgejo/forgejo"
 
 [integration]
 yunohost = ">= 11.2"
-architectures = ["amd64", "arm64", "armhf"]
+architectures = [ "amd64", "arm64", "armhf" ]
 multi_instance = true
 ldap = true
 sso = true
@@ -55,33 +55,38 @@ ram.runtime = "2G"
     armhf.url = "https://codeberg.org/forgejo/forgejo/releases/download/v1.21.5-0/forgejo-1.21.5-0-linux-arm-6.xz"
     armhf.sha256 = "7bb71546249d1a69f1146d6bd5f6b537661af18c82b27ca5d459e209b1f8249d"
     format = "whatever"
-    extract = false # will be extracted during install script
+    extract = false                                                                                                # will be extracted during install script
     rename = "forgejo.xz"
 
-    [resources.system_user]
-    allow_ssh = true
+    autoupdate.asset.amd64 = "^forgejo-.*-linux-amd64.xz$"
+    autoupdate.asset.arm64 = "^forgejo-.*-linux-arm64.xz$"
+    autoupdate.asset.armhf = "^forgejo-.*-linux-arm-6.xz$"
+    autoupdate.strategy = "latest_forgejo_release"
 
-    [resources.ports]
-    main.default = 6000
+[resources.system_user]
+allow_ssh = true
 
-    [resources.install_dir]
+[resources.ports]
+main.default = 6000
 
-    [resources.data_dir]
+[resources.install_dir]
 
-    [resources.permissions]
-    main.url = "/"
+[resources.data_dir]
 
-    admin.show_tile = false
-    admin.auth_header = false
-    admin.protected = true
+[resources.permissions]
+main.url = "/"
 
-    api.url = "/api"
-    api.show_tile = false
-    api.allowed = "visitors"
-    api.auth_header = false
+admin.show_tile = false
+admin.auth_header = false
+admin.protected = true
 
-    [resources.apt]
-    packages = "postgresql"
+api.url = "/api"
+api.show_tile = false
+api.allowed = "visitors"
+api.auth_header = false
 
-    [resources.database]
-    type = "postgresql"
+[resources.apt]
+packages = "postgresql"
+
+[resources.database]
+type = "postgresql"
