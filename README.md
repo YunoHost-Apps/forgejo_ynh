@@ -18,7 +18,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Forgejo is a self-hosted lightweight software forge. Easy to install and low maintenance, it just does the job.
 
-Brought to you by an inclusive community under the umbrella of Codeberg e.V., a democratic non-profit organization, Forgejo can be trusted to be exclusively Free Software. It is a "soft" fork of Gitea with a focus on scaling, federation and privacy. 
+Brought to you by an inclusive community under the umbrella of Codeberg e.V., a democratic non-profit organization, Forgejo can be trusted to be exclusively Free Software. It focuses on security, scaling, federation and privacy. 
 
 ### Features
 

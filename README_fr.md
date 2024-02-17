@@ -16,22 +16,22 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 
 ## Vue d’ensemble
 
-Forgejo is a self-hosted lightweight software forge. Easy to install and low maintenance, it just does the job.
+Forgejo est une forge logiciel légère auto-hébergée. Facilité d'installation et peu de maintenance, elle fait simplement ce qu'on lui demande.
 
-Brought to you by an inclusive community under the umbrella of Codeberg e.V., a democratic non-profit organization, Forgejo can be trusted to be exclusively Free Software. It is a "soft" fork of Gitea with a focus on scaling, federation and privacy. 
+Présenté par une communauté inclusive sous l'égide de Codeberg e.V., une organisation démocratique à but non lucratif, Forgejo peut être considéré comme étant exclusivement un logiciel libre. Il se concentre sur la sécurité, la mise à l’échelle, la fédération et la confidentialité.
 
 ### Features
 
-- User dashboard, user profile and activity timeline.
-- User, organization and repository management.
-- Repository and organization webhooks, including Slack, Discord and Dingtalk.
-- Repository Git hooks, deploy keys and Git LFS.
-- Repository issues, pull requests, wiki, protected branches and collaboration.
-- Migrate and mirror repositories with wiki from other code hosts.
-- Web editor for quick editing repository files and wiki.
-- Jupyter Notebook and PDF rendering.
-- Authentication via SMTP, LDAP.
-- Customize HTML templates, static files and many others.
+- Tableau de bord utilisateur, profil et chronologie des activités.
+- Gestion des utilisateurs, organisations et dépôts.
+- Webhook dépôt et organisation, incluant Slack, Discord et Dingtalk.
+- Hooks dépôt Git, clés de déploiement et Git LFS.
+- Tickets de dépôt, demandes d'ajout, wiki, branches protégées et collaboration.
+- Migration et dépôt mirroir avec wiki hébergé sur un autre hôte.
+- Éditeur web pour une édition rapide des fichiers du dépôt et du wiki.
+- Rendu Jupyter Notebook et PDF.
+- Authentification via SMTP, LDAP.
+- Modèle personnalisé HTML, de fichiers statiques et de nombreux autres.
 
 
 **Version incluse :** 1.21.5-0~ynh1
