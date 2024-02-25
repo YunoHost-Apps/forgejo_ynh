@@ -1,0 +1,133 @@
+version = "1.0"
+
+[main]
+
+services = [ "__APP__" ]
+
+name.en = "Config panel"
+name.fr = "Panneau de configuration"
+
+help = "Here you can easily configure some things about your Forgejo instance."
+
+####################
+#### SERVICE CONFIG
+####################
+
+    [main.service]
+    name = "Service config"
+    help = ""
+
+        [main.service.register_email_confirm]
+        ask.en = "Email confirmation on registration?"
+        ask.fr = "Confirmation d'email à l'inscription ?"
+        bind = "REGISTER_EMAIL_CONFIRM:__INSTALL_DIR__/custom/conf/app.ini"
+        help.en = "REGISTER_EMAIL_CONFIRM: Whether a new user needs to confirm their email when registering."
+        help.fr = "REGISTER_EMAIL_CONFIRM : Si un nouvel utilisateur doit confirmer son adresse électronique lors de l'inscription."
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+        [main.service.register_manual_confirm]
+        ask.en = "Email confirmation on registration?"
+        ask.fr = "Confirmation d'email à l'inscription ?"
+        bind = "REGISTER_MANUAL_CONFIRM:__INSTALL_DIR__/custom/conf/app.ini"
+        help.en = "REGISTER_MANUAL_CONFIRM: Whether a new user needs to be confirmed manually after registration. (Requires `REGISTER_EMAIL_CONFIRM` to be disabled.)"
+        help.fr = "REGISTER_MANUAL_CONFIRM : Si un nouvel utilisateur doit être confirmé manuellement après son inscription. (Nécessite que `REGISTER_EMAIL_CONFIRM` soit désactivé)."
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+        [main.service.disable_registration]
+        ask.en = "Email confirmation on registration?"
+        ask.fr = "Confirmation d'email à l'inscription ?"
+        bind = "DISABLE_REGISTRATION:__INSTALL_DIR__/custom/conf/app.ini"
+        help.en = "DISABLE_REGISTRATION: Disallow registration, only allow admins to create accounts."
+        help.fr = "DISABLE_REGISTRATION : Ne pas autoriser l'inscription, permettre uniquement aux administrateurs de créer des comptes."
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+        [main.service.require_signin_view]
+        ask.en = "Email confirmation on registration?"
+        ask.fr = "Confirmation d'email à l'inscription ?"
+        bind = "REQUIRE_SIGNIN_VIEW:__INSTALL_DIR__/custom/conf/app.ini"
+        help.en = "REQUIRE_SIGNIN_VIEW: User must sign in to view anything."
+        help.fr = "REQUIRE_SIGNIN_VIEW : L'utilisateur doit s'identifier pour visualiser le contenu."
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+        [main.service.mail_notification]
+        ask.en = "Mail notification?"
+        ask.fr = "Notification par courriel ?"
+        bind = "ENABLE_NOTIFY_MAIL:__INSTALL_DIR__/custom/conf/app.ini"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+        [main.service.show_registration_button]
+        ask.en = "Show Registration button?"
+        ask.fr = "Afficher le bouton d'inscription ?"
+        bind = "SHOW_REGISTRATION_BUTTON:__INSTALL_DIR__/custom/conf/app.ini"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+
+        ####################
+        #### MIRROR CONFIG
+        ####################
+
+[main.mirror]
+name = "Mirror config"
+help = "Config pertaining to repo mirroring."
+
+    [main.mirror.enabled]
+    ask.en = "Enable the mirror functionality?"
+    ask.fr = "Activer la fonctionnalité mirroir ?"
+    bind = "mirror>ENABLED:__INSTALL_DIR__/custom/conf/app.ini"
+    type = "boolean"
+    yes = "true"
+    no = "false"
+    help.en = "Set to **false** to disable all mirrors. Pre-existing mirrors remain valid but won't be updated; may be converted to regular repo."
+    help.fr = "Définir à **false** pour désactiver tous les miroirs. Les miroirs préexistants restent valables mais ne seront pas mis à jour ; ils peuvent être convertis en dépôts normaux."
+
+    [main.mirror.disable_new_pull]
+    ask.en = "Disable pull mirroring?"
+    ask.fr = "Désactiver les miroirs pull ?"
+    bind = "mirror>DISABLE_NEW_PULL:__INSTALL_DIR__/custom/conf/app.ini"
+    type = "boolean"
+    yes = "true"
+    no = "false"
+    help.en = "Disable the creation of **new** pull mirrors. Pre-existing mirrors remain valid. Will be ignored if `mirror.ENABLED` is `false`."
+    help.fr = "Désactive la création de **nouveaux** miroirs pull. Les miroirs préexistants restent valables. Sera ignoré si `mirror.ENABLED` est `false`."
+
+    [main.mirror.disable_new_push]
+    ask.en = "Disable push mirroring?"
+    ask.fr = "Désactiver les miroirs push ?"
+    bind = "mirror>DISABLE_NEW_PULL:__INSTALL_DIR__/custom/conf/app.ini"
+    type = "boolean"
+    yes = "true"
+    no = "false"
+    help.en = "Disable the creation of **new** push mirrors. Pre-existing mirrors remain valid. Will be ignored if `mirror.ENABLED` is `false`."
+    help.fr = "Désactive la création de **nouveaux** miroirs push. Les miroirs préexistants restent valables. Sera ignoré si `mirror.ENABLED` est `false`."
+
+    [main.mirror.default_interval]
+    ask.en = "Default duration between each check?"
+    ask.fr = "Durée par défaut entre chaque contrôle ?"
+    bind = "mirror>DEFAULT_INTERVAL:__INSTALL_DIR__/custom/conf/app.ini"
+    type = "string"
+    help.en = "Examples: '8h', '30m'"
+    help.fr = "Exemples : '8h', '30m'"
+    pattern.regexp = '^[0-9]+(m$|h$|d$)$'
+    pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'."
+
+    [main.mirror.min_interval]
+    ask.en = "Minimum duration between each check?"
+    ask.fr = "Durée minimale entre chaque contrôle ?"
+    bind = "mirror>MIN_INTERVAL:__INSTALL_DIR__/custom/conf/app.ini"
+    type = "string"
+    help.en = "Examples: '2h', '10m'"
+    help.fr = "Exemples : '2h', '10m'"
+    pattern.regexp = '(?!^[0-1]m$)(^[0-9]+(m$|h$|d$)$)'
+    pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'. Must not be more than '1m'."

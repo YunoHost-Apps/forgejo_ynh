@@ -1,0 +1,2 @@
+Starting with this update, you can configure your instance using the config panel integrated in Yunohost, you will find it in the web admin interface of your Yunohost by following these steps:  
+`Applications > Forgejo > Config Panel`
