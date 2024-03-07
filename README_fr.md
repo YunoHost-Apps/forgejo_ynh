@@ -34,7 +34,7 @@ Présenté par une communauté inclusive sous l'égide de Codeberg e.V., une org
 - Modèle personnalisé HTML, de fichiers statiques et de nombreux autres.
 
 
-**Version incluse :** 1.21.6-0~ynh1
+**Version incluse :** 1.21.7-0~ynh1
 
 ## Captures d’écran
 
@@ -42,12 +42,12 @@ Présenté par une communauté inclusive sous l'égide de Codeberg e.V., une org
 
 ## Documentations et ressources
 
-* Site officiel de l’app : <https://forgejo.org>
-* Documentation officielle utilisateur : <https://forgejo.org/docs/latest/user/>
-* Documentation officielle de l’admin : <https://forgejo.org/docs/latest/admin/>
-* Dépôt de code officiel de l’app : <https://codeberg.org/forgejo/forgejo>
-* YunoHost Store: <https://apps.yunohost.org/app/forgejo>
-* Signaler un bug : <https://github.com/YunoHost-Apps/forgejo_ynh/issues>
+- Site officiel de l’app : <https://forgejo.org>
+- Documentation officielle utilisateur : <https://forgejo.org/docs/latest/user/>
+- Documentation officielle de l’admin : <https://forgejo.org/docs/latest/admin/>
+- Dépôt de code officiel de l’app : <https://codeberg.org/forgejo/forgejo>
+- YunoHost Store : <https://apps.yunohost.org/app/forgejo>
+- Signaler un bug : <https://github.com/YunoHost-Apps/forgejo_ynh/issues>
 
 ## Informations pour les développeurs
 
