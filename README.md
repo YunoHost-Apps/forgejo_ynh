@@ -33,7 +33,6 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Authentication via SMTP, LDAP.
 - Customize HTML templates, static files and many others.
 
-
 **Shipped version:** 1.21.6-0~ynh1
 
 ## Screenshots
@@ -42,12 +41,12 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 
 ## Documentation and resources
 
-* Official app website: <https://forgejo.org>
-* Official user documentation: <https://forgejo.org/docs/latest/user/>
-* Official admin documentation: <https://forgejo.org/docs/latest/admin/>
-* Upstream app code repository: <https://codeberg.org/forgejo/forgejo>
-* YunoHost Store: <https://apps.yunohost.org/app/forgejo>
-* Report a bug: <https://github.com/YunoHost-Apps/forgejo_ynh/issues>
+- Official app website: <https://forgejo.org>
+- Official user documentation: <https://forgejo.org/docs/latest/user/>
+- Official admin documentation: <https://forgejo.org/docs/latest/admin/>
+- Upstream app code repository: <https://codeberg.org/forgejo/forgejo>
+- YunoHost Store: <https://apps.yunohost.org/app/forgejo>
+- Report a bug: <https://github.com/YunoHost-Apps/forgejo_ynh/issues>
 
 ## Developer info
 
@@ -55,7 +54,7 @@ Please send your pull request to the [testing branch](https://github.com/YunoHos
 
 To try the testing branch, please proceed like that.
 
-``` bash
+```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing --debug
 or
 sudo yunohost app upgrade forgejo -u https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing --debug
