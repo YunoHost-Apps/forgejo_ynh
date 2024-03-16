@@ -33,7 +33,7 @@ Présenté par une communauté inclusive sous l'égide de Codeberg e.V., une org
 - Authentification via SMTP, LDAP.
 - Modèle personnalisé HTML, de fichiers statiques et de nombreux autres.
 
-**Version incluse :** 1.21.6-0~ynh1
+**Version incluse :** 1.21.7-0~ynh1
 
 ## Captures d’écran
 

@@ -33,7 +33,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Authentication via SMTP, LDAP.
 - Customize HTML templates, static files and many others.
 
-**Shipped version:** 1.21.6-0~ynh1
+**Shipped version:** 1.21.7-0~ynh1
 
 ## Screenshots
 
