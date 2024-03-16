@@ -85,7 +85,7 @@ fi
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=3
 
-ynh_setup_source --dest_dir=$install_dir --full_replace=1
+ynh_setup_source --dest_dir=$install_dir --full_replace=1 --keep="custom"
 xz -f -d "$install_dir/forgejo.xz"
 
 chmod -R o-rwx "$install_dir"
