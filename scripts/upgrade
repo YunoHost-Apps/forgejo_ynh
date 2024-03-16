@@ -80,6 +80,35 @@ if [ -z ${oauth2_jwt_secret:-} ]; then
     ynh_app_setting_set --app=$app --key=oauth2_jwt_secret --value=$oauth2_jwt_secret
 fi
 
+# if we update from a version prior to the config panel, create new settings
+if [ -z "${register_email_confirm:-}" ]; then
+    register_email_confirm=false
+    register_manual_confirm=false
+    disable_registration=true
+    require_signin_view=false
+    enable_notify_mail=true
+    show_registration_button=true
+
+    mirror_enabled=true
+    mirror_disable_new_pull=false
+    mirror_disable_new_push=false
+    mirror_default_interval="8h"
+    mirror_min_interval="10m"
+
+    ynh_app_setting_set --app="$app" --key=register_email_confirm --value=$register_email_confirm
+    ynh_app_setting_set --app="$app" --key=register_manual_confirm --value=$register_manual_confirm
+    ynh_app_setting_set --app="$app" --key=disable_registration --value=$disable_registration
+    ynh_app_setting_set --app="$app" --key=require_signin_view --value=$require_signin_view
+    ynh_app_setting_set --app="$app" --key=enable_notify_mail --value=$enable_notify_mail
+    ynh_app_setting_set --app="$app" --key=show_registration_button --value=$show_registration_button
+
+    ynh_app_setting_set --app="$app" --key=mirror_enabled --value=$mirror_enabled
+    ynh_app_setting_set --app="$app" --key=mirror_disable_new_pull --value=$mirror_disable_new_pull
+    ynh_app_setting_set --app="$app" --key=mirror_disable_new_push --value=$mirror_disable_new_push
+    ynh_app_setting_set --app="$app" --key=mirror_default_interval --value=$mirror_default_interval
+    ynh_app_setting_set --app="$app" --key=mirror_min_interval --value=$mirror_min_interval
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
