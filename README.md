@@ -9,7 +9,7 @@ It shall NOT be edited by hand.
 
 [![Install Forgejo with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
-*[Lire ce readme en français.](./README_fr.md)*
+*[Read this README is other languages.](./ALL_README.md)*
 
 > *This package allows you to install Forgejo quickly and simply on a YunoHost server.
 If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
@@ -33,7 +33,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Authentication via SMTP, LDAP.
 - Customize HTML templates, static files and many others.
 
-**Shipped version:** 1.21.7-0~ynh1
+**Shipped version:** 1.21.8-0~ynh1
 
 ## Screenshots
 
@@ -50,7 +50,8 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 
 ## Developer info
 
-Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing).
+Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing),
+
 
 To try the testing branch, please proceed like that.
 
