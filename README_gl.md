@@ -1,5 +1,5 @@
 <!--
-NOTA: Este README foi creado automáticamente por https://github.com/YunoHost/apps/tree/master/tools/readme_generator
+NOTA: Este README foi creado automáticamente por <https://github.com/YunoHost/apps/tree/master/tools/readme_generator>
 NON debe editarse manualmente.
 -->
 
@@ -11,8 +11,8 @@ NON debe editarse manualmente.
 
 *[Le este README en outros idiomas.](./ALL_README.md)*
 
-> *Este paquete permíteche instalar Forgejo de xeito rápido e doado nun servidor YunoHost.
-Se non usas YunoHost, le a [documentación](https://yunohost.org/#/install) para saber como instalalo.*
+> *Este paquete permíteche instalar Forgejo de xeito rápido e doado nun servidor YunoHost.*  
+> *Se non usas YunoHost, le a [documentación](https://yunohost.org/install) para saber como instalalo.*
 
 ## Vista xeral
 
@@ -33,7 +33,8 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Authentication via SMTP, LDAP.
 - Customize HTML templates, static files and many others.
 
-**Versión proporcionada** 1.21.8-0~ynh1
+
+**Versión proporcionada:** 1.21.8-0~ynh1
 
 ## Capturas de pantalla
 
@@ -50,14 +51,13 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 
 ## Info de desenvolvemento
 
-Envía a túa colaboración á [rama testing](https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing),
+Envía a túa colaboración á [rama `testing`](https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing).
 
-
-Para probar a rama testing, procede deste xeito.
+Para probar a rama `testing`, procede deste xeito:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing --debug
-or
+ou
 sudo yunohost app upgrade forgejo -u https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing --debug
 ```
 
