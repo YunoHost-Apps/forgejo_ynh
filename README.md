@@ -9,7 +9,7 @@ It shall NOT be edited by hand.
 
 [![Install Forgejo with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
-*[Read this README is other languages.](./ALL_README.md)*
+*[Read this README in other languages.](./ALL_README.md)*
 
 > *This package allows you to install Forgejo quickly and simply on a YunoHost server.*  
 > *If you don't have YunoHost, please consult [the guide](https://yunohost.org/install) to learn how to install it.*
@@ -34,7 +34,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Shipped version:** 1.21.8-0~ynh2
+**Shipped version:** 1.21.11-1~ynh1
 
 ## Screenshots
 
