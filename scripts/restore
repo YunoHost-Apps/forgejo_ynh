@@ -26,20 +26,20 @@ ynh_script_progression --message="Restoring $app main directory..." --weight=10
 ynh_restore_file --origin_path="$install_dir"
 
 chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
+chown -R "$app:$app" "$install_dir"
 
 #=================================================
 # RESTORE THE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Restoring the data directory..." --weight=1
 ynh_restore_file --origin_path="$data_dir" --not_mandatory
-chown -R $app:$app "$data_dir"
+chown -R "$app:$app" "$data_dir"
 
 #=================================================
 # RESTORE THE LOG DIRECTORY
 #=================================================
 ynh_restore_file --origin_path="/var/log/$app"
-chown -R $app:$app "/var/log/$app"
+chown -R "$app:$app" "/var/log/$app"
 chmod u=rwX,g=rX,o= "/var/log/$app"
 
 #=================================================
@@ -56,7 +56,7 @@ ynh_systemd_action --action=restart --service_name=fail2ban
 #=================================================
 ynh_script_progression --message="Restoring the database..." --weight=6
 
-ynh_psql_execute_file_as_root --file="./db.sql" --database=$db_name
+ynh_psql_execute_file_as_root --file="./db.sql" --database="$db_name"
 
 #=================================================
 # RESTORE SYSTEMD
@@ -64,7 +64,7 @@ ynh_psql_execute_file_as_root --file="./db.sql" --database=$db_name
 ynh_script_progression --message="Restoring the systemd configuration..." --weight=5
 
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
-systemctl enable $app.service --quiet
+systemctl enable "$app.service" --quiet
 
 #=================================================
 # RESTORE THE LOGROTATE CONFIGURATION
@@ -78,14 +78,14 @@ ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
+yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=3
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
+ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
 
 #=================================================
 # GENERIC FINALIZATION

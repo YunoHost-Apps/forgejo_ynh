@@ -20,20 +20,20 @@ chmod +x "$install_dir/forgejo"
 mkdir -p "$install_dir/custom/conf"
 
 chmod -R o-rwx "$install_dir/custom"
-chown -R $app:$app "$install_dir/custom"
+chown -R "$app:$app" "$install_dir/custom"
 
 #=================================================
 # KEYS GENERATION
 #=================================================
 
-secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
-lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
-internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
-oauth2_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
-ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
-ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
-ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
-ynh_app_setting_set --app=$app --key=oauth2_jwt_secret --value=$oauth2_jwt_secret
+secret_key=$("$install_dir/forgejo" generate secret SECRET_KEY)
+lfs_jwt_secret=$("$install_dir/forgejo" generate secret JWT_SECRET)
+internal_token=$("$install_dir/forgejo" generate secret INTERNAL_TOKEN)
+oauth2_jwt_secret=$("$install_dir/forgejo" generate secret JWT_SECRET)
+ynh_app_setting_set --app="$app" --key=secret_key --value="$secret_key"
+ynh_app_setting_set --app="$app" --key=lfs_jwt_secret --value="$lfs_jwt_secret"
+ynh_app_setting_set --app="$app" --key=internal_token --value="$internal_token"
+ynh_app_setting_set --app="$app" --key=oauth2_jwt_secret --value="$oauth2_jwt_secret"
 
 #=================================================
 # ADD A CONFIGURATION
@@ -44,7 +44,7 @@ ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
 ynh_add_config --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
 
 chmod 640 "$install_dir/custom/conf/app.ini"
-chown $app:$app "$install_dir/custom/conf/app.ini"
+chown "$app:$app" "$install_dir/custom/conf/app.ini"
 
 #=================================================
 # SETUP SYSTEMD
@@ -70,7 +70,7 @@ ynh_script_progression --message="Configuring log rotation..." --weight=1
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate --logfile "/var/log/$app" --nonappend
 
-chown -R $app:$app "/var/log/$app"
+chown -R "$app:$app" "/var/log/$app"
 chmod u=rwX,g=rX,o= "/var/log/$app"
 
 #=================================================
@@ -78,7 +78,7 @@ chmod u=rwX,g=rX,o= "/var/log/$app"
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=2
 
-yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
+yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -86,7 +86,7 @@ yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.l
 ynh_script_progression --message="Starting a systemd service..." --weight=3
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
+ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
 
 #=================================================
 # SETUP FAIL2BAN

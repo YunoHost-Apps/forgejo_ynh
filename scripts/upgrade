@@ -21,7 +21,7 @@ upgrade_type=$(ynh_check_app_version_changed)
 # STOP SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..." --weight=2
-ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
+ynh_systemd_action --service_name="$app" --action="stop" --log_path="systemd"
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -30,18 +30,18 @@ ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
 # Update forgejo login source (1.19.3-0~ynh2)
 pushd "$install_dir"
-    old_login_source_id=$(ynh_exec_as $app ./forgejo admin auth list | grep "YunoHost LDAP" | grep "via BindDN" | cut -f 1)
-    if [ ! -z $old_login_source_id ]; then
+    old_login_source_id=$(ynh_exec_as "$app" ./forgejo admin auth list | grep "YunoHost LDAP" | grep "via BindDN" | cut -f 1)
+    if [ -n "$old_login_source_id" ]; then
         ynh_print_info --message="Delete obsolete forgejo login source (LDAP via BindDN)"
 
         # Ensure no user have this obsolete login source
-        ynh_psql_execute_as_root --database $db_name --sql "update public.user set login_source = 0, login_type = 0 where login_source = ${old_login_source_id}"
+        ynh_psql_execute_as_root --database "$db_name" --sql "update public.user set login_source = 0, login_type = 0 where login_source = ${old_login_source_id}"
 
         # Delete old login source
-        ynh_exec_as $app ./forgejo admin auth delete --id $old_login_source_id
+        ynh_exec_as "$app" ./forgejo admin auth delete --id "$old_login_source_id"
     fi
 
-    ynh_exec_as $app ./forgejo admin auth list | grep "YunoHost LDAP" | grep -q "LDAP (simple auth)" ||
+    ynh_exec_as "$app" ./forgejo admin auth list | grep "YunoHost LDAP" | grep -q "LDAP (simple auth)" ||
         # create new login source if not existing
         set_forgejo_login_source
 popd
@@ -53,31 +53,31 @@ enable_login_source_sync
 # .ssh directory should move from old home dir (data_dir) to new one
 # (/var/www/$app is the default value for home in resources.system_user)
 if [ -d "$data_dir/.ssh" ]; then
-    mv "$data_dir/.ssh" /var/www/$app
+    mv "$data_dir/.ssh" "/var/www/$app"
 fi
 
 # If secret_key doesn't exist, create it
-if [ -z ${secret_key:-} ]; then
-    secret_key=$($install_dir/forgejo generate secret SECRET_KEY)
-    ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
+if [ -z "${secret_key:-}" ]; then
+    secret_key=$("$install_dir/forgejo" generate secret SECRET_KEY)
+    ynh_app_setting_set --app="$app" --key=secret_key --value="$secret_key"
 fi
 
 # If lfs_jwt_secret doesn't exist, create it
-if [ -z ${lfs_jwt_secret:-} ]; then
-    lfs_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
-    ynh_app_setting_set --app=$app --key=lfs_jwt_secret --value=$lfs_jwt_secret
+if [ -z "${lfs_jwt_secret:-}" ]; then
+    lfs_jwt_secret=$("$install_dir/forgejo" generate secret JWT_SECRET)
+    ynh_app_setting_set --app="$app" --key=lfs_jwt_secret --value="$lfs_jwt_secret"
 fi
 
 # If internal_token doesn't exist, create it
-if [ -z ${internal_token:-} ]; then
-    internal_token=$($install_dir/forgejo generate secret INTERNAL_TOKEN)
-    ynh_app_setting_set --app=$app --key=internal_token --value=$internal_token
+if [ -z "${internal_token:-}" ]; then
+    internal_token=$("$install_dir/forgejo" generate secret INTERNAL_TOKEN)
+    ynh_app_setting_set --app="$app" --key=internal_token --value="$internal_token"
 fi
 
 # If oauth2_jwt_secret doesn't exist, create it
-if [ -z ${oauth2_jwt_secret:-} ]; then
-    oauth2_jwt_secret=$($install_dir/forgejo generate secret JWT_SECRET)
-    ynh_app_setting_set --app=$app --key=oauth2_jwt_secret --value=$oauth2_jwt_secret
+if [ -z "${oauth2_jwt_secret:-}" ]; then
+    oauth2_jwt_secret=$("$install_dir/forgejo" generate secret JWT_SECRET)
+    ynh_app_setting_set --app="$app" --key=oauth2_jwt_secret --value="$oauth2_jwt_secret"
 fi
 
 #=================================================
@@ -85,11 +85,11 @@ fi
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=3
 
-ynh_setup_source --dest_dir=$install_dir --full_replace=1 --keep="custom .ssh"
+ynh_setup_source --dest_dir="$install_dir" --full_replace=1 --keep="custom .ssh"
 xz -f -d "$install_dir/forgejo.xz"
 
 chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
+chown -R "$app:$app" "$install_dir"
 chmod +x "$install_dir/forgejo"
 
 #=================================================
@@ -101,7 +101,7 @@ ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
 ynh_add_config --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
 
 chmod 640 "$install_dir/custom/conf/app.ini"
-chown $app:$app "$install_dir/custom/conf/app.ini"
+chown "$app:$app" "$install_dir/custom/conf/app.ini"
 
 #=================================================
 # SETUP SYSTEMD
@@ -127,7 +127,7 @@ ynh_script_progression --message="Configuring log rotation..." --weight=1
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate --logfile "/var/log/$app" --nonappend
 
-chown -R $app:$app "/var/log/$app"
+chown -R "$app:$app" "/var/log/$app"
 chmod u=rwX,g=rX,o= "/var/log/$app"
 
 #=================================================
@@ -135,7 +135,7 @@ chmod u=rwX,g=rX,o= "/var/log/$app"
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=2
 
-yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.log"
+yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -143,13 +143,13 @@ yunohost service add $app --description="Forgejo" --log="/var/log/$app/forgejo.l
 ynh_script_progression --message="Starting a systemd service..." --weight=3
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
+ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
 
 
 #=================================================
 # Synchronize users (backward compatibility 1.19.3-0~ynh3)
 #=================================================
-if [ -z ${forgejo_api_user:-} ]; then
+if [ -z "${forgejo_api_user:-}" ]; then
     create_forgejo_api_user
 fi
 

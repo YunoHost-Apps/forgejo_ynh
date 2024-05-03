@@ -16,7 +16,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..." --weight=2
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/forgejo.log"
+ynh_systemd_action --service_name="$app" --action="stop" --log_path="/var/log/$app/forgejo.log"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
@@ -34,7 +34,7 @@ ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
 ynh_exec_warn_less ynh_add_config --template="../conf/app.ini" --destination="$install_dir/custom/conf/app.ini"
 
 chmod 640 "$install_dir/custom/conf/app.ini"
-chown $app:$app "$install_dir/custom/conf/app.ini"
+chown "$app:$app" "$install_dir/custom/conf/app.ini"
 
 #=================================================
 # GENERIC FINALISATION
@@ -43,7 +43,7 @@ chown $app:$app "$install_dir/custom/conf/app.ini"
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=2
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
+ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
 
 #=================================================
 # END OF SCRIPT
