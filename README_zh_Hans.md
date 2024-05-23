@@ -3,7 +3,7 @@
 请勿手动编辑。
 -->
 
-# YunoHost 的 Forgejo
+# YunoHost 上的 Forgejo
 
 [![集成程度](https://dash.yunohost.org/integration/forgejo.svg)](https://dash.yunohost.org/appci/app/forgejo) ![工作状态](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
 
@@ -34,7 +34,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**分发版本：** 7.0.2~ynh1
+**分发版本：** 7.0.3~ynh1
 
 ## 截图
 
