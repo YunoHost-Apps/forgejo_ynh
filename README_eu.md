@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # Forgejo YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/forgejo.svg)](https://dash.yunohost.org/appci/app/forgejo) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/forgejo.svg)](https://ci-apps.yunohost.org/ci/apps/forgejo/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
 
 [![Instalatu Forgejo YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
@@ -34,7 +34,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Paketatutako bertsioa:** 7.0.4~ynh1
+**Paketatutako bertsioa:** 7.0.5~ynh1
 
 ## Pantaila-argazkiak
 
