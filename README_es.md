@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Forgejo para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/forgejo.svg)](https://dash.yunohost.org/appci/app/forgejo) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/forgejo.svg)](https://ci-apps.yunohost.org/ci/apps/forgejo/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
 
 [![Instalar Forgejo con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
@@ -34,7 +34,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Versión actual:** 7.0.4~ynh1
+**Versión actual:** 7.0.5~ynh1
 
 ## Capturas
 
