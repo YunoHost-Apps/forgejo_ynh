@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Forgejo para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/forgejo.svg)](https://dash.yunohost.org/appci/app/forgejo) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/forgejo.svg)](https://ci-apps.yunohost.org/ci/apps/forgejo/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
 
 [![Instalar Forgejo con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
