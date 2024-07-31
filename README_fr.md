@@ -34,7 +34,7 @@ Présenté par une communauté inclusive sous l'égide de Codeberg e.V., une org
 - Modèle personnalisé HTML, de fichiers statiques et de nombreux autres.
 
 
-**Version incluse :** 7.0.5~ynh1
+**Version incluse :** 8.0.0~ynh1
 
 ## Captures d’écran
 
