@@ -30,18 +30,18 @@ secret_key=$("$install_dir/forgejo" generate secret SECRET_KEY)
 lfs_jwt_secret=$("$install_dir/forgejo" generate secret JWT_SECRET)
 internal_token=$("$install_dir/forgejo" generate secret INTERNAL_TOKEN)
 oauth2_jwt_secret=$("$install_dir/forgejo" generate secret JWT_SECRET)
-ynh_app_setting_set --app="$app" --key=secret_key --value="$secret_key"
-ynh_app_setting_set --app="$app" --key=lfs_jwt_secret --value="$lfs_jwt_secret"
-ynh_app_setting_set --app="$app" --key=internal_token --value="$internal_token"
-ynh_app_setting_set --app="$app" --key=oauth2_jwt_secret --value="$oauth2_jwt_secret"
+ynh_app_setting_set --key=secret_key --value="$secret_key"
+ynh_app_setting_set --key=lfs_jwt_secret --value="$lfs_jwt_secret"
+ynh_app_setting_set --key=internal_token --value="$internal_token"
+ynh_app_setting_set --key=oauth2_jwt_secret --value="$oauth2_jwt_secret"
 
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..." --weight=1
+ynh_script_progression "Adding $app's configuration..."
 
 ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
-ynh_add_config --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
+ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
 
 chmod 640 "$install_dir/custom/conf/app.ini"
 chown "$app:$app" "$install_dir/custom/conf/app.ini"
@@ -49,56 +49,54 @@ chown "$app:$app" "$install_dir/custom/conf/app.ini"
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
+ynh_script_progression "Upgrading systemd configuration..."
 
-ynh_add_systemd_config
+ynh_config_add_systemd
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=2
+ynh_script_progression "Upgrading NGINX web server configuration..."
 
-ynh_add_nginx_config
+ynh_config_add_nginx
 
-#=================================================
-# GENERIC FINALIZATION
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Configuring log rotation..." --weight=1
+ynh_script_progression "Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
-ynh_use_logrotate --logfile "/var/log/$app" --nonappend
+ynh_config_add_logrotate  "/var/log/$app"
 
-chown -R "$app:$app" "/var/log/$app"
-chmod u=rwX,g=rX,o= "/var/log/$app"
+#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:$app" "/var/log/$app"
+#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod u=rwX,g=rX,o= "/var/log/$app"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=2
+ynh_script_progression "Integrating service in YunoHost..."
 
 yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=3
+ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --line_match="Starting new Web server: tcp:127.0.0.1:"
+ynh_systemctl --service="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --wait_until="Starting new Web server: tcp:127.0.0.1:"
 
 #=================================================
 # SETUP FAIL2BAN
 #=================================================
-ynh_script_progression --message="Configuring Fail2Ban..." --weight=1
+ynh_script_progression "Configuring Fail2Ban..."
 
-ynh_add_fail2ban_config --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
+ynh_config_add_fail2ban --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 #=================================================
 # LDAP CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding LDAP configuration..." --weight=1
+ynh_script_progression "Adding LDAP configuration..."
 set_forgejo_login_source
 enable_login_source_sync
 
@@ -112,4 +110,4 @@ synchronize_users
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_script_progression "Installation of $app completed"
