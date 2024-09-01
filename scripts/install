@@ -13,7 +13,9 @@ source /usr/share/yunohost/helpers
 #=================================================
 # Create install and data subdirs
 #=================================================
+
 ynh_setup_source --dest_dir="$install_dir"
+
 xz -d "$install_dir/forgejo.xz"
 chmod +x "$install_dir/forgejo"
 
@@ -67,9 +69,6 @@ ynh_script_progression "Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
 ynh_config_add_logrotate  "/var/log/$app"
-
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:$app" "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod u=rwX,g=rX,o= "/var/log/$app"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST

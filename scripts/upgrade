@@ -7,6 +7,7 @@ source /usr/share/yunohost/helpers
 # STOP SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
+
 ynh_systemctl --service="$app" --action="stop" --log_path="systemd"
 
 #=================================================
@@ -43,32 +44,16 @@ if [ -d "$data_dir/.ssh" ]; then
 fi
 
 # If secret_key doesn't exist, create it
-# FIXMEhelpers2.1: maybe replace with: ynh_app_setting_set_default --key=secret_key --value=$("$install_dir/forgejo" generate secret SECRET_KEY)
-if [ -z "${secret_key:-}" ]; then
-    secret_key=$("$install_dir/forgejo" generate secret SECRET_KEY)
-    ynh_app_setting_set --key=secret_key --value="$secret_key"
-fi
+ynh_app_setting_set_default --key=secret_key --value=$("$install_dir/forgejo" generate secret SECRET_KEY)
 
 # If lfs_jwt_secret doesn't exist, create it
-# FIXMEhelpers2.1: maybe replace with: ynh_app_setting_set_default --key=lfs_jwt_secret --value=$("$install_dir/forgejo" generate secret JWT_SECRET)
-if [ -z "${lfs_jwt_secret:-}" ]; then
-    lfs_jwt_secret=$("$install_dir/forgejo" generate secret JWT_SECRET)
-    ynh_app_setting_set --key=lfs_jwt_secret --value="$lfs_jwt_secret"
-fi
+ynh_app_setting_set_default --key=lfs_jwt_secret --value=$("$install_dir/forgejo" generate secret JWT_SECRET)
 
 # If internal_token doesn't exist, create it
-# FIXMEhelpers2.1: maybe replace with: ynh_app_setting_set_default --key=internal_token --value=$("$install_dir/forgejo" generate secret INTERNAL_TOKEN)
-if [ -z "${internal_token:-}" ]; then
-    internal_token=$("$install_dir/forgejo" generate secret INTERNAL_TOKEN)
-    ynh_app_setting_set --key=internal_token --value="$internal_token"
-fi
+ynh_app_setting_set_default --key=internal_token --value=$("$install_dir/forgejo" generate secret INTERNAL_TOKEN)
 
 # If oauth2_jwt_secret doesn't exist, create it
-# FIXMEhelpers2.1: maybe replace with: ynh_app_setting_set_default --key=oauth2_jwt_secret --value=$("$install_dir/forgejo" generate secret JWT_SECRET)
-if [ -z "${oauth2_jwt_secret:-}" ]; then
-    oauth2_jwt_secret=$("$install_dir/forgejo" generate secret JWT_SECRET)
-    ynh_app_setting_set --key=oauth2_jwt_secret --value="$oauth2_jwt_secret"
-fi
+ynh_app_setting_set_default --key=oauth2_jwt_secret --value=$("$install_dir/forgejo" generate secret JWT_SECRET)
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -78,8 +63,6 @@ ynh_script_progression "Setting up source files..."
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="custom .ssh"
 xz -f -d "$install_dir/forgejo.xz"
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:$app" "$install_dir"
 chmod +x "$install_dir/forgejo"
 
 #=================================================
@@ -114,9 +97,6 @@ ynh_script_progression "Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
 ynh_config_add_logrotate  "/var/log/$app"
-
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:$app" "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod u=rwX,g=rX,o= "/var/log/$app"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
