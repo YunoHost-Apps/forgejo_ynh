@@ -83,34 +83,19 @@ ynh_script_progression "Upgrading systemd configuration..."
 
 ynh_config_add_systemd
 
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression "Upgrading NGINX web server configuration..."
-
 ynh_config_add_nginx
 
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression "Configuring log rotation..."
-
-# Use logrotate to manage application logfile(s)
 ynh_config_add_logrotate  "/var/log/$app"
 
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression "Integrating service in YunoHost..."
-
 yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo.log"
+
+ynh_config_add_fail2ban --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
 ynh_systemctl --service="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --wait_until="Starting new Web server: tcp:127.0.0.1:"
 
 #=================================================
@@ -123,13 +108,6 @@ fi
 set_users_login_source
 
 synchronize_users
-
-#=================================================
-# SETUP FAIL2BAN
-#=================================================
-ynh_script_progression "Configuring Fail2Ban..."
-
-ynh_config_add_fail2ban --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>" --max_retry 5
 
 #=================================================
 # END OF SCRIPT
