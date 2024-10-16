@@ -34,7 +34,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Versión actual:** 8.0.3~ynh1
+**Versión actual:** 9.0.0~ynh1
 
 ## Capturas
 
@@ -51,7 +51,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 
