@@ -10,7 +10,7 @@ version = "9.0.0~ynh1"
 maintainers = [ "Emmanuel Averty" ]
 
 [upstream]
-license = "MIT"
+license = "GPL-3.0-or-later"
 website = "https://forgejo.org"
 admindoc = "https://forgejo.org/docs/latest/admin/"
 userdoc = "https://forgejo.org/docs/latest/user/"
