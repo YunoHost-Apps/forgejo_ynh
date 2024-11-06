@@ -34,7 +34,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Versione pubblicata:** 1.21.8-0~ynh2
+**Versione pubblicata:** 9.0.1~ynh1
 
 ## Screenshot
 
