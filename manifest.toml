@@ -5,7 +5,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "9.0.1~ynh1"
+version = "9.0.1~ynh2"
 
 maintainers = [ "Emmanuel Averty" ]
 
@@ -17,7 +17,7 @@ userdoc = "https://forgejo.org/docs/latest/user/"
 code = "https://codeberg.org/forgejo/forgejo"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 12.0"
 architectures = [ "amd64", "arm64", "armhf" ]
 multi_instance = true
 ldap = true
