@@ -5,7 +5,9 @@ Hij mag NIET handmatig aangepast worden.
 
 # Forgejo voor Yunohost
 
-[![Integratieniveau](https://dash.yunohost.org/integration/forgejo.svg)](https://ci-apps.yunohost.org/ci/apps/forgejo/) ![Mate van functioneren](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Onderhoudsstatus](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
+[![Integratieniveau](https://apps.yunohost.org/badge/integration/forgejo)](https://ci-apps.yunohost.org/ci/apps/forgejo/)
+![Mate van functioneren](https://apps.yunohost.org/badge/state/forgejo)
+![Onderhoudsstatus](https://apps.yunohost.org/badge/maintained/forgejo)
 
 [![Forgejo met Yunohost installeren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
@@ -34,7 +36,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Geleverde versie:** 9.0.1~ynh2
+**Geleverde versie:** 9.0.3~ynh1
 
 ## Schermafdrukken
 
