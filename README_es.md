@@ -5,7 +5,9 @@ No se debe editar a mano.
 
 # Forgejo para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/forgejo.svg)](https://ci-apps.yunohost.org/ci/apps/forgejo/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
+[![Nivel de integración](https://apps.yunohost.org/badge/integration/forgejo)](https://ci-apps.yunohost.org/ci/apps/forgejo/)
+![Estado funcional](https://apps.yunohost.org/badge/state/forgejo)
+![Estado En Mantención](https://apps.yunohost.org/badge/maintained/forgejo)
 
 [![Instalar Forgejo con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
@@ -34,7 +36,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Versión actual:** 8.0.2~ynh1
+**Versión actual:** 9.0.3~ynh1
 
 ## Capturas
 
@@ -51,7 +53,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/forgejo_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 

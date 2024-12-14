@@ -5,7 +5,9 @@
 
 # Forgejo для YunoHost
 
-[![Уровень интеграции](https://dash.yunohost.org/integration/forgejo.svg)](https://ci-apps.yunohost.org/ci/apps/forgejo/) ![Состояние работы](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Состояние сопровождения](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
+[![Уровень интеграции](https://apps.yunohost.org/badge/integration/forgejo)](https://ci-apps.yunohost.org/ci/apps/forgejo/)
+![Состояние работы](https://apps.yunohost.org/badge/state/forgejo)
+![Состояние сопровождения](https://apps.yunohost.org/badge/maintained/forgejo)
 
 [![Установите Forgejo с YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
@@ -34,7 +36,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Поставляемая версия:** 8.0.2~ynh1
+**Поставляемая версия:** 9.0.3~ynh1
 
 ## Снимки экрана
 
