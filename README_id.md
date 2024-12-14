@@ -5,7 +5,9 @@ Ini TIDAK boleh diedit dengan tangan.
 
 # Forgejo untuk YunoHost
 
-[![Tingkat integrasi](https://dash.yunohost.org/integration/forgejo.svg)](https://ci-apps.yunohost.org/ci/apps/forgejo/) ![Status kerja](https://ci-apps.yunohost.org/ci/badges/forgejo.status.svg) ![Status pemeliharaan](https://ci-apps.yunohost.org/ci/badges/forgejo.maintain.svg)
+[![Tingkat integrasi](https://apps.yunohost.org/badge/integration/forgejo)](https://ci-apps.yunohost.org/ci/apps/forgejo/)
+![Status kerja](https://apps.yunohost.org/badge/state/forgejo)
+![Status pemeliharaan](https://apps.yunohost.org/badge/maintained/forgejo)
 
 [![Pasang Forgejo dengan YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=forgejo)
 
@@ -34,7 +36,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Versi terkirim:** 9.0.1~ynh2
+**Versi terkirim:** 9.0.3~ynh1
 
 ## Tangkapan Layar
 
