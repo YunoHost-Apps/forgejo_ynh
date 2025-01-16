@@ -5,7 +5,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "9.0.3~ynh1"
+version = "10.0.0~ynh1"
 
 maintainers = [ "Emmanuel Averty" ]
 
@@ -48,12 +48,12 @@ ram.runtime = "2G"
 
 [resources]
     [resources.sources.main]
-    amd64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v9.0.3/forgejo-9.0.3-linux-amd64.xz"
-    amd64.sha256 = "234eb62d883025aa27bdc51cd48dd3b6d03c00368461caa72069b8234ca0f125"
-    arm64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v9.0.3/forgejo-9.0.3-linux-arm64.xz"
-    arm64.sha256 = "eab4df67631fc9ae6f2fe9f55b1716da6c98875bee5eb6cf657f107a0badffed"
-    armhf.url = "https://codeberg.org/forgejo/forgejo/releases/download/v9.0.3/forgejo-9.0.3-linux-arm-6.xz"
-    armhf.sha256 = "d4d13c4c8c1af0ca84f7fbe084605fb611611de8fc95a06f81b4fb36c69266d5"
+    amd64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.0/forgejo-10.0.0-linux-amd64.xz"
+    amd64.sha256 = "bb01cfd68d1ec1cbf53a5a9d61c8123f6d20f0019ae950fb7658d04c4a213805"
+    arm64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.0/forgejo-10.0.0-linux-arm64.xz"
+    arm64.sha256 = "604a132025fb50b567535a350d82d6d5719a853bff2f3b66a25dc7cdcdd5ba70"
+    armhf.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.0/forgejo-10.0.0-linux-arm-6.xz"
+    armhf.sha256 = "68e725d956bf806e0fa6083d3aa11e391cadf508ac6450b4e5b14506fcaa9a97"
     format = "whatever"
     extract = false
     rename = "forgejo.xz"
