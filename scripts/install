@@ -66,7 +66,6 @@ ynh_config_add_fail2ban --logpath "/var/log/$app/forgejo.log" --failregex ".*Fai
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
 ynh_systemctl --service="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --wait_until="Starting new Web server: tcp:127.0.0.1:"
 
 #=================================================
