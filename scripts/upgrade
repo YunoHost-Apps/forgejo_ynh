@@ -101,6 +101,7 @@ ynh_systemctl --service="$app" --action="start" --log_path="/var/log/$app/forgej
 #=================================================
 # Synchronize users (backward compatibility 1.19.3-0~ynh3)
 #=================================================
+
 if [ -z "${forgejo_api_user:-}" ]; then
     create_forgejo_api_user
 fi

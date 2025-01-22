@@ -17,14 +17,12 @@ ynh_script_progression "Restoring the data directory..."
 
 ynh_restore "$data_dir"
 
-chown -R "$app:$app" "$data_dir"
-
 #=================================================
 # RESTORE THE DATABASE
 #=================================================
 ynh_script_progression "Restoring the database..."
 
-ynh_psql_db_shell < "./db.sql"
+ynh_psql_db_shell < ./db.sql
 
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
