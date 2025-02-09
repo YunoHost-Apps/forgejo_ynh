@@ -15,13 +15,17 @@ website = "https://forgejo.org"
 admindoc = "https://forgejo.org/docs/latest/admin/"
 userdoc = "https://forgejo.org/docs/latest/user/"
 code = "https://codeberg.org/forgejo/forgejo"
+cpe = "???"
 
 [integration]
 yunohost = ">= 11.2"
 architectures = [ "amd64", "arm64", "armhf" ]
 multi_instance = true
+
 ldap = true
+
 sso = true
+
 disk = "150M"
 ram.build = "50M"
 ram.runtime = "2G"
@@ -63,30 +67,30 @@ ram.runtime = "2G"
     autoupdate.asset.armhf = "^forgejo-.*-linux-arm-6.xz$"
     autoupdate.strategy = "latest_forgejo_release"
 
-[resources.system_user]
-allow_ssh = true
+    [resources.system_user]
+    allow_ssh = true
 
-[resources.ports]
-main.default = 6000
+    [resources.install_dir]
 
-[resources.install_dir]
+    [resources.data_dir]
 
-[resources.data_dir]
+    [resources.permissions]
+    main.url = "/"
 
-[resources.permissions]
-main.url = "/"
+    admin.show_tile = false
+    admin.auth_header = false
+    admin.protected = true
 
-admin.show_tile = false
-admin.auth_header = false
-admin.protected = true
+    api.url = "/api"
+    api.show_tile = false
+    api.allowed = "visitors"
+    api.auth_header = false
 
-api.url = "/api"
-api.show_tile = false
-api.allowed = "visitors"
-api.auth_header = false
+    [resources.ports]
+    main.default = 6000
 
-[resources.apt]
-packages = "postgresql"
+    [resources.apt]
+    packages = "postgresql"
 
-[resources.database]
-type = "postgresql"
+    [resources.database]
+    type = "postgresql"
