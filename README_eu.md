@@ -36,7 +36,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Paketatutako bertsioa:** 10.0.0~ynh1
+**Paketatutako bertsioa:** 10.0.1~ynh1
 
 ## Pantaila-argazkiak
 
