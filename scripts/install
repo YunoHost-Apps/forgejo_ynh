@@ -1,18 +1,17 @@
 #!/bin/bash
 
 #=================================================
-# GENERIC START
+# IMPORT GENERIC HELPERS
 #=================================================
 
-# Load common variables and helpers
-source ./_common.sh
-
-# IMPORT GENERIC HELPERS
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# Create install and data subdirs
+# DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_script_progression --message="Setting up source files..."
+
 ynh_setup_source --dest_dir="$install_dir"
 xz -d "$install_dir/forgejo.xz"
 chmod +x "$install_dir/forgejo"
