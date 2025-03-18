@@ -5,7 +5,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "9.0.3~ynh1"
+version = "10.0.1~ynh1"
 
 maintainers = [ "Emmanuel Averty" ]
 
@@ -15,6 +15,7 @@ website = "https://forgejo.org"
 admindoc = "https://forgejo.org/docs/latest/admin/"
 userdoc = "https://forgejo.org/docs/latest/user/"
 code = "https://codeberg.org/forgejo/forgejo"
+cpe = "???"
 
 [integration]
 yunohost = ">= 12.0.9"
@@ -23,6 +24,7 @@ architectures = [ "amd64", "arm64", "armhf" ]
 multi_instance = true
 
 ldap = true
+
 sso = true
 
 disk = "150M"
@@ -51,12 +53,12 @@ ram.runtime = "2G"
 
 [resources]
     [resources.sources.main]
-    amd64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v9.0.3/forgejo-9.0.3-linux-amd64.xz"
-    amd64.sha256 = "234eb62d883025aa27bdc51cd48dd3b6d03c00368461caa72069b8234ca0f125"
-    arm64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v9.0.3/forgejo-9.0.3-linux-arm64.xz"
-    arm64.sha256 = "eab4df67631fc9ae6f2fe9f55b1716da6c98875bee5eb6cf657f107a0badffed"
-    armhf.url = "https://codeberg.org/forgejo/forgejo/releases/download/v9.0.3/forgejo-9.0.3-linux-arm-6.xz"
-    armhf.sha256 = "d4d13c4c8c1af0ca84f7fbe084605fb611611de8fc95a06f81b4fb36c69266d5"
+    amd64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.1/forgejo-10.0.1-linux-amd64.xz"
+    amd64.sha256 = "b0bc86cfeb08527e4939291d430c09666e13ed3a615b64108cd338177e5b6486"
+    arm64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.1/forgejo-10.0.1-linux-arm64.xz"
+    arm64.sha256 = "0ed5a1e2f0dc8028c1ba3d2c23543c53b8b418a2c4022fec9de527bc62bfaa56"
+    armhf.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.1/forgejo-10.0.1-linux-arm-6.xz"
+    armhf.sha256 = "065ddef373790260286d47d192452dfae3774a99193961816b859695de7d56e4"
     format = "whatever"
     extract = false
     rename = "forgejo.xz"
@@ -66,30 +68,30 @@ ram.runtime = "2G"
     autoupdate.asset.armhf = "^forgejo-.*-linux-arm-6.xz$"
     autoupdate.strategy = "latest_forgejo_release"
 
-[resources.system_user]
-allow_ssh = true
+    [resources.system_user]
+    allow_ssh = true
 
-[resources.ports]
-main.default = 6000
+    [resources.install_dir]
 
-[resources.install_dir]
+    [resources.data_dir]
 
-[resources.data_dir]
+    [resources.permissions]
+    main.url = "/"
 
-[resources.permissions]
-main.url = "/"
+    admin.show_tile = false
+    admin.auth_header = false
+    admin.protected = true
 
-admin.show_tile = false
-admin.auth_header = false
-admin.protected = true
+    api.url = "/api"
+    api.show_tile = false
+    api.allowed = "visitors"
+    api.auth_header = false
 
-api.url = "/api"
-api.show_tile = false
-api.allowed = "visitors"
-api.auth_header = false
+    [resources.ports]
+    main.default = 6000
 
-[resources.apt]
-packages = "postgresql"
+    [resources.apt]
+    packages = "postgresql"
 
-[resources.database]
-type = "postgresql"
+    [resources.database]
+    type = "postgresql"

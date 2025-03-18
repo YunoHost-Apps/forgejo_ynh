@@ -1,8 +1,9 @@
 #!/bin/bash
 
 #=================================================
-# SET ALL CONSTANTS
+# COMMON VARIABLES AND CUSTOM HELPERS
 #=================================================
+
 
 function set_forgejo_login_source() {
     ynh_print_info "Creating forgejo login source"
