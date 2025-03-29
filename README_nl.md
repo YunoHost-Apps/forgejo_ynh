@@ -36,7 +36,7 @@ Brought to you by an inclusive community under the umbrella of Codeberg e.V., a 
 - Customize HTML templates, static files and many others.
 
 
-**Geleverde versie:** 10.0.1~ynh1
+**Geleverde versie:** 10.0.3~ynh1
 
 ## Schermafdrukken
 

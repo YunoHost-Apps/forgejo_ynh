@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 id = "forgejo"
@@ -5,7 +7,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "10.0.1~ynh1"
+version = "10.0.3~ynh1"
 
 maintainers = [ "Emmanuel Averty" ]
 
@@ -53,12 +55,12 @@ ram.runtime = "2G"
 
 [resources]
     [resources.sources.main]
-    amd64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.1/forgejo-10.0.1-linux-amd64.xz"
-    amd64.sha256 = "b0bc86cfeb08527e4939291d430c09666e13ed3a615b64108cd338177e5b6486"
-    arm64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.1/forgejo-10.0.1-linux-arm64.xz"
-    arm64.sha256 = "0ed5a1e2f0dc8028c1ba3d2c23543c53b8b418a2c4022fec9de527bc62bfaa56"
-    armhf.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.1/forgejo-10.0.1-linux-arm-6.xz"
-    armhf.sha256 = "065ddef373790260286d47d192452dfae3774a99193961816b859695de7d56e4"
+    amd64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.3/forgejo-10.0.3-linux-amd64.xz"
+    amd64.sha256 = "4320e381f804ddfa0554c23953b382edcd24e6893539fca6825908759f222194"
+    arm64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.3/forgejo-10.0.3-linux-arm64.xz"
+    arm64.sha256 = "8cd22675f5f66913ee83d9c52511403a6b3b81621a750d68261c999d8f74b9b4"
+    armhf.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.3/forgejo-10.0.3-linux-arm-6.xz"
+    armhf.sha256 = "9e941c052027f10cb7f63c882af1259a73626b835057b73fcdb685abdc6978c6"
     format = "whatever"
     extract = false
     rename = "forgejo.xz"

@@ -43,4 +43,3 @@ Don't forget to restart Forgejo `sudo systemctl restart forgejo.service`.
 ### Git command access with HTTPS
 
 If you want to use the Git command (like `git clone`, `git pull`, `git push`), you need to set this app as **public**.
-
