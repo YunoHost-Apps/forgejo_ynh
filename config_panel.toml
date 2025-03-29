@@ -120,3 +120,45 @@ help = "Config pertaining to repo mirroring."
     help.fr = "Exemples : '2h', '10m'"
     pattern.regexp = '(?!^[0-1]m$)(^[0-9]+(m$|h$|d$)$)'
     pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'. Must not be more than '1m'."
+
+
+[main.project]
+name = "Organisation and team"
+help = "Organisation and team member management. Note that after a creation of a team in forgejo you will need to trigger the sync group mapping to have the correct mapping between your forgejo team and your Yunohost groups."
+
+    [main.project.group_sync_enabled]
+    ask.en = "Enable group synchronisation from Yunohost to the organisation team members"
+    help.en = "When enabled, for all organisation teams which has the same name than a Yunohost group name, the members  will be synchronised."
+    type = "boolean"
+    yes = "true"
+    no = "false"
+
+    [main.project.group_sync_excluded_organisations]
+    ask.en = "Excluded organisations to sync group member"
+    help.en = "A list of organisation name to exclude from the group/team synchronisation."
+    type = "tags"
+    visible = "group_sync_enabled"
+
+    [main.project.group_sync_included_organisations]
+    ask.en = "Included organisations to sync group member"
+    help.en = "A list of organisation name to include from the group/team synchronisation. If set, this will exclude all not listed organisations."
+    type = "tags"
+    visible = "group_sync_enabled"
+
+    [main.project.group_sync_excluded_ynh_group]
+    ask.en = "Excluded Yunohost group to sync group member"
+    help.en = "A list of Yunohost group name to exclude from the group/team synchronisation."
+    type = "tags"
+    visible = "group_sync_enabled"
+
+    [main.project.group_sync_included_ynh_group]
+    ask.en = "Included Yunohost group to sync group member"
+    help.en = "A list of Yunohost group name to include from the group/team synchronisation. If set, this will exclude all not listed groups."
+    type = "tags"
+    visible = "group_sync_enabled"
+
+    [main.admin_users.sync_groups_mapping]
+    type = "button"
+    ask = "Force sync group mapping"
+    # disabled because of https://github.com/YunoHost/issues/issues/2488
+    # visible = "group_sync_enabled"

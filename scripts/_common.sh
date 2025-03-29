@@ -9,14 +9,93 @@ ssh_port="$(yunohost settings get security.ssh.ssh_port)"
 function set_forgejo_login_source() {
     ynh_print_info "Creating forgejo login source"
     pushd "$install_dir"
-	ynh_exec_as_app ./forgejo admin auth add-ldap-simple --security-protocol "Unencrypted" --name "YunoHost LDAP" --host "localhost" --port "389" --skip-tls-verify --user-search-base "ou=users,dc=yunohost,dc=org" --user-dn "uid=%s,ou=Users,dc=yunohost,dc=org" --user-filter "(&(objectclass=posixAccount)(uid=%s)(permission=cn=$app.main,ou=permission,dc=yunohost,dc=org))" --admin-filter "(permission=cn=forgejo.admin,ou=permission,dc=yunohost,dc=org)" --username-attribute "uid" --firstname-attribute "givenName" --surname-attribute "sn" --email-attribute "mail"
-    popd
-}
+    if ! ynh_exec_as_app ./forgejo admin auth list | grep -qF 'YunoHost LDAP'; then
+        ynh_exec_as_app ./forgejo admin auth add-ldap --name "YunoHost LDAP" \
+            --host "localhost" --port "389" --security-protocol "Unencrypted" \
+            --user-search-base 'ou=users,dc=yunohost,dc=org' \
+            --user-filter '()' --email-attribute 'mail'
 
-function enable_login_source_sync() {
-    ynh_print_info "Set forgejo login source as synchronizable"
-    # Enable login source synchronisation manualy because forgejo command does not allow it (https://codeberg.org/forgejo/forgejo/issues/952)
-    ynh_psql_db_shell  "$db_name" <<< "update login_source set is_sync_enabled = true where type = 5 and name = 'YunoHost LDAP';"
+    fi
+    popd
+
+    # Update all LDAP settings
+
+    local list_group_mapping=''
+    local sql_request
+    local ynh_group_list
+    local org_name
+    local team_name
+    local include_entry
+    local group_mapping_found
+    if "$group_sync_enabled"; then
+        org_team_list="$(sudo --login --user=postgres psql -qAt "$db_name" <<< \
+            "SELECT json_agg(json_build_object(
+                'org_name', public.user.name,
+                'team_name', public.team.lower_name))
+            FROM public.user INNER JOIN public.team ON public.user.id = team.org_id" \
+            | jq -r '.[]| join("|")')"
+        ynh_group_list=$(yunohost --output-as json user group list | jq -r '.groups | keys | .[]')
+
+        while read -r e; do
+            org_name="$(echo "$e" | cut -d'|' -f1)"
+            team_name="$(echo "$e" | cut -d'|' -f2)"
+            include_entry=false
+            group_mapping_found=false
+            while read -r g; do
+                if [ "$g" == "$team_name" ]; then
+                    group_mapping_found=true
+                fi
+            done <<< "$ynh_group_list"
+            if ! $group_mapping_found; then
+                continue
+            fi
+
+            if [ -n "$group_sync_included_organisations" ]; then
+                while read -r -d, name; do
+                    if [ "$org_name" == "$name" ]; then
+                        include_entry=true
+                    fi
+                done <<< "$group_sync_included_organisations"
+            else
+                include_entry=true
+                while read -r -d, name; do
+                    if [ "$org_name" == "$name" ]; then
+                        include_entry=false
+                    fi
+                done <<< "$group_sync_excluded_organisations"
+            fi
+            if ! $include_entry; then
+                continue
+            fi
+
+            include_entry=false
+            if [ -n "$group_sync_included_ynh_group" ]; then
+                while read -r -d, name; do
+                    if [ "$team_name" == "$name" ]; then
+                        include_entry=true
+                    fi
+                done <<< "$group_sync_included_ynh_group"
+            else
+                include_entry=true
+                while read -r -d, name; do
+                    if [ "$team_name" == "$name" ]; then
+                        include_entry=false
+                    fi
+                done <<< "$group_sync_excluded_ynh_group"
+            fi
+            if ! $include_entry; then
+                continue
+            fi
+
+            list_group_mapping+="$e
+"
+        done <<< "$org_team_list"
+    fi
+
+    sql_request=$(mktemp)
+    ynh_config_add --jinja --template=login_source.sql --destination="$sql_request"
+
+    ynh_psql_db_shell < "$sql_request"
 }
 
 function create_forgejo_api_user() {
@@ -66,4 +145,10 @@ ensure_vars_set() {
     ynh_app_setting_set_default --app="$app" --key=mirror_disable_new_push --value=false
     ynh_app_setting_set_default --app="$app" --key=mirror_default_interval --value=8h
     ynh_app_setting_set_default --app="$app" --key=mirror_min_interval --value=10m
+
+    ynh_app_setting_set_default --app="$app" --key=group_sync_enabled --value=false
+    ynh_app_setting_set_default --app="$app" --key=group_sync_excluded_organisations --value=''
+    ynh_app_setting_set_default --app="$app" --key=group_sync_included_organisations --value=''
+    ynh_app_setting_set_default --app="$app" --key=group_sync_excluded_ynh_group --value=''
+    ynh_app_setting_set_default --app="$app" --key=group_sync_included_ynh_group --value=''
 }
