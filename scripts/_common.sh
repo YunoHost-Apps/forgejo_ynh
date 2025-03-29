@@ -15,7 +15,7 @@ function set_forgejo_login_source() {
 function enable_login_source_sync() {
     ynh_print_info "Set forgejo login source as synchronizable"
     # Enable login source synchronisation manualy because forgejo command does not allow it (https://codeberg.org/forgejo/forgejo/issues/952)
-    ynh_psql_db_shell  "$db_name" --sql "update login_source set is_sync_enabled = true where type = 5 and name = 'YunoHost LDAP'"
+    ynh_psql_db_shell  "$db_name" <<< "update login_source set is_sync_enabled = true where type = 5 and name = 'YunoHost LDAP';"
 }
 
 function create_forgejo_api_user() {
@@ -36,7 +36,7 @@ function set_users_login_source() {
     for username in $(ynh_user_list); do
         ynh_print_info "Updating forgejo user login type for ${username}"
 
-        ynh_psql_db_shell  "$db_name" --sql "update public.user set login_source = (select id from login_source where name = 'YunoHost LDAP' and type = 5), login_name = name, login_type = 5 where name = '${username}'"
+        ynh_psql_db_shell  "$db_name" <<< "update public.user set login_source = (select id from login_source where name = 'YunoHost LDAP' and type = 5), login_name = name, login_type = 5 where name = '${username}';"
     done
 }
 
