@@ -27,7 +27,7 @@ ynh_psql_db_shell < ./db.sql
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression --message="Restoring system configurations related to $app..." --weight=1
+ynh_script_progression "Restoring system configurations related to $app..." --weight=1
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
