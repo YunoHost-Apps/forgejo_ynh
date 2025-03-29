@@ -4,6 +4,7 @@
 # COMMON VARIABLES AND CUSTOM HELPERS
 #=================================================
 
+ssh_port="$(yunohost settings get security.ssh.ssh_port)"
 
 function set_forgejo_login_source() {
     ynh_print_info "Creating forgejo login source"
