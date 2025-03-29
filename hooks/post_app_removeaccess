@@ -17,4 +17,5 @@ path=$(ynh_app_setting_get --app=$app --key=path)
 # Load common variables and helpers
 source ${pwd}/../../apps/${app}/scripts/_common.sh
 
+set_forgejo_login_source
 synchronize_users

@@ -74,10 +74,10 @@ ynh_systemctl --service="$app" --action="start" --log_path="/var/log/$app/forgej
 #=================================================
 # LDAP CONFIGURATION
 #=================================================
+
 ynh_script_progression "Adding LDAP configuration..."
 
 set_forgejo_login_source
-enable_login_source_sync
 
 # API user creation
 create_forgejo_api_user
