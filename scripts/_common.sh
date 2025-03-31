@@ -4,6 +4,7 @@
 # COMMON VARIABLES AND CUSTOM HELPERS
 #=================================================
 
+ssh_port="$(yunohost settings get security.ssh.ssh_port)"
 
 function set_forgejo_login_source() {
     ynh_print_info "Creating forgejo login source"
@@ -50,4 +51,19 @@ function synchronize_users() {
 
     # User synchronization must be launched using API : no cli exists for this purpose (https://codeberg.org/forgejo/forgejo/issues/953)
     curl --url "https://${domain}${no_trailing_slash_path}/api/v1/admin/cron/sync_external_users" -X POST -H "Authorization: token $forgejo_api_token" -kfsS
+}
+
+ensure_vars_set() {
+    ynh_app_setting_set_default --app="$app" --key=register_email_confirm --value=false
+    ynh_app_setting_set_default --app="$app" --key=register_manual_confirm --value=false
+    ynh_app_setting_set_default --app="$app" --key=disable_registration --value=true
+    ynh_app_setting_set_default --app="$app" --key=require_signin_view --value=false
+    ynh_app_setting_set_default --app="$app" --key=enable_notify_mail --value=true
+    ynh_app_setting_set_default --app="$app" --key=show_registration_button --value=true
+
+    ynh_app_setting_set_default --app="$app" --key=mirror_enabled --value=true
+    ynh_app_setting_set_default --app="$app" --key=mirror_disable_new_pull --value=false
+    ynh_app_setting_set_default --app="$app" --key=mirror_disable_new_push --value=false
+    ynh_app_setting_set_default --app="$app" --key=mirror_default_interval --value=8h
+    ynh_app_setting_set_default --app="$app" --key=mirror_min_interval --value=10m
 }

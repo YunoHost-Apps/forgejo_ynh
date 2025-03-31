@@ -7,6 +7,8 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
+ynh_app_setting_set --key=protect_against_basic_auth_spoofing --value=false
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -40,7 +42,8 @@ ynh_app_setting_set --key=oauth2_jwt_secret --value="$oauth2_jwt_secret"
 #=================================================
 ynh_script_progression "Adding $app's configuration files..."
 
-ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
+ensure_vars_set
+
 ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
 
 chmod 640 "$install_dir/custom/conf/app.ini"
