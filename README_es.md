@@ -3,7 +3,7 @@ Este archivo README esta generado automaticamente<https://github.com/YunoHost/ap
 No se debe editar a mano.
 -->
 
-# Forgejo para Yunohost
+# Forgejo para YunoHost
 
 [![Nivel de integración](https://apps.yunohost.org/badge/integration/forgejo)](https://ci-apps.yunohost.org/ci/apps/forgejo/)
 ![Estado funcional](https://apps.yunohost.org/badge/state/forgejo)
