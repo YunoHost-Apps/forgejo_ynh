@@ -1,5 +1,7 @@
 #!/bin/bash
 
+YNH_HELPERS_VERSION=2.1
+
 # IMPORT GENERIC HELPERS
 source /usr/share/yunohost/helpers
 
