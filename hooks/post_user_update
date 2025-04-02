@@ -1,5 +1,7 @@
 #!/bin/bash
 
+YNH_HELPERS_VERSION=2.1
+
 ###
 # This hook is only used because yunohost doesn't trigger any hook when adding a user to a group (e.g. admin)
 # After adding a user to a group, one should update a user to trigger this hook (https://forum.yunohost.org/t/hook-when-a-user-is-added-in-a-group/25437)
