@@ -3,6 +3,8 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
+ynh_app_setting_set --key=protect_against_basic_auth_spoofing --value=false
+
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
@@ -14,27 +16,6 @@ ynh_systemctl --service="$app" --action="stop" --log_path="systemd"
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 ynh_script_progression "Ensuring downward compatibility..."
-
-# Update forgejo login source (1.19.3-0~ynh2)
-pushd "$install_dir"
-    old_login_source_id=$(ynh_exec_as_app ./forgejo admin auth list | grep "YunoHost LDAP" | grep "via BindDN" | cut -f 1)
-    if [ -n "$old_login_source_id" ]; then
-        ynh_print_info "Delete obsolete forgejo login source (LDAP via BindDN)"
-
-        # Ensure no user have this obsolete login source
-        ynh_psql_db_shell  "$db_name" --sql "update public.user set login_source = 0, login_type = 0 where login_source = ${old_login_source_id}"
-
-        # Delete old login source
-        ynh_exec_as_app ./forgejo admin auth delete --id "$old_login_source_id"
-    fi
-
-    ynh_exec_as_app ./forgejo admin auth list | grep "YunoHost LDAP" | grep -q "LDAP (simple auth)" ||
-        # create new login source if not existing
-        set_forgejo_login_source
-popd
-
-# Update login source synchronization flag (1.19.3-0~ynh3)
-enable_login_source_sync
 
 # forgejo home directory has changed (yunohost packaging v2)
 # .ssh directory should move from old home dir (data_dir) to new one
@@ -55,6 +36,8 @@ ynh_app_setting_set_default --key=internal_token --value=$("$install_dir/forgejo
 # If oauth2_jwt_secret doesn't exist, create it
 ynh_app_setting_set_default --key=oauth2_jwt_secret --value=$("$install_dir/forgejo" generate secret JWT_SECRET)
 
+ensure_vars_set
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -70,7 +53,6 @@ chmod +x "$install_dir/forgejo"
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
 
-ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
 ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
 
 chmod 640 "$install_dir/custom/conf/app.ini"
@@ -106,7 +88,9 @@ if [ -z "${forgejo_api_user:-}" ]; then
     create_forgejo_api_user
 fi
 
-set_users_login_source
+ynh_print_info "Creating forgejo login source"
+
+set_forgejo_login_source
 
 synchronize_users
 
