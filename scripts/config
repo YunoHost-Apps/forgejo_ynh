@@ -6,6 +6,11 @@ source /usr/share/yunohost/helpers
 ynh_app_config_apply() {
     _ynh_app_config_apply
     ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
+    set_forgejo_login_source
+}
+
+run__sync_groups_mapping() {
+    set_forgejo_login_source
 }
 
 #=================================================
