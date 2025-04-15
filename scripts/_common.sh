@@ -152,3 +152,21 @@ ensure_vars_set() {
     ynh_app_setting_set_default --app="$app" --key=group_sync_excluded_ynh_group --value=''
     ynh_app_setting_set_default --app="$app" --key=group_sync_included_ynh_group --value=''
 }
+
+set_permissions() {
+    chown -R "$app:$app" "$install_dir"
+    chmod -R u=rwX,g=rX,o= "$install_dir"
+    chmod -R u=rwX,g=,o= "$install_dir/.ssh"
+
+    chown "$app:$app" -R /var/log/"$app"
+    chmod 750 -R /var/log/"$app"
+
+    chown -R "$app:$app" "$data_dir"
+    chmod u=rwx,g=rx,o= "$data_dir"
+    find "$data_dir" \(   \! -perm -o= \
+                     -o \! -user "$app" \
+                     -o \! -group "$app" \) \
+                   -exec chown "$app:$app" {} \; \
+                   -exec chmod u=rwX,g=rX,o= {} \;
+
+}
