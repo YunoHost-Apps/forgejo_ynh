@@ -29,6 +29,8 @@ yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo
 
 ynh_systemctl --action=restart --service=fail2ban
 
+set_permissions
+
 #=================================================
 # RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
 #=================================================

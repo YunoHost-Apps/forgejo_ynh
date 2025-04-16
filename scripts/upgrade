@@ -21,7 +21,7 @@ ynh_script_progression "Ensuring downward compatibility..."
 # .ssh directory should move from old home dir (data_dir) to new one
 # (/var/www/$app is the default value for home in resources.system_user)
 if [ -d "$data_dir/.ssh" ]; then
-    mv "$data_dir/.ssh" "/var/www/$app"
+    mv "$data_dir/.ssh" "$install_dir"
 fi
 
 # If secret_key doesn't exist, create it
@@ -72,6 +72,8 @@ ynh_config_add_logrotate  "/var/log/$app"
 yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo.log"
 
 ynh_config_add_fail2ban --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>"
+
+set_permissions
 
 #=================================================
 # START SYSTEMD SERVICE

@@ -19,7 +19,7 @@ ynh_setup_source --dest_dir="$install_dir"
 xz -d "$install_dir/forgejo.xz"
 chmod +x "$install_dir/forgejo"
 
-mkdir -p "$install_dir/custom/conf"
+mkdir -p "$install_dir/custom/conf" "$install_dir/.ssh"
 
 chmod -R o-rwx "$install_dir/custom"
 chown -R "$app:$app" "$install_dir/custom"
@@ -63,6 +63,8 @@ ynh_config_add_logrotate  "/var/log/$app"
 yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo.log"
 
 ynh_config_add_fail2ban --logpath "/var/log/$app/forgejo.log" --failregex ".*Failed authentication attempt for .* from <HOST>"
+
+set_permissions
 
 #=================================================
 # START SYSTEMD SERVICE
