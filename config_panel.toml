@@ -162,3 +162,13 @@ help = "Organisation and team member management. Note that after a creation of a
     ask = "Force sync group mapping"
     # disabled because of https://github.com/YunoHost/issues/issues/2488
     # visible = "group_sync_enabled"
+
+[main.federation]
+name = "Federation feature"
+help = "All feature related to the federation. Keep in mind that currently the implementation is experimental and limited. To see https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md for the list of available feature."
+
+    [main.federation.federation_enabled]
+    ask.en = "Enable federation"
+    type = "boolean"
+    yes = "true"
+    no = "false"
