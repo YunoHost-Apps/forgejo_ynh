@@ -151,6 +151,8 @@ ensure_vars_set() {
     ynh_app_setting_set_default --app="$app" --key=group_sync_included_organisations --value=''
     ynh_app_setting_set_default --app="$app" --key=group_sync_excluded_ynh_group --value=''
     ynh_app_setting_set_default --app="$app" --key=group_sync_included_ynh_group --value=''
+
+    ynh_app_setting_set_default --app="$app" --key=federation_enabled --value='false'
 }
 
 set_permissions() {
