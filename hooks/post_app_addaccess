@@ -1,21 +1,30 @@
 #!/bin/bash
 
-# IMPORT GENERIC HELPERS
+YNH_HELPERS_VERSION=2.1
+
+# The file name is <priority>-<app>
+filename="$(basename "$0")"
+app="${filename#*-}"
+
+# Exit as quickly as possible if the change don't impact this app
+if [ "$1" != "$app" ]; then
+    exit 0
+fi
+
+cd "/etc/yunohost/apps/$app/scripts"
+
+source _common.sh
 source /usr/share/yunohost/helpers
 
-pwd=$(dirname $0)
-filename=$(basename $0)
+domain="$(ynh_app_setting_get --app="$app" --key=domain)"
+path="$(ynh_app_setting_get --app="$app" --key=path)"
+install_dir="$(ynh_app_setting_get --app="$app" --key=install_dir)"
+db_name="$(ynh_app_setting_get --app="$app" --key=db_name)"
+group_sync_enabled="$(ynh_app_setting_get --app="$app" --key=group_sync_enabled)"
+group_sync_included_organisations="$(ynh_app_setting_get --app="$app" --key=group_sync_included_organisations)"
+group_sync_excluded_organisations="$(ynh_app_setting_get --app="$app" --key=group_sync_excluded_organisations)"
+group_sync_included_ynh_group="$(ynh_app_setting_get --app="$app" --key=group_sync_included_ynh_group)"
+group_sync_excluded_ynh_group="$(ynh_app_setting_get --app="$app" --key=group_sync_excluded_ynh_group)"
 
-# Set vars for following script
-
-# TODO : app should be fetch from arguments
-# The file name is <priority>-<app>
-app=${filename#*-}
-
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path=$(ynh_app_setting_get --app=$app --key=path)
-
-# Load common variables and helpers
-source ${pwd}/../../apps/${app}/scripts/_common.sh
-
+set_forgejo_login_source
 synchronize_users

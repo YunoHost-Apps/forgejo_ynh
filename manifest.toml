@@ -7,7 +7,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "10.0.3~ynh1"
+version = "11.0.1~ynh1"
 
 maintainers = [ "Emmanuel Averty" ]
 
@@ -17,10 +17,10 @@ website = "https://forgejo.org"
 admindoc = "https://forgejo.org/docs/latest/admin/"
 userdoc = "https://forgejo.org/docs/latest/user/"
 code = "https://codeberg.org/forgejo/forgejo"
-cpe = "???"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 12.0.9"
+helpers_version = "2.1"
 architectures = [ "amd64", "arm64", "armhf" ]
 multi_instance = true
 
@@ -45,8 +45,8 @@ ram.runtime = "2G"
     default = "visitors"
 
     [install.init_admin_permission]
-    ask.en = "Which group will have access to forgejo admin page (broken feature : see appliction description)"
-    ask.fr = "Quel groupe aura accès à l'administration de forgejo (ne fonctionne pas : voir la description de l'application)"
+    ask.en = "Which group will have access to forgejo admin page"
+    ask.fr = "Quel groupe aura accès à l'administration de forgejo"
     help.en = "Users of this group should have access to Forgejo admin page"
     help.fr = "Les utilisateurs de ce groupe devrait avoir accès à la page d'administration de Forgejo"
     type = "group"
@@ -54,12 +54,12 @@ ram.runtime = "2G"
 
 [resources]
     [resources.sources.main]
-    amd64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.3/forgejo-10.0.3-linux-amd64.xz"
-    amd64.sha256 = "4320e381f804ddfa0554c23953b382edcd24e6893539fca6825908759f222194"
-    arm64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.3/forgejo-10.0.3-linux-arm64.xz"
-    arm64.sha256 = "8cd22675f5f66913ee83d9c52511403a6b3b81621a750d68261c999d8f74b9b4"
-    armhf.url = "https://codeberg.org/forgejo/forgejo/releases/download/v10.0.3/forgejo-10.0.3-linux-arm-6.xz"
-    armhf.sha256 = "9e941c052027f10cb7f63c882af1259a73626b835057b73fcdb685abdc6978c6"
+    amd64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v11.0.1/forgejo-11.0.1-linux-amd64.xz"
+    amd64.sha256 = "e5f51b375fc678b619e23126feeba5b610ce2768ba8e6171fe85c26b0e95b2ef"
+    arm64.url = "https://codeberg.org/forgejo/forgejo/releases/download/v11.0.1/forgejo-11.0.1-linux-arm64.xz"
+    arm64.sha256 = "971fb9af8a188bad1390f1732d4a66a2d12a4e8d0f9971e608ebf00de4d4b4e6"
+    armhf.url = "https://codeberg.org/forgejo/forgejo/releases/download/v11.0.1/forgejo-11.0.1-linux-arm-6.xz"
+    armhf.sha256 = "a3aa1653a727fbfa3ab4bd26b3960fc5ef55ede7065a2dd424751c9d04f741a3"
     format = "whatever"
     extract = false
     rename = "forgejo.xz"
@@ -71,6 +71,7 @@ ram.runtime = "2G"
 
     [resources.system_user]
     allow_ssh = true
+    allow_email = true
 
     [resources.install_dir]
 
@@ -87,6 +88,12 @@ ram.runtime = "2G"
     api.show_tile = false
     api.allowed = "visitors"
     api.auth_header = false
+
+    container_registry.show_tile = false
+    container_registry.auth_header = false
+    container_registry.label = "Container registry"
+    container_registry.url = "__DOMAIN__/v2"
+    container_registry.allowed = "visitors"
 
     [resources.ports]
     main.default = 6000
