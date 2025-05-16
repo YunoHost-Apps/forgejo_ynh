@@ -4,177 +4,227 @@ version = "1.0"
 
 services = [ "__APP__" ]
 
-name.en = "Config panel"
-name.fr = "Panneau de configuration"
+name.en = "Main config panel"
+name.fr = "Panneau de configuration principal"
 
 help.en = "Here you can easily configure some things about your Forgejo instance."
 help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre instance Forgejo."
 
-####################
-#### SERVICE CONFIG
-####################
+    ####################
+    #### SERVICE CONFIG
+    ####################
 
-    [main.service]
-    name.en = "Service config"
-    name.fr = "Configuration du service"
+    [main.registration]
+    name = "Registration"
 
-        [main.service.register_email_confirm]
-        ask.en = "Email confirmation on registration?"
-        ask.fr = "Confirmation d'e-mail à l'inscription ?"
-        help.en = "REGISTER_EMAIL_CONFIRM: Whether a new user needs to confirm their email when registering."
-        help.fr = "REGISTER_EMAIL_CONFIRM : Si un nouvel utilisateur doit confirmer son adresse électronique lors de l'inscription."
+        [main.registration.disable_registration]
+        ask.en = "Désactiver les inscriptions ?"
+        ask.fr = "Disable registrations ?"
+        help.en = "Disallow registration, only allow admins to create accounts."
+        help.fr = "Ne pas autoriser l'inscription, permettre uniquement aux administrateurs de créer des comptes."
         type = "boolean"
         yes = "true"
         no = "false"
 
-        [main.service.register_manual_confirm]
-        ask.en = "Email confirmation on registration?"
-        ask.fr = "Confirmation d'e-mail à l'inscription ?"
-        help.en = "REGISTER_MANUAL_CONFIRM: Whether a new user needs to be confirmed manually after registration. (Requires `REGISTER_EMAIL_CONFIRM` to be disabled.)"
-        help.fr = "REGISTER_MANUAL_CONFIRM : Si un nouvel utilisateur doit être confirmé manuellement après son inscription. (Nécessite que `REGISTER_EMAIL_CONFIRM` soit désactivé)."
+        [main.registration.show_registration_button]
+        ask.en = "Show Registration button?"
+        ask.fr = "Afficher le bouton d'inscription ?"
         type = "boolean"
         yes = "true"
         no = "false"
+        visible = "!disable_registration"
 
-        [main.service.disable_registration]
+        [main.registration.register_email_confirm]
         ask.en = "Email confirmation on registration?"
-        ask.fr = "Confirmation d'e-mail à l'inscription ?"
-        help.en = "DISABLE_REGISTRATION: Disallow registration, only allow admins to create accounts."
-        help.fr = "DISABLE_REGISTRATION : Ne pas autoriser l'inscription, permettre uniquement aux administrateurs de créer des comptes."
+        ask.fr = "Confirmation d'email à l'inscription ?"
+        help.en = "Whether a new user needs to confirm their email when registering."
+        help.fr = "Si un nouvel utilisateur doit confirmer son adresse électronique lors de l'inscription."
         type = "boolean"
         yes = "true"
         no = "false"
+        visible = "!disable_registration"
 
-        [main.service.require_signin_view]
-        ask.en = "Email confirmation on registration?"
-        ask.fr = "Confirmation d'e-mail à l'inscription ?"
-        help.en = "REQUIRE_SIGNIN_VIEW: User must sign in to view anything."
-        help.fr = "REQUIRE_SIGNIN_VIEW : L'utilisateur doit s'identifier pour visualiser le contenu."
+        [main.registration.register_manual_confirm]
+        ask.en = "Manually confirm the registration?"
+        help.en = "Whether a new user needs to be confirmed manually after registration."
+        help.fr = "Si un nouvel utilisateur doit être confirmé manuellement après son inscription."
         type = "boolean"
         yes = "true"
         no = "false"
+        visible = "!disable_registration && !register_email_confirm"
 
-        [main.service.enable_notify_mail]
+    [main.email]
+    name.en = "Notifications"
+
+        [main.email.enable_notify_mail]
         ask.en = "Mail notification?"
         ask.fr = "Notification par e-mail ?"
         type = "boolean"
         yes = "true"
         no = "false"
 
-        [main.service.show_registration_button]
-        ask.en = "Show Registration button?"
-        ask.fr = "Afficher le bouton d'inscription ?"
+    [main.privacy]
+    name.en = "Privacy Settings"
+    name.de = "Privatsphäre-Einstellungen"
+    name.fr = "Paramètres de confidentialité"
+
+        [main.privacy.show_user_email]
+        ask.en="Should email addresses be show on explore/users page?"
+        ask.fr="Les adresses e-mail doivent-elles être affichées sur la page explore/users?"
+        ask.de="Sollen Email Adressen auf der Seite explore/users angezeigt werden?"
+        type="boolean"
+        yes="true"
+        no="false"
+
+        [main.privacy.default_keep_email_private]
+        ask.en="Should the users email address be hidden in user profile?"
+        ask.fr="L'adresse e-mail des utilisateurs doit-elle être masquée dans user profile?"
+        ask.de="Soll die E-Mail-Adresse im Nutzerprofil ausgeblendet werden?"
+        type="boolean"
+        yes="true"
+        no="false"
+
+    [main.explore_ui]
+    name.en = "Paramètre de la page explore"
+
+        [main.explore_ui.require_signin_view]
+        ask.en = "Require sign in to view"
+        help.en = "Only allow signed in users to view the explore pages"
+        help.fr = "L'utilisateur doit s'identifier pour visualiser le contenu."
         type = "boolean"
         yes = "true"
         no = "false"
 
+        [main.explore_ui.disable_users_page]
+        ask.en = "Disable the users explore page"
+        ask.fr = "La page explore/users doit-elle être désactivée ?"
+        ask.de = "Soll die Seite explore/users deaktiviert werden?"
+        type="boolean"
+        yes="true"
+        no="false"
 
-        ####################
-        #### MIRROR CONFIG
-        ####################
+        [main.explore_ui.disable_organizations_page]
+        ask.en = "Disable the organizations explore page"
+        type="boolean"
+        yes="true"
+        no="false"
 
-[main.mirror]
-name.en = "Mirror config"
-name.fr = "Configuration des miroirs"
-help.en = "Config pertaining to repo mirroring."
-help.fr = "Configuration relative à la mise en miroir de repo"
+        [main.explore_ui.disable_code_page]
+        ask.en = "Disable the code explore page"
+        type="boolean"
+        yes="true"
+        no="false"
 
-    [main.mirror.mirror_enabled]
-    ask.en = "Enable mirror functionality?"
-    ask.fr = "Activer la fonctionnalité mirroir ?"
-    type = "boolean"
-    yes = "true"
-    no = "false"
-    help.en = "Set to **false** to disable all mirrors. Pre-existing mirrors remain valid but won't be updated; may be converted to regular repo."
-    help.fr = "Définir à **false** pour désactiver tous les miroirs. Les miroirs préexistants restent valables mais ne seront pas mis à jour ; ils peuvent être convertis en dépôts normaux."
+    [main.indexing]
+    name.en = "Code indexing"
 
-    [main.mirror.mirror_disable_new_pull]
-    ask.en = "Disable pull mirroring?"
-    ask.fr = "Désactiver les miroirs pull ?"
-    type = "boolean"
-    yes = "true"
-    no = "false"
-    help.en = "Disable the creation of **new** pull mirrors. Pre-existing mirrors remain valid. Will be ignored if `mirror.ENABLED` is `false`."
-    help.fr = "Désactive la création de **nouveaux** miroirs pull. Les miroirs préexistants restent valables. Sera ignoré si `mirror.ENABLED` est `false`."
+        [main.indexing.repos_indexer_enabled]
+        ask.en = "Enable repo indexer"
+        help.en = "Indexing code can take a lot of system resources, especially when first enabled or on major Gitea upgrade"
+        type = "boolean"
+        yes="true"
+        no="false"
 
-    [main.mirror.mirror_disable_new_push]
-    ask.en = "Disable push mirroring?"
-    ask.fr = "Désactiver les miroirs push ?"
-    type = "boolean"
-    yes = "true"
-    no = "false"
-    help.en = "Disable the creation of **new** push mirrors. Pre-existing mirrors remain valid. Will be ignored if `mirror.ENABLED` is `false`."
-    help.fr = "Désactive la création de **nouveaux** miroirs push. Les miroirs préexistants restent valables. Sera ignoré si `mirror.ENABLED` est `false`."
+    ####################
+    #### MIRROR CONFIG
+    ####################
 
-    [main.mirror.mirror_default_interval]
-    ask.en = "Default duration between each check?"
-    ask.fr = "Durée par défaut entre chaque contrôle ?"
-    type = "string"
-    help.en = "Examples: '8h', '30m'"
-    help.fr = "Exemples : '8h', '30m'"
-    pattern.regexp = '^[0-9]+(m$|h$|d$)$'
-    pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'."
+    [main.mirror]
+    name = "Mirror config"
+    help = "Config pertaining to repo mirroring."
 
-    [main.mirror.mirror_min_interval]
-    ask.en = "Minimum duration between each check?"
-    ask.fr = "Durée minimale entre chaque contrôle ?"
-    type = "string"
-    help.en = "Examples: '2h', '10m'"
-    help.fr = "Exemples : '2h', '10m'"
-    pattern.regexp = '(?!^[0-1]m$)(^[0-9]+(m$|h$|d$)$)'
-    pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'. Must not be more than '1m'."
+        [main.mirror.mirror_enabled]
+        ask.en = "Enable the mirror functionality?"
+        ask.fr = "Activer la fonctionnalité mirroir ?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        help.en = "Set to **false** to disable all mirrors. Pre-existing mirrors remain valid but won't be updated; may be converted to regular repo."
+        help.fr = "Définir à **false** pour désactiver tous les miroirs. Les miroirs préexistants restent valables mais ne seront pas mis à jour ; ils peuvent être convertis en dépôts normaux."
 
+        [main.mirror.mirror_disable_new_pull]
+        ask.en = "Disable pull mirroring?"
+        ask.fr = "Désactiver les miroirs pull ?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        help.en = "Disable the creation of **new** pull mirrors. Pre-existing mirrors remain valid. Will be ignored if `mirror.ENABLED` is `false`."
+        help.fr = "Désactive la création de **nouveaux** miroirs pull. Les miroirs préexistants restent valables. Sera ignoré si `mirror.ENABLED` est `false`."
 
-[main.project]
-name.en = "Organisation and team"
-name.fr = "Organisation et équipe"
-help.en = "Organisation and team member management. Note that after a creation of a team in Forgejo you will need to trigger the sync group mapping to have the correct mapping between your Forgejo team and your YunoHost groups."
-help.fr = "Organisation et gestion des membres de l'équipe. Notez qu'après la création d'une équipe dans Forgejo, vous devrez déclencher la synchronisation des groupes pour avoir une correspondance correcte entre votre équipe Forgejo et vos groupes YunoHost."
-    
-    [main.project.group_sync_enabled]
-    ask.en = "Enable group synchronisation from YunoHost to the organisation team members"
-    help.en = "When enabled, for all organisation teams which has the same name than a YunoHost group name, the members  will be synchronised."
-    type = "boolean"
-    yes = "true"
-    no = "false"
+        [main.mirror.mirror_disable_new_push]
+        ask.en = "Disable push mirroring?"
+        ask.fr = "Désactiver les miroirs push ?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        help.en = "Disable the creation of **new** push mirrors. Pre-existing mirrors remain valid. Will be ignored if `mirror.ENABLED` is `false`."
+        help.fr = "Désactive la création de **nouveaux** miroirs push. Les miroirs préexistants restent valables. Sera ignoré si `mirror.ENABLED` est `false`."
 
-    [main.project.group_sync_excluded_organisations]
-    ask.en = "Excluded organisations to sync group member"
-    help.en = "A list of organisation name to exclude from the group/team synchronisation."
-    type = "tags"
-    visible = "group_sync_enabled"
+        [main.mirror.mirror_default_interval]
+        ask.en = "Default duration between each check?"
+        ask.fr = "Durée par défaut entre chaque contrôle ?"
+        type = "string"
+        help.en = "Examples: '8h', '30m'"
+        help.fr = "Exemples : '8h', '30m'"
+        pattern.regexp = '^[0-9]+(m$|h$|d$)$'
+        pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'."
 
-    [main.project.group_sync_included_organisations]
-    ask.en = "Included organisations to sync group member"
-    help.en = "A list of organisation name to include from the group/team synchronisation. If set, this will exclude all not listed organisations."
-    type = "tags"
-    visible = "group_sync_enabled"
+        [main.mirror.mirror_min_interval]
+        ask.en = "Minimum duration between each check?"
+        ask.fr = "Durée minimale entre chaque contrôle ?"
+        type = "string"
+        help.en = "Examples: '2h', '10m'"
+        help.fr = "Exemples : '2h', '10m'"
+        pattern.regexp = '(?!^[0-1]m$)(^[0-9]+(m$|h$|d$)$)'
+        pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'. Must not be more than '1m'."
 
-    [main.project.group_sync_excluded_ynh_group]
-    ask.en = "Excluded YunoHost group to sync group member"
-    help.en = "A list of YunoHost group name to exclude from the group/team synchronisation."
-    type = "tags"
-    visible = "group_sync_enabled"
+    [main.project]
+    name = "Organisation and team"
+    help = "Organisation and team member management. Note that after a creation of a team in forgejo you will need to trigger the sync group mapping to have the correct mapping between your forgejo team and your Yunohost groups."
 
-    [main.project.group_sync_included_ynh_group]
-    ask.en = "Included YunoHost group to sync group member"
-    help.en = "A list of YunoHost group name to include from the group/team synchronisation. If set, this will exclude all not listed groups."
-    type = "tags"
-    visible = "group_sync_enabled"
+        [main.project.group_sync_enabled]
+        ask.en = "Enable group synchronisation from Yunohost to the organisation team members"
+        help.en = "When enabled, for all organisation teams which has the same name than a Yunohost group name, the members  will be synchronised."
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
-    [main.admin_users.sync_groups_mapping]
-    type = "button"
-    ask.en = "Force sync group mapping"
-    # disabled because of https://github.com/YunoHost/issues/issues/2488
-    # visible = "group_sync_enabled"
+        [main.project.group_sync_excluded_organisations]
+        ask.en = "Excluded organisations to sync group member"
+        help.en = "A list of organisation name to exclude from the group/team synchronisation."
+        type = "tags"
+        visible = "group_sync_enabled"
 
-[main.federation]
-name = "Federation feature"
-help = "All feature related to the federation. Keep in mind that currently the implementation is experimental and limited. To see https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md for the list of available feature."
+        [main.project.group_sync_included_organisations]
+        ask.en = "Included organisations to sync group member"
+        help.en = "A list of organisation name to include from the group/team synchronisation. If set, this will exclude all not listed organisations."
+        type = "tags"
+        visible = "group_sync_enabled"
 
-    [main.federation.federation_enabled]
-    ask.en = "Enable federation"
-    ask.fr = "Activer la fédération"
-    type = "boolean"
-    yes = "true"
-    no = "false"
+        [main.project.group_sync_excluded_ynh_group]
+        ask.en = "Excluded Yunohost group to sync group member"
+        help.en = "A list of Yunohost group name to exclude from the group/team synchronisation."
+        type = "tags"
+        visible = "group_sync_enabled"
+
+        [main.project.group_sync_included_ynh_group]
+        ask.en = "Included Yunohost group to sync group member"
+        help.en = "A list of Yunohost group name to include from the group/team synchronisation. If set, this will exclude all not listed groups."
+        type = "tags"
+        visible = "group_sync_enabled"
+
+        [main.admin_users.sync_groups_mapping]
+        type = "button"
+        ask = "Force sync group mapping"
+        # disabled because of https://github.com/YunoHost/issues/issues/2488
+        # visible = "group_sync_enabled"
+
+    [main.federation]
+    name = "Federation feature"
+    help = "All feature related to the federation. Keep in mind that currently the implementation is experimental and limited. To see https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md for the list of available feature."
+
+        [main.federation.federation_enabled]
+        ask.en = "Enable federation"
+        type = "boolean"
+        yes = "true"
+        no = "false"

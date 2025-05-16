@@ -133,26 +133,36 @@ function synchronize_users() {
 }
 
 ensure_vars_set() {
-    ynh_app_setting_set_default --app="$app" --key=register_email_confirm --value=false
-    ynh_app_setting_set_default --app="$app" --key=register_manual_confirm --value=false
-    ynh_app_setting_set_default --app="$app" --key=disable_registration --value=true
-    ynh_app_setting_set_default --app="$app" --key=require_signin_view --value=false
-    ynh_app_setting_set_default --app="$app" --key=enable_notify_mail --value=true
-    ynh_app_setting_set_default --app="$app" --key=show_registration_button --value=true
+    ynh_app_setting_set_default --key=disable_registration --value=true
+    ynh_app_setting_set_default --key=show_registration_button --value=true
+    ynh_app_setting_set_default --key=register_email_confirm --value=false
+    ynh_app_setting_set_default --key=register_manual_confirm --value=false
 
-    ynh_app_setting_set_default --app="$app" --key=mirror_enabled --value=true
-    ynh_app_setting_set_default --app="$app" --key=mirror_disable_new_pull --value=false
-    ynh_app_setting_set_default --app="$app" --key=mirror_disable_new_push --value=false
-    ynh_app_setting_set_default --app="$app" --key=mirror_default_interval --value=8h
-    ynh_app_setting_set_default --app="$app" --key=mirror_min_interval --value=10m
+    ynh_app_setting_set_default --key=require_signin_view --value=false
+    ynh_app_setting_set_default --key=disable_users_page --value=false
+    ynh_app_setting_set_default --key=disable_organizations_page --value=false
+    ynh_app_setting_set_default --key=disable_code_page --value=false
 
-    ynh_app_setting_set_default --app="$app" --key=group_sync_enabled --value=false
-    ynh_app_setting_set_default --app="$app" --key=group_sync_excluded_organisations --value=''
-    ynh_app_setting_set_default --app="$app" --key=group_sync_included_organisations --value=''
-    ynh_app_setting_set_default --app="$app" --key=group_sync_excluded_ynh_group --value=''
-    ynh_app_setting_set_default --app="$app" --key=group_sync_included_ynh_group --value=''
+    ynh_app_setting_set_default --key=show_user_email --value=true
+    ynh_app_setting_set_default --key=default_keep_email_private --value=false
 
-    ynh_app_setting_set_default --app="$app" --key=federation_enabled --value='false'
+    ynh_app_setting_set_default --key=repos_indexer_enabled --value=false
+
+    ynh_app_setting_set_default --key=enable_notify_mail --value=true
+
+    ynh_app_setting_set_default --key=mirror_enabled --value=true
+    ynh_app_setting_set_default --key=mirror_disable_new_pull --value=false
+    ynh_app_setting_set_default --key=mirror_disable_new_push --value=false
+    ynh_app_setting_set_default --key=mirror_default_interval --value=8h
+    ynh_app_setting_set_default --key=mirror_min_interval --value=10m
+
+    ynh_app_setting_set_default --key=group_sync_enabled --value=false
+    ynh_app_setting_set_default --key=group_sync_excluded_organisations --value=''
+    ynh_app_setting_set_default --key=group_sync_included_organisations --value=''
+    ynh_app_setting_set_default --key=group_sync_excluded_ynh_group --value=''
+    ynh_app_setting_set_default --key=group_sync_included_ynh_group --value=''
+
+    ynh_app_setting_set_default --key=federation_enabled --value='false'
 }
 
 set_permissions() {
