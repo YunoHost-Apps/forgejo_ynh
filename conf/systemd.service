@@ -1,6 +1,6 @@
 [Unit]
 Description=Forgejo: lightweight software forge
-After=syslog.target network.target mysql.service slapd.service
+After=syslog.target network.target postgresql.service slapd.service
 
 [Service]
 Type=simple
