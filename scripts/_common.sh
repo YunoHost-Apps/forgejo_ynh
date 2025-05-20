@@ -100,7 +100,8 @@ function set_forgejo_login_source() {
 
 function create_forgejo_api_user() {
     ynh_print_info "Creating forgejo api user"
-    forgejo_api_user=yunohost_api
+    local forgejo_api_user=yunohost_api
+    local forgejo_api_pwd
     forgejo_api_pwd=$(ynh_string_random --length=24)
     ynh_app_setting_set --key=forgejo_api_user --value="$forgejo_api_user"
     ynh_app_setting_set --key=forgejo_api_pwd --value="$forgejo_api_pwd"
@@ -108,6 +109,8 @@ function create_forgejo_api_user() {
     ynh_exec_as_app ./forgejo admin user create --username "$forgejo_api_user" --password "$forgejo_api_pwd" --email "admin@${domain}" --admin --must-change-password=false
     forgejo_api_token=$(ynh_exec_as_app ./forgejo admin user generate-access-token --username "$forgejo_api_user" --token-name "admin" --scopes "write:admin" --raw | tail -1)
     ynh_app_setting_set --key=forgejo_api_token --value="$forgejo_api_token"
+    # Ensure yunohost_api user is not visible by other users
+    ynh_psql_db_shell  "$db_name" <<< "update public.user set visibility = 2 where name = '${forgejo_api_user}';"
     popd
 }
 
