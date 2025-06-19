@@ -219,6 +219,28 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
         # disabled because of https://github.com/YunoHost/issues/issues/2488
         # visible = "group_sync_enabled"
 
+    [main.actions]
+    name.en = "Gitea Actions and Webhook"
+    name.de = "Gitea Actions und Webhook"
+    name.fr = "Gitea Actions et Webhook"
+
+        [main.actions.actions_enabled]
+        ask.en = "Enable Gitea Actions"
+        ask.de = "Gitea Actions aktivieren"
+        ask.fr = "Activez Gitea Actions"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+        [main.actions.webhook_allowed_hosts]
+        ask.en = "List of hosts allowed to call via webhook"
+        ask.de = "Liste von Hosts, die per Webhook angesprochen werden dürfen"
+        ask.fr = "Liste des hôtes pouvant être adressés via un webhook"
+        help.en = "Webhook can only call allowed hosts for security reasons. Comma separated list (example.com,anotherexample.com)."
+        help.de = "Webhook kann nur erlaubte Hosts ansprechen. Durch Komma separierte Liste (beispiel.de,anderesbeispiel.de)."
+        help.fr = "Pour des raisons de sécurité, le webhook ne peut appeler que les hôtes autorisés. Liste séparée par des virgules (example.fr, autreexample.fr)."
+        type = "string"
+
     [main.federation]
     name = "Federation feature"
     help = "All feature related to the federation. Keep in mind that currently the implementation is experimental and limited. To see https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md for the list of available feature."
