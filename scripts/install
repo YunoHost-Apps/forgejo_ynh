@@ -71,7 +71,7 @@ set_permissions
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --wait_until="Starting new Web server: tcp:127.0.0.1:"
+ynh_systemctl --service="$app" --action="start" --log_path="/var/log/$app/forgejo.log" --wait_until="Starting new Web server: tcp:127.0.0.1:" --timeout=300
 
 #=================================================
 # LDAP CONFIGURATION
