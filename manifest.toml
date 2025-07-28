@@ -9,7 +9,7 @@ description.fr = "Forge logiciel légère"
 
 version = "12.0.1~ynh1"
 
-maintainers = [ "Emmanuel Averty" ]
+maintainers = [ "Emmanuel Averty", "Josué Tille" ]
 
 [upstream]
 license = "GPL-3.0-or-later"
