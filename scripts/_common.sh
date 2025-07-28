@@ -32,64 +32,39 @@ function set_forgejo_login_source() {
             "SELECT json_agg(json_build_object(
                 'org_name', public.user.name,
                 'team_name', public.team.lower_name))
-            FROM public.user INNER JOIN public.team ON public.user.id = team.org_id" \
-            | jq -r '.[]| join("|")')"
-        ynh_group_list=$(yunohost --output-as json user group list | jq -r '.groups | keys | .[]')
-
-        while read -r e; do
-            org_name="$(echo "$e" | cut -d'|' -f1)"
-            team_name="$(echo "$e" | cut -d'|' -f2)"
-            include_entry=false
-            group_mapping_found=false
-            while read -r g; do
-                if [ "$g" == "$team_name" ]; then
-                    group_mapping_found=true
-                fi
-            done <<< "$ynh_group_list"
-            if ! $group_mapping_found; then
-                continue
-            fi
-
-            if [ -n "$group_sync_included_organisations" ]; then
-                while read -r -d, name; do
-                    if [ "$org_name" == "$name" ]; then
-                        include_entry=true
-                    fi
-                done <<< "$group_sync_included_organisations"
-            else
-                include_entry=true
-                while read -r -d, name; do
-                    if [ "$org_name" == "$name" ]; then
-                        include_entry=false
-                    fi
-                done <<< "$group_sync_excluded_organisations"
-            fi
-            if ! $include_entry; then
-                continue
-            fi
-
-            include_entry=false
-            if [ -n "$group_sync_included_ynh_group" ]; then
-                while read -r -d, name; do
-                    if [ "$team_name" == "$name" ]; then
-                        include_entry=true
-                    fi
-                done <<< "$group_sync_included_ynh_group"
-            else
-                include_entry=true
-                while read -r -d, name; do
-                    if [ "$team_name" == "$name" ]; then
-                        include_entry=false
-                    fi
-                done <<< "$group_sync_excluded_ynh_group"
-            fi
-            if ! $include_entry; then
-                continue
-            fi
-
-            list_group_mapping+="$e
-"
-        done <<< "$org_team_list"
+            FROM public.user INNER JOIN public.team ON public.user.id = team.org_id")"
+        ynh_group_list="$(yunohost --output-as json user group list)"
+        list_group_mapping="$(python3 -c "import json
+ynh_group_list = json.loads('$ynh_group_list')['groups'].keys()
+org_team_list: dict = json.loads('$org_team_list' if '$org_team_list' else '[]')
+group_sync_included_organisations = '$group_sync_included_organisations'.split(',') if '$group_sync_included_organisations' else []
+group_sync_excluded_organisations = '$group_sync_excluded_organisations'.split(',') if '$group_sync_excluded_organisations' else []
+group_sync_included_ynh_group = '$group_sync_included_ynh_group'.split(',') if '$group_sync_included_ynh_group' else []
+group_sync_excluded_ynh_group = '$group_sync_excluded_ynh_group'.split(',') if '$group_sync_excluded_ynh_group' else []
+result = []
+for entry in org_team_list:
+    org_name = entry['org_name']
+    team_name = entry['team_name']
+    if team_name not in ynh_group_list:
+        continue
+    if len(group_sync_included_organisations) > 0:
+        if org_name not in group_sync_included_organisations:
+            print('a')
+            continue
+    else:
+        if org_name in group_sync_excluded_organisations:
+            print('b')
+            continue
+    if len(group_sync_included_ynh_group) > 0:
+        if team_name not in group_sync_included_ynh_group:
+            print('c')
+            continue
+    else:
+        if team_name in group_sync_excluded_ynh_group:
+            print('d')
+            continue
+    result.append(f'{org_name}|{team_name}')
+print('\n'.join(result))")"
     fi
 
     sql_request=$(mktemp)
