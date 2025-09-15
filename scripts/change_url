@@ -28,6 +28,8 @@ ynh_hide_warnings ynh_config_add --template="app.ini" --destination="$install_di
 chmod 640 "$install_dir/custom/conf/app.ini"
 chown "$app:$app" "$install_dir/custom/conf/app.ini"
 
+ynh_permission_url --permission=container_registry --url="$domain/v2"
+
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
