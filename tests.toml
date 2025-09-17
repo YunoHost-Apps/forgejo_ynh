@@ -17,3 +17,63 @@ test_format = 1.0
     # -------------------------------
 
     test_upgrade_from.eebeab47.name = "Upgrade from 1.21.11-1~ynh1"
+
+    # -------------------------------
+    # Curl tests to validate that the app works
+    # -------------------------------
+    [default.curl_tests]
+    home_no_login.path = "/"
+    home_no_login.logged_on_sso = false
+    home_no_login.expect_title = "Explore - Forgejo"
+
+    login.path = "/user/login"
+    login.logged_on_sso = false
+    login.expect_title = "Sign in - Forgejo"
+
+    home.path = "/"
+    home.expect_title = "packagechecker - Dashboard - Forgejo"
+    home.logged_on_sso = true
+
+    api.path = "/api/v1/user"
+    api.logged_on_sso = false
+    api.expect_content = '\{"message":"token is required","url":"https://.*/api/swagger"\}'
+    api.expect_return_code = 401
+
+    container_registry.base_url = "https://__DOMAIN__"
+    container_registry.logged_on_sso = false
+    container_registry.path = "/v2"
+    container_registry.expect_content = '\{"errors":\[\{"code":"UNAUTHORIZED","message":""\}\]\}'
+    container_registry.expect_return_code = 401
+
+    [default.curl_tests.admin]
+    path = "/admin"
+    logged_on_sso = true
+    expect_title = "Dashboard - Forgejo"
+    expect_content = '''[\n.]*\
+[\n.]*Create…\
+[\n.]*New\srepository\
+[\n.]*New\smigration\
+[\n.]*New\sorganization\
+[\n.]*package_checker\
+[\n.]*Signed\sin\sas\spackage_checker\
+[\n.]*Profile\
+[\n.]*Starred\
+[\n.]*Subscriptions\
+[\n.]*Settings\
+[\n.]*Help\
+[\n.]*Site\sadministration\
+[\n.]*Sign\sout\
+[\n.]*Admin\ssettings\
+[\n.]*Dashboard\
+[\n.]*Identity\s&\saccess\
+[\n.]*Authentication\ssources\
+[\n.]*Organizations\
+[\n.]*User\saccounts\
+[\n.]*User\semails\
+[\n.]*Code\sassets\
+[\n.]*Packages\
+[\n.]*Repositories\
+[\n.]*Integrations\
+[\n.]*Applications\
+[\n.]*Webhooks\
+[\n.]*Configuration[\n.]*'''

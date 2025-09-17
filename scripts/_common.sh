@@ -151,8 +151,8 @@ set_permissions() {
     chmod -R u=rwX,g=rX,o= "$install_dir"
     chmod -R u=rwX,g=,o= "$install_dir/.ssh"
 
-    chown "$app:$app" -R /var/log/"$app"
-    chmod 750 -R /var/log/"$app"
+    chown -R "$app:$app" "/var/log/$app"
+    chmod -R u=rwX,g=rX,o= "/var/log/$app"
 
     chown -R "$app:$app" "$data_dir"
     chmod u=rwx,g=rx,o= "$data_dir"
