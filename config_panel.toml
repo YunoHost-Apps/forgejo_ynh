@@ -175,7 +175,9 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
         type = "string"
         help.en = "Examples: '2h', '10m'"
         help.fr = "Exemples : '2h', '10m'"
-        pattern.regexp = '(?!^[0-1]m$)(^[0-9]+(m$|h$|d$)$)'
+        # Lookaround isn't supported by pydantic v2 ?
+        # pattern.regexp = '(?!^[0-1]m$)(^[0-9]+(m$|h$|d$)$)'
+        pattern.regexp = "^[0-9]+(m$|h$|d$)$"
         pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'. Must not be more than '1m'."
 
     [main.project]
