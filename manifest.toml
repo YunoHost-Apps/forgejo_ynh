@@ -7,7 +7,7 @@ name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
 
-version = "13.0.3~ynh1"
+version = "13.0.3~ynh2"
 
 maintainers = [ "Emmanuel Averty", "Josué Tille" ]
 
@@ -19,13 +19,12 @@ userdoc = "https://forgejo.org/docs/latest/user/"
 code = "https://codeberg.org/forgejo/forgejo"
 
 [integration]
-yunohost = ">= 12.0.9"
+yunohost = ">= 12.1.17"
 helpers_version = "2.1"
 architectures = [ "amd64", "arm64", "armhf" ]
 multi_instance = true
 
 ldap = true
-
 sso = true
 
 disk = "150M"
@@ -45,8 +44,8 @@ ram.runtime = "2G"
     default = "visitors"
 
     [install.init_admin_permission]
-    ask.en = "Which group will have access to forgejo admin page"
-    ask.fr = "Quel groupe aura accès à l'administration de forgejo"
+    ask.en = "Which group will have access to Forgejo admin page"
+    ask.fr = "Quel groupe aura accès à l'administration de Forgejo"
     help.en = "Users of this group should have access to Forgejo admin page"
     help.fr = "Les utilisateurs de ce groupe devrait avoir accès à la page d'administration de Forgejo"
     type = "group"
@@ -99,7 +98,7 @@ ram.runtime = "2G"
     main.default = 6000
 
     [resources.apt]
-    packages = "postgresql"
+    packages = "postgresql, git, git-lfs"
 
     [resources.database]
     type = "postgresql"
