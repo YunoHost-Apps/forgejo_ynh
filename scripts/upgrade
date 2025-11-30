@@ -67,7 +67,7 @@ ynh_config_add_systemd
 
 ynh_config_add_nginx
 
-ynh_config_add_logrotate  "/var/log/$app"
+ynh_config_add_logrotate "/var/log/$app"
 
 yunohost service add "$app" --description="Forgejo" --log="/var/log/$app/forgejo.log"
 
@@ -90,7 +90,7 @@ if [ -z "${forgejo_api_user:-}" ]; then
     create_forgejo_api_user
 fi
 
-ynh_print_info "Creating forgejo login source"
+ynh_print_info "Creating Forgejo login source"
 
 set_forgejo_login_source
 
