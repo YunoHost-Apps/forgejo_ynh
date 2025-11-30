@@ -7,6 +7,7 @@ source /usr/share/yunohost/helpers
 # RESTORE THE APP MAIN DIR
 #=================================================
 ynh_script_progression "Restoring the app files..."
+
 ynh_restore_everything
 
 #=================================================
@@ -19,7 +20,7 @@ ynh_psql_db_shell < ./db.sql
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression "Restoring system configurations related to $app..." --weight=1
+ynh_script_progression "Restoring system configurations related to $app..."
 
 systemctl enable "$app.service" --quiet
 
