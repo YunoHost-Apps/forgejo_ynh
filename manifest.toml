@@ -98,7 +98,7 @@ ram.runtime = "2G"
     main.default = 6000
 
     [resources.apt]
-    packages = "postgresql"
+    packages = "postgresql, git, git-lfs"
 
     [resources.database]
     type = "postgresql"
