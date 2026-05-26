@@ -49,22 +49,21 @@ for entry in org_team_list:
         continue
     if len(group_sync_included_organisations) > 0:
         if org_name not in group_sync_included_organisations:
-            print('a')
             continue
     else:
         if org_name in group_sync_excluded_organisations:
-            print('b')
             continue
     if len(group_sync_included_ynh_group) > 0:
         if team_name not in group_sync_included_ynh_group:
-            print('c')
             continue
     else:
         if team_name in group_sync_excluded_ynh_group:
             print('d')
             continue
-    result.append(f'{org_name}|{team_name}')
-print('\n'.join(result))")"
+    result.append({'org': org_name, 'team': team_name})
+json_result = {f'''cn={i['team']},ou=groups,dc=yunohost,dc=org''': {i['org']: [i['team']]} for i in result}
+# We need to escape because this is already into a JSON
+print(json.dumps([json.dumps(json_result)])[2:-2])")"
     fi
 
     sql_request=$(mktemp)

@@ -11,6 +11,7 @@ ynh_app_config_apply() {
 
 run__sync_groups_mapping() {
     set_forgejo_login_source
+    synchronize_users
 }
 
 #=================================================

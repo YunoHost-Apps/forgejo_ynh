@@ -30,11 +30,8 @@ SET
         "GroupDN": "ou=groups,dc=yunohost,dc=org",
         "GroupFilter": "",
         "GroupMemberUID": "memberUid",
-        "GroupTeamMap": "{% if group_sync_enabled == 'true' -%}{
-                {%- for e in list_group_mapping.splitlines() -%}
-                    {%- if loop.index > 1 -%}, {%- endif -%}
-                    \"cn={{ e.split('|')[1] }},ou=groups,dc=yunohost,dc=org\": {\"{{ e.split('|')[0] }}\": [\"{{ e.split('|')[1] }}\"]}
-                {%- endfor -%}}
+        "GroupTeamMap": "{% if group_sync_enabled == 'true' -%}
+            {{ list_group_mapping }}
             {%- endif %}",
         "GroupTeamMapRemoval": true,
         "UserUID": "uid"
