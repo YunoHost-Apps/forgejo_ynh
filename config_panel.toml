@@ -27,7 +27,7 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
         no = "false"
 
         [main.registration.show_registration_button]
-        ask.en = "Show Registration button?"
+        ask.en = "Show registration button?"
         ask.fr = "Afficher le bouton d'inscription ?"
         type = "boolean"
         yes = "true"
@@ -46,6 +46,7 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
 
         [main.registration.register_manual_confirm]
         ask.en = "Manually confirm the registration?"
+        ask.fr = "Confirmez manuellement l'inscrition ?"
         help.en = "Whether a new user needs to be confirmed manually after registration."
         help.fr = "Si un nouvel utilisateur doit être confirmé manuellement après son inscription."
         type = "boolean"
@@ -55,6 +56,7 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
 
     [main.email]
     name.en = "Notifications"
+    name.fr = "Notifications"
 
         [main.email.enable_notify_mail]
         ask.en = "Mail notification?"
@@ -78,17 +80,19 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
 
         [main.privacy.default_keep_email_private]
         ask.en="Should the users email address be hidden in user profile?"
-        ask.fr="L'adresse e-mail des utilisateurs doit-elle être masquée dans user profile?"
+        ask.fr="L'adresse e-mail des utilisateurs doit-elle être masquée dans user profile ?"
         ask.de="Soll die E-Mail-Adresse im Nutzerprofil ausgeblendet werden?"
         type="boolean"
         yes="true"
         no="false"
 
     [main.explore_ui]
-    name.en = "Paramètre de la page explore"
+    name.en = "Explore pages"
+    name.fr = "Paramètre de la page explore"
 
         [main.explore_ui.require_signin_view]
         ask.en = "Require sign in to view"
+        ask.fr = "Connexion requise pour consulter"
         help.en = "Only allow signed in users to view the explore pages"
         help.fr = "L'utilisateur doit s'identifier pour visualiser le contenu."
         type = "boolean"
@@ -105,12 +109,14 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
 
         [main.explore_ui.disable_organizations_page]
         ask.en = "Disable the organizations explore page"
+        ask.fr = "La page explore/organizations doit-elle être désactivée ?"
         type="boolean"
         yes="true"
         no="false"
 
         [main.explore_ui.disable_code_page]
         ask.en = "Disable the code explore page"
+        ask.fr = "La page explore/code doit-elle être désactivée ?"
         type="boolean"
         yes="true"
         no="false"
@@ -119,8 +125,10 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
     name.en = "Code indexing"
 
         [main.indexing.repos_indexer_enabled]
-        ask.en = "Enable repo indexer"
-        help.en = "Indexing code can take a lot of system resources, especially when first enabled or on major Gitea upgrade"
+        ask.en = "Enable repo indexer?"
+        ask.fr = "Activer l'indexeur de dépôts ?"
+        help.en = "Indexing code can take a lot of system resources, especially when first enabled or on major Gitea upgrade."
+        help.fr = "Le code d'indexation peut mobiliser beaucoup de ressources système, en particulier lors de sa première activation ou lors d'une mise à jour majeure de Gitea."
         type = "boolean"
         yes="true"
         no="false"
@@ -130,12 +138,14 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
     ####################
 
     [main.mirror]
-    name = "Mirror config"
-    help = "Config pertaining to repo mirroring."
+    name.en = "Mirror config"
+    name.fr = "Configuration du miroir"
+    help.en = "Config pertaining to repo mirroring."
+    help.fr = "Configuration relative à la mise en miroir du dépôt."
 
         [main.mirror.mirror_enabled]
         ask.en = "Enable the mirror functionality?"
-        ask.fr = "Activer la fonctionnalité mirroir ?"
+        ask.fr = "Activer la fonctionnalité miroir ?"
         type = "boolean"
         yes = "true"
         no = "false"
@@ -181,37 +191,49 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
         pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'. Must not be more than '1m'."
 
     [main.project]
-    name = "Organisation and team"
-    help = "Organisation and team member management. Note that after a creation of a team in forgejo you will need to trigger the sync group mapping to have the correct mapping between your forgejo team and your Yunohost groups."
+    name.en = "Organisation and team"
+    name.fr = "Organisation et équipe"
+    help.en = "Organisation and team member management. Note that after a creation of a team in forgejo you will need to trigger the sync group mapping to have the correct mapping between your forgejo team and your Yunohost groups."
+    help.fr = "Organisation et gestion des membres de l'équipe. Notez qu'après avoir créé une équipe dans Forgejo, vouz devrez lancer la synchronisation du mappage des groupes afin d'obtenir le mappage correct entre votre équipe Forgejo et vos groupes Yunohost."
 
         [main.project.group_sync_enabled]
         ask.en = "Enable group synchronisation from Yunohost to the organisation team members"
-        help.en = "When enabled, for all organisation teams which has the same name than a Yunohost group name, the members  will be synchronised."
+        ask.fr = "Activer la synchronisation des groupes depuis Yunohost vers les membres de l'équipe de l'organisation"
+        help.en = "When enabled, for all organisation teams which has the same name than a Yunohost group name, the members will be synchronised."
+        help.fr = "Lorsque cette option est activée, les membres de toutes les équipes de l'organisation dont le nom correspond à celui d'un groupe Yunohost seront synchronisés."
         type = "boolean"
         yes = "true"
         no = "false"
 
         [main.project.group_sync_excluded_organisations]
         ask.en = "Excluded organisations to sync group member"
-        help.en = "A list of organisation name to exclude from the group/team synchronisation."
+        ask.fr = "Organisations exclues pour synchroniser les membres du groupe"
+        help.en = "A list of organisation names to exclude from the group/team synchronisation."
+        help.fr = "Une liste des noms d'organisations à exclure de la synchronisation des groupes/équipes."
         type = "tags"
         visible = "group_sync_enabled"
 
         [main.project.group_sync_included_organisations]
         ask.en = "Included organisations to sync group member"
+        ask.fr = "Organisations incluses pour synchroniser les membres du groupe"
         help.en = "A list of organisation name to include from the group/team synchronisation. If set, this will exclude all not listed organisations."
+        help.fr = "Une liste des noms d'organisations à inclure dans la synchronisation des groupes/équipes. Si cette option est activée, toutes les organisations qui ne figurent pas dans la liste seront exclues."
         type = "tags"
         visible = "group_sync_enabled"
 
         [main.project.group_sync_excluded_ynh_group]
         ask.en = "Excluded Yunohost group to sync group member"
+        ask.fr = "Des groupes Yunohost exclues pour synchroniser les membres du groupe"
         help.en = "A list of Yunohost group name to exclude from the group/team synchronisation."
+        help.fr = "Une liste des noms des groupes Yunohost à exclure de la synchronisation des groupes/équipes."
         type = "tags"
         visible = "group_sync_enabled"
 
         [main.project.group_sync_included_ynh_group]
         ask.en = "Included Yunohost group to sync group member"
+        ask.fr = "Des groupes Yunohost incluses pour synchroniser les membres du groupe"
         help.en = "A list of Yunohost group name to include from the group/team synchronisation. If set, this will exclude all not listed groups."
+        help.fr = "Une liste des noms des groupes Yunohost à inclure dans la synchronisation des groupes/équipes. Si cette option est activée, toutes les groupes qui ne figurent pas dans la liste seront exclues."
         type = "tags"
         visible = "group_sync_enabled"
 
@@ -244,11 +266,14 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
         type = "string"
 
     [main.federation]
-    name = "Federation feature"
-    help = "All feature related to the federation. Keep in mind that currently the implementation is experimental and limited. To see https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md for the list of available feature."
+    name.en = "Federation feature"
+    name.fr = "Fonctionnalité de la fédération"
+    help.en = "All feature related to the federation. Keep in mind that currently the implementation is experimental and limited. See https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md for the list of available feature."
+    help.fr = "Toutes les fonctionnalités liées à la fédération. N'oubliez pas qu'à l'heure actuelle, cette fonctionnalité est encore en phase expérimentale et son utilisation est limitée. Consultez https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md pour connaître la liste des fonctionnalités disponibles."
 
         [main.federation.federation_enabled]
         ask.en = "Enable federation"
+        ask.fr = "Activer la fédération"
         type = "boolean"
         yes = "true"
         no = "false"
