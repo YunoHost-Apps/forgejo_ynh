@@ -18,8 +18,8 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
     name = "Registration"
 
         [main.registration.disable_registration]
-        ask.en = "Désactiver les inscriptions ?"
-        ask.fr = "Disable registrations ?"
+        ask.en = "Disable registrations ?"
+        ask.fr = "Désactiver les inscriptions ?"
         help.en = "Disallow registration, only allow admins to create accounts."
         help.fr = "Ne pas autoriser l'inscription, permettre uniquement aux administrateurs de créer des comptes."
         type = "boolean"
