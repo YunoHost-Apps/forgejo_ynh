@@ -148,8 +148,8 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
         ask.en = "Enable repo indexer?"
         ask.fr = "Activer l'indexeur de dépôts ?"
         ask.de = "Akiviere Repo Indexer?"
-        help.en = "Indexing code can take a lot of system resources, especially when first enabled or on major Gitea upgrade."
-        help.fr = "Le code d'indexation peut mobiliser beaucoup de ressources système, en particulier lors de sa première activation ou lors d'une mise à jour majeure de Gitea."
+        help.en = "Indexing code can take a lot of system resources, especially when first enabled or on major Forgejo upgrade."
+        help.fr = "Le code d'indexation peut mobiliser beaucoup de ressources système, en particulier lors de sa première activation ou lors d'une mise à jour majeure de Forgejo."
         help.de = "Code Indexing kann erhebliche Systemressourcen beanspruchen, insbesondere bei der erstmaligen Aktivierung oder nach einem größeren Forgejo-Upgrade."
         type = "boolean"
         yes = "true"
@@ -290,14 +290,14 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
         # visible = "group_sync_enabled"
 
     [main.actions]
-    name.en = "Gitea Actions and Webhook"
-    name.fr = "Gitea Actions et Webhook"
-    name.de = "Gitea Actions und Webhook"
+    name.en = "Forgejo Actions and Webhook"
+    name.fr = "Forgejo Actions et Webhook"
+    name.de = "Forgejo Actions und Webhook"
 
         [main.actions.actions_enabled]
-        ask.en = "Enable Gitea Actions?"
-        ask.fr = "Activez Gitea Actions ?"
-        ask.de = "Gitea Actions aktivieren?"
+        ask.en = "Enable Forgejo Actions?"
+        ask.fr = "Activez Forgejo Actions ?"
+        ask.de = "Forgejo Actions aktivieren?"
         type = "boolean"
         yes = "true"
         no = "false"
