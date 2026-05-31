@@ -252,3 +252,18 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
         type = "boolean"
         yes = "true"
         no = "false"
+
+    [main.lfs]
+    name.en = "Git LSF support"
+
+        [main.lfs.lfs_enable]
+        ask.en = "Enable LFS support on this instance"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+        [main.lfs.lfs_ssh_support]
+        ask.en = "Enable support hover SSH protocol"
+        type = "boolean"
+        yes = "true"
+        no = "false"
