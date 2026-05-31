@@ -22,7 +22,7 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
     name.de = "Registrierung"
 
         [main.registration.disable_registration]
-        ask.en = "Disable registrations ?"
+        ask.en = "Disable registrations?"
         ask.fr = "Désactiver les inscriptions ?"
         ask.de = "Selbstregistrierung deaktivieren?"
         help.en = "Disallow registration, only allow admins to create accounts."
@@ -71,33 +71,33 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
     name.de = "Benachrichtigungen"
 
         [main.email.enable_notify_mail]
-        ask.en = "Mail notification?"
-        ask.fr = "Notification par e-mail ?"
-        ask.de = "Email-Benachrichtigungen?"
+        ask.en = "Enable mail notification?"
+        ask.fr = "Activer les notification par e-mail ?"
+        ask.de = "Email-Benachrichtigungen aktivieren?"
         type = "boolean"
         yes = "true"
         no = "false"
 
     [main.privacy]
     name.en = "Privacy Settings"
-    name.de = "Privatsphäre-Einstellungen"
     name.fr = "Paramètres de confidentialité"
+    name.de = "Privatsphäre-Einstellungen"
 
         [main.privacy.show_user_email]
-        ask.en="Should email addresses be show on explore/users page?"
-        ask.fr="Les adresses e-mail doivent-elles être affichées sur la page explore/users?"
-        ask.de="Sollen Email Adressen auf der Seite explore/users angezeigt werden?"
-        type="boolean"
-        yes="true"
-        no="false"
+        ask.en = "Should email addresses be show on explore/users page?"
+        ask.fr = "Les adresses e-mail doivent-elles être affichées sur la page explore/users?"
+        ask.de = "Sollen Email Adressen auf der Seite explore/users angezeigt werden?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
         [main.privacy.default_keep_email_private]
-        ask.en="Should the users email address be hidden in user profile?"
-        ask.fr="L'adresse e-mail des utilisateurs doit-elle être masquée dans user profile ?"
-        ask.de="Soll die E-Mail-Adresse im Nutzerprofil ausgeblendet werden?"
-        type="boolean"
-        yes="true"
-        no="false"
+        ask.en = "Should the users email address be hidden in user profile?"
+        ask.fr = "L'adresse e-mail des utilisateurs doit-elle être masquée dans user profile ?"
+        ask.de = "Soll die Email Adresse im Nutzerprofil ausgeblendet werden?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
     [main.explore_ui]
     name.en = "Explore pages"
@@ -105,8 +105,8 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
     name.de = "Erkunden-Seite"
 
         [main.explore_ui.require_signin_view]
-        ask.en = "Require sign in to view"
-        ask.fr = "Connexion requise pour consulter"
+        ask.en = "Require sign in to view?"
+        ask.fr = "Connexion requise pour consulter ?"
         ask.de = "Login erforderlich?"
         help.en = "Only allow signed in users to view the explore pages"
         help.fr = "L'utilisateur doit s'identifier pour visualiser le contenu."
@@ -116,28 +116,28 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
         no = "false"
 
         [main.explore_ui.disable_users_page]
-        ask.en = "Disable the users explore page"
+        ask.en = "Disable the users explore page?"
         ask.fr = "La page explore/users doit-elle être désactivée ?"
         ask.de = "Soll die Seite explore/users deaktiviert werden?"
-        type="boolean"
-        yes="true"
-        no="false"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
         [main.explore_ui.disable_organizations_page]
-        ask.en = "Disable the organizations explore page"
+        ask.en = "Disable the organizations explore page?"
         ask.fr = "La page explore/organizations doit-elle être désactivée ?"
         ask.de = "Soll die Seite explore/organizations deaktiviert werden?"
-        type="boolean"
-        yes="true"
-        no="false"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
         [main.explore_ui.disable_code_page]
-        ask.en = "Disable the code explore page"
+        ask.en = "Disable the code explore page?"
         ask.fr = "La page explore/code doit-elle être désactivée ?"
         ask.de = "Soll die Seite explore/code deaktiviert werden?"
-        type="boolean"
-        yes="true"
-        no="false"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
     [main.indexing]
     name.en = "Code indexing"
@@ -152,8 +152,8 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
         help.fr = "Le code d'indexation peut mobiliser beaucoup de ressources système, en particulier lors de sa première activation ou lors d'une mise à jour majeure de Gitea."
         help.de = "Code Indexing kann erhebliche Systemressourcen beanspruchen, insbesondere bei der erstmaligen Aktivierung oder nach einem größeren Forgejo-Upgrade."
         type = "boolean"
-        yes="true"
-        no="false"
+        yes = "true"
+        no = "false"
 
     ####################
     #### MIRROR CONFIG
@@ -228,14 +228,14 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
     name.en = "Organisation and team"
     name.fr = "Organisation et équipe"
     name.de = "Organisation und Team"
-    help.en = "Organisation and team member management. Note that after a creation of a team in forgejo you will need to trigger the sync group mapping to have the correct mapping between your forgejo team and your Yunohost groups."
+    help.en = "Organisation and team member management. Note that after a creation of a team in Forgejo you will need to trigger the sync group mapping to have the correct mapping between your Forgejo team and your Yunohost groups."
     help.fr = "Organisation et gestion des membres de l'équipe. Notez qu'après avoir créé une équipe dans Forgejo, vouz devrez lancer la synchronisation du mappage des groupes afin d'obtenir le mappage correct entre votre équipe Forgejo et vos groupes Yunohost."
     help.de = "Organisation und Team Verwaltung. Beachte, dass nach der Erstellung eines Teams in Forgejo die Gruppenzuordnung synchronisiert werden muss, um die korrekte Zuordnung zwischen dem Forgejo-Team und den Yunohost-Gruppen sicherzustellen."
 
         [main.project.group_sync_enabled]
-        ask.en = "Enable group synchronisation from Yunohost to the organisation team members"
-        ask.fr = "Activer la synchronisation des groupes depuis Yunohost vers les membres de l'équipe de l'organisation"
-        ask.de = "Synchronisierung von Yunohost-Gruppen zu Teammitgliedern aktivieren"
+        ask.en = "Enable group synchronisation from Yunohost to the organisation team members?"
+        ask.fr = "Activer la synchronisation des groupes depuis Yunohost vers les membres de l'équipe de l'organisation ?"
+        ask.de = "Synchronisierung von Yunohost-Gruppen zu Teammitgliedern aktivieren?"
         help.en = "When enabled, members of all organisation teams whose names match the name of a Yunohost group will be synchronised."
         help.fr = "Lorsque cette option est activée, les membres de toutes les équipes de l'organisation dont le nom correspond à celui d'un groupe Yunohost seront synchronisés."
         help.de = "Bei Aktivierung werden die Mitglieder aller Teams, deren Name mit dem Namen einer Yunohost-Gruppe übereinstimmt, synchronisiert."
@@ -291,24 +291,24 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
 
     [main.actions]
     name.en = "Gitea Actions and Webhook"
-    name.de = "Gitea Actions und Webhook"
     name.fr = "Gitea Actions et Webhook"
+    name.de = "Gitea Actions und Webhook"
 
         [main.actions.actions_enabled]
-        ask.en = "Enable Gitea Actions"
-        ask.de = "Gitea Actions aktivieren"
-        ask.fr = "Activez Gitea Actions"
+        ask.en = "Enable Gitea Actions?"
+        ask.fr = "Activez Gitea Actions ?"
+        ask.de = "Gitea Actions aktivieren?"
         type = "boolean"
         yes = "true"
         no = "false"
 
         [main.actions.webhook_allowed_hosts]
         ask.en = "List of hosts allowed to call via webhook"
-        ask.de = "Liste von Hosts, die per Webhook angesprochen werden dürfen"
         ask.fr = "Liste des hôtes pouvant être adressés via un webhook"
+        ask.de = "Liste von Hosts, die per Webhook angesprochen werden dürfen"
         help.en = "Webhook can only call allowed hosts for security reasons. Comma separated list (example.com,anotherexample.com)."
-        help.de = "Webhook kann nur erlaubte Hosts ansprechen. Durch Komma separierte Liste (beispiel.de,anderesbeispiel.de)."
         help.fr = "Pour des raisons de sécurité, le webhook ne peut appeler que les hôtes autorisés. Liste séparée par des virgules (example.fr, autreexample.fr)."
+        help.de = "Webhook kann nur erlaubte Hosts ansprechen. Durch Komma separierte Liste (beispiel.de,anderesbeispiel.de)."
         type = "string"
 
     [main.federation]
@@ -320,9 +320,9 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
     help.de = "Alle Funktionen im Zusammenhang mit der Föderation. Beachte, dass sich die Implementierung derzeit noch im Versuchsstadium befindet und nur eingeschränkt verfügbar ist. Siehe https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md für eine Liste der verfügbaren Funktionen."
 
         [main.federation.federation_enabled]
-        ask.en = "Enable federation"
-        ask.fr = "Activer la fédération"
-        ask.de = "Föderation aktivieren"
+        ask.en = "Enable federation?"
+        ask.fr = "Activer la fédération ?"
+        ask.de = "Föderation aktivieren?"
         type = "boolean"
         yes = "true"
         no = "false"
