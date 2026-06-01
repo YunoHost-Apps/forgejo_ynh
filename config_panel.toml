@@ -106,7 +106,7 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
 
         [main.explore_ui.require_signin_view]
         ask.en = "Require sign in to view?"
-        ask.fr = "Connexion requise pour consulter ?"
+        ask.fr = "Connexion requise pour voir ?"
         ask.de = "Login erforderlich?"
         help.en = "Only allow signed in users to view the explore pages"
         help.fr = "L'utilisateur doit s'identifier pour visualiser le contenu."
@@ -163,7 +163,7 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
     name.en = "Mirror config"
     name.fr = "Configuration du miroir"
     name.de = "Spiegel Einstellungen"
-    help.en = "Config pertaining to repo mirroring."
+    help.en = "Config related to repo mirroring."
     help.fr = "Configuration relative à la mise en miroir du dépôt."
     help.de = "Einstellungen für die Repo-Spiegelung."
 
@@ -225,9 +225,9 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
         pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'. Must not be more than '1m'."
 
     [main.project]
-    name.en = "Organisation and team"
-    name.fr = "Organisation et équipe"
-    name.de = "Organisation und Team"
+    name.en = "Organisation and team synchronisation"
+    name.fr = "Synchronisation d'organisation et équipe"
+    name.de = "Organisation und Team Synchronisierung"
     help.en = "Organisation and team member management. Note that after a creation of a team in Forgejo you will need to trigger the sync group mapping to have the correct mapping between your Forgejo team and your Yunohost groups."
     help.fr = "Organisation et gestion des membres de l'équipe. Notez qu'après avoir créé une équipe dans Forgejo, vouz devrez lancer la synchronisation du mappage des groupes afin d'obtenir le mappage correct entre votre équipe Forgejo et vos groupes Yunohost."
     help.de = "Organisation und Team Verwaltung. Beachte, dass nach der Erstellung eines Teams in Forgejo die Gruppenzuordnung synchronisiert werden muss, um die korrekte Zuordnung zwischen dem Forgejo-Team und den Yunohost-Gruppen sicherzustellen."
