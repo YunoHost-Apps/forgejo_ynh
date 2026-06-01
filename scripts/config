@@ -3,6 +3,14 @@
 source ./_common.sh
 source /usr/share/yunohost/helpers
 
+ynh_app_config_validate() {
+    # Ensure to not show the registration button when the registration is disabled
+    if [ "$disable_registration" == 'true' ]; then
+        show_registration_button=false
+    fi
+    _ynh_app_config_validate
+}
+
 ynh_app_config_apply() {
     _ynh_app_config_apply
     ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"

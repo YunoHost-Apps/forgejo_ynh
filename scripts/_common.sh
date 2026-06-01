@@ -111,7 +111,7 @@ function synchronize_users() {
 
 ensure_vars_set() {
     ynh_app_setting_set_default --key=disable_registration --value=true
-    ynh_app_setting_set_default --key=show_registration_button --value=true
+    ynh_app_setting_set_default --key=show_registration_button --value=false
     ynh_app_setting_set_default --key=register_email_confirm --value=false
     ynh_app_setting_set_default --key=register_manual_confirm --value=false
 
