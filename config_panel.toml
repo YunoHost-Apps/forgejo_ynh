@@ -176,7 +176,7 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
         no = "false"
         help.en = "Set to **false** to disable all mirrors. Pre-existing mirrors remain valid but won't be updated; may be converted to regular repo."
         help.fr = "Définir à **false** pour désactiver tous les miroirs. Les miroirs préexistants restent valables mais ne seront pas mis à jour ; ils peuvent être convertis en dépôts normaux."
-        help.fr = "Wähle **false**, um alle Spiegel zu deaktivieren. Bereits vorhandene Spiegel bleiben gültig, werden jedoch nicht mehr aktualisiert; sie können in reguläre Repos umgewandelt werden."
+        help.de = "Wähle **false**, um alle Spiegel zu deaktivieren. Bereits vorhandene Spiegel bleiben gültig, werden jedoch nicht mehr aktualisiert; sie können in reguläre Repos umgewandelt werden."
 
         [main.mirror.mirror_disable_new_pull]
         ask.en = "Disable pull mirroring?"
