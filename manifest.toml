@@ -6,6 +6,7 @@ id = "forgejo"
 name = "Forgejo"
 description.en = "Lightweight software forge"
 description.fr = "Forge logiciel légère"
+description.de = "Leichtgewichtige Software-Forge"
 
 version = "15.0.2~ynh1"
 
@@ -44,10 +45,12 @@ ram.runtime = "2G"
     default = "visitors"
 
     [install.init_admin_permission]
-    ask.en = "Which group will have access to Forgejo admin page"
-    ask.fr = "Quel groupe aura accès à l'administration de Forgejo"
+    ask.en = "Which group will have access to Forgejo admin page?"
+    ask.fr = "Quel groupe aura accès à l'administration de Forgejo ?"
+    ask.de = "Welche Gruppe soll Zugriff auf die Forgejo Administrationsseite erhalten?"
     help.en = "Users of this group should have access to Forgejo admin page"
     help.fr = "Les utilisateurs de ce groupe devrait avoir accès à la page d'administration de Forgejo"
+    help.de = "Benutzer in dieser Gruppe sollen Zugriff auf die Forgejo Administrationsseite erhalten."
     type = "group"
     default = "admins"
 

@@ -38,6 +38,12 @@ ynh_app_setting_set_default --key=oauth2_jwt_secret --value=$("$install_dir/forg
 
 ensure_vars_set
 
+# Ensure to not show the registration button when the registration is disabled
+if [ "$disable_registration" == 'true' ]; then
+    show_registration_button=false
+    ynh_app_setting_set --key=show_registration_button --value="$show_registration_button"
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================

@@ -111,7 +111,7 @@ function synchronize_users() {
 
 ensure_vars_set() {
     ynh_app_setting_set_default --key=disable_registration --value=true
-    ynh_app_setting_set_default --key=show_registration_button --value=true
+    ynh_app_setting_set_default --key=show_registration_button --value=false
     ynh_app_setting_set_default --key=register_email_confirm --value=false
     ynh_app_setting_set_default --key=register_manual_confirm --value=false
 
@@ -127,6 +127,9 @@ ensure_vars_set() {
 
     ynh_app_setting_set_default --key=actions_enabled --value=false
     ynh_app_setting_set_default --key=webhook_allowed_hosts --value=""
+
+    ynh_app_setting_set_default --key=lfs_enable --value=true
+    ynh_app_setting_set_default --key=lfs_ssh_support --value=false
 
     ynh_app_setting_set_default --key=enable_notify_mail --value=true
 

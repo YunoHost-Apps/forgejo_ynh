@@ -6,29 +6,36 @@ services = [ "__APP__" ]
 
 name.en = "Main config panel"
 name.fr = "Panneau de configuration principal"
+name.de = "Allgemeine Einstellungen"
 
 help.en = "Here you can easily configure some things about your Forgejo instance."
 help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre instance Forgejo."
+help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-Instanz vornehmen."
 
     ####################
     #### SERVICE CONFIG
     ####################
 
     [main.registration]
-    name = "Registration"
+    name.en = "Registration"
+    name.fr = "Inscription"
+    name.de = "Registrierung"
 
         [main.registration.disable_registration]
-        ask.en = "Disable registrations ?"
+        ask.en = "Disable registrations?"
         ask.fr = "Désactiver les inscriptions ?"
+        ask.de = "Selbstregistrierung deaktivieren?"
         help.en = "Disallow registration, only allow admins to create accounts."
         help.fr = "Ne pas autoriser l'inscription, permettre uniquement aux administrateurs de créer des comptes."
+        help.de = "Registrierung sperren, nur Administratoren dürfen Konten erstellen."
         type = "boolean"
         yes = "true"
         no = "false"
 
         [main.registration.show_registration_button]
-        ask.en = "Show Registration button?"
+        ask.en = "Show registration button?"
         ask.fr = "Afficher le bouton d'inscription ?"
+        ask.de = "Schaltfläche zum Registrieren anzeigen?"
         type = "boolean"
         yes = "true"
         no = "false"
@@ -37,8 +44,10 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
         [main.registration.register_email_confirm]
         ask.en = "Email confirmation on registration?"
         ask.fr = "Confirmation d'email à l'inscription ?"
+        ask.de = "Email-Bestätigung bei Registrierung?"
         help.en = "Whether a new user needs to confirm their email when registering."
         help.fr = "Si un nouvel utilisateur doit confirmer son adresse électronique lors de l'inscription."
+        help.de = "Neue Nutzer müssen bei der Registrierung ihre Email Adresse bestätigen."
         type = "boolean"
         yes = "true"
         no = "false"
@@ -46,8 +55,11 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
 
         [main.registration.register_manual_confirm]
         ask.en = "Manually confirm the registration?"
+        ask.fr = "Confirmez manuellement l'inscrition ?"
+        ask.de = "Die Registrierung manuell bestätigen?"
         help.en = "Whether a new user needs to be confirmed manually after registration."
         help.fr = "Si un nouvel utilisateur doit être confirmé manuellement après son inscription."
+        help.de = "Neue Nutzer müssen nach der Registrierung manuell bestätigt werden."
         type = "boolean"
         yes = "true"
         no = "false"
@@ -55,163 +67,219 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
 
     [main.email]
     name.en = "Notifications"
+    name.fr = "Notifications"
+    name.de = "Benachrichtigungen"
 
         [main.email.enable_notify_mail]
-        ask.en = "Mail notification?"
-        ask.fr = "Notification par e-mail ?"
+        ask.en = "Enable mail notification?"
+        ask.fr = "Activer les notification par e-mail ?"
+        ask.de = "Email-Benachrichtigungen aktivieren?"
         type = "boolean"
         yes = "true"
         no = "false"
 
     [main.privacy]
     name.en = "Privacy Settings"
-    name.de = "Privatsphäre-Einstellungen"
     name.fr = "Paramètres de confidentialité"
+    name.de = "Privatsphäre-Einstellungen"
 
         [main.privacy.show_user_email]
-        ask.en="Should email addresses be show on explore/users page?"
-        ask.fr="Les adresses e-mail doivent-elles être affichées sur la page explore/users?"
-        ask.de="Sollen Email Adressen auf der Seite explore/users angezeigt werden?"
-        type="boolean"
-        yes="true"
-        no="false"
+        ask.en = "Should email addresses be show on explore/users page?"
+        ask.fr = "Les adresses e-mail doivent-elles être affichées sur la page explore/users?"
+        ask.de = "Sollen Email Adressen auf der Seite explore/users angezeigt werden?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
         [main.privacy.default_keep_email_private]
-        ask.en="Should the users email address be hidden in user profile?"
-        ask.fr="L'adresse e-mail des utilisateurs doit-elle être masquée dans user profile?"
-        ask.de="Soll die E-Mail-Adresse im Nutzerprofil ausgeblendet werden?"
-        type="boolean"
-        yes="true"
-        no="false"
+        ask.en = "Should the users email address be hidden in user profile?"
+        ask.fr = "L'adresse e-mail des utilisateurs doit-elle être masquée dans user profile ?"
+        ask.de = "Soll die Email Adresse im Nutzerprofil ausgeblendet werden?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
     [main.explore_ui]
-    name.en = "Paramètre de la page explore"
+    name.en = "Explore pages"
+    name.fr = "Paramètre de la page explore"
+    name.de = "Erkunden-Seite"
 
         [main.explore_ui.require_signin_view]
-        ask.en = "Require sign in to view"
+        ask.en = "Require sign in to view?"
+        ask.fr = "Connexion requise pour voir ?"
+        ask.de = "Login erforderlich?"
         help.en = "Only allow signed in users to view the explore pages"
         help.fr = "L'utilisateur doit s'identifier pour visualiser le contenu."
+        help.de = "Nur angemeldeten Benutzern die Anzeige der Erkunden-Seite erlauben."
         type = "boolean"
         yes = "true"
         no = "false"
 
         [main.explore_ui.disable_users_page]
-        ask.en = "Disable the users explore page"
+        ask.en = "Disable the users explore page?"
         ask.fr = "La page explore/users doit-elle être désactivée ?"
         ask.de = "Soll die Seite explore/users deaktiviert werden?"
-        type="boolean"
-        yes="true"
-        no="false"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
         [main.explore_ui.disable_organizations_page]
-        ask.en = "Disable the organizations explore page"
-        type="boolean"
-        yes="true"
-        no="false"
+        ask.en = "Disable the organizations explore page?"
+        ask.fr = "La page explore/organizations doit-elle être désactivée ?"
+        ask.de = "Soll die Seite explore/organizations deaktiviert werden?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
         [main.explore_ui.disable_code_page]
-        ask.en = "Disable the code explore page"
-        type="boolean"
-        yes="true"
-        no="false"
+        ask.en = "Disable the code explore page?"
+        ask.fr = "La page explore/code doit-elle être désactivée ?"
+        ask.de = "Soll die Seite explore/code deaktiviert werden?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
 
     [main.indexing]
     name.en = "Code indexing"
+    name.fr = "Code indexing"
+    name.de = "Code indexing"
 
         [main.indexing.repos_indexer_enabled]
-        ask.en = "Enable repo indexer"
-        help.en = "Indexing code can take a lot of system resources, especially when first enabled or on major Gitea upgrade"
+        ask.en = "Enable repo indexer?"
+        ask.fr = "Activer l'indexeur de dépôts ?"
+        ask.de = "Akiviere Repo Indexer?"
+        help.en = "Indexing code can take a lot of system resources, especially when first enabled or on major Forgejo upgrade."
+        help.fr = "Le code d'indexation peut mobiliser beaucoup de ressources système, en particulier lors de sa première activation ou lors d'une mise à jour majeure de Forgejo."
+        help.de = "Code Indexing kann erhebliche Systemressourcen beanspruchen, insbesondere bei der erstmaligen Aktivierung oder nach einem größeren Forgejo-Upgrade."
         type = "boolean"
-        yes="true"
-        no="false"
+        yes = "true"
+        no = "false"
 
     ####################
     #### MIRROR CONFIG
     ####################
 
     [main.mirror]
-    name = "Mirror config"
-    help = "Config pertaining to repo mirroring."
+    name.en = "Mirror config"
+    name.fr = "Configuration du miroir"
+    name.de = "Spiegel Einstellungen"
+    help.en = "Config related to repo mirroring."
+    help.fr = "Configuration relative à la mise en miroir du dépôt."
+    help.de = "Einstellungen für die Repo-Spiegelung."
 
         [main.mirror.mirror_enabled]
         ask.en = "Enable the mirror functionality?"
-        ask.fr = "Activer la fonctionnalité mirroir ?"
+        ask.fr = "Activer la fonctionnalité miroir ?"
+        ask.de = "Repo-Spiegelung aktivieren?"
         type = "boolean"
         yes = "true"
         no = "false"
         help.en = "Set to **false** to disable all mirrors. Pre-existing mirrors remain valid but won't be updated; may be converted to regular repo."
         help.fr = "Définir à **false** pour désactiver tous les miroirs. Les miroirs préexistants restent valables mais ne seront pas mis à jour ; ils peuvent être convertis en dépôts normaux."
+        help.de = "Wähle **false**, um alle Spiegel zu deaktivieren. Bereits vorhandene Spiegel bleiben gültig, werden jedoch nicht mehr aktualisiert; sie können in reguläre Repos umgewandelt werden."
 
         [main.mirror.mirror_disable_new_pull]
         ask.en = "Disable pull mirroring?"
         ask.fr = "Désactiver les miroirs pull ?"
+        ask.de = "Pull-Spiegel deaktivieren?"
         type = "boolean"
         yes = "true"
         no = "false"
         help.en = "Disable the creation of **new** pull mirrors. Pre-existing mirrors remain valid. Will be ignored if `mirror.ENABLED` is `false`."
         help.fr = "Désactive la création de **nouveaux** miroirs pull. Les miroirs préexistants restent valables. Sera ignoré si `mirror.ENABLED` est `false`."
+        help.de = "Die Erstellung **neuer** Pull-Spiegel deaktivieren. Bereits vorhandene Spiegel bleiben gültig. Wird ignoriert, wenn `mirror.ENABLED` auf `false` gesetzt ist."
 
         [main.mirror.mirror_disable_new_push]
         ask.en = "Disable push mirroring?"
         ask.fr = "Désactiver les miroirs push ?"
+        ask.de = "Push-Spiegel deaktivieren?"
         type = "boolean"
         yes = "true"
         no = "false"
         help.en = "Disable the creation of **new** push mirrors. Pre-existing mirrors remain valid. Will be ignored if `mirror.ENABLED` is `false`."
         help.fr = "Désactive la création de **nouveaux** miroirs push. Les miroirs préexistants restent valables. Sera ignoré si `mirror.ENABLED` est `false`."
+        help.de = "Die Erstellung **neuer** Push-Spiegel deaktivieren. Bereits vorhandene Spiegel bleiben gültig. Wird ignoriert, wenn `mirror.ENABLED` auf `false` gesetzt ist."
 
         [main.mirror.mirror_default_interval]
         ask.en = "Default duration between each check?"
         ask.fr = "Durée par défaut entre chaque contrôle ?"
+        ask.de = "Standarddauer zwischen Aktualisierungen?"
         type = "string"
         help.en = "Examples: '8h', '30m'"
         help.fr = "Exemples : '8h', '30m'"
+        help.de = "Beispiele: '8h', '30m'"
         pattern.regexp = '^[0-9]+(m$|h$|d$)$'
         pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'."
 
         [main.mirror.mirror_min_interval]
         ask.en = "Minimum duration between each check?"
         ask.fr = "Durée minimale entre chaque contrôle ?"
+        ask.de = "Minimaldauer zwischen Aktualisierungen?"
         type = "string"
         help.en = "Examples: '2h', '10m'"
         help.fr = "Exemples : '2h', '10m'"
+        help.de = "Beispiele: '2h', '10m'"
         # Lookaround isn't supported by pydantic v2 ?
         # pattern.regexp = '(?!^[0-1]m$)(^[0-9]+(m$|h$|d$)$)'
         pattern.regexp = "^[0-9]+(m$|h$|d$)$"
         pattern.error = "Must begin with one or more digits and end with 'm', 'h' or 'd'. Must not be more than '1m'."
 
     [main.project]
-    name = "Organisation and team"
-    help = "Organisation and team member management. Note that after a creation of a team in forgejo you will need to trigger the sync group mapping to have the correct mapping between your forgejo team and your Yunohost groups."
+    name.en = "Organisation and team synchronisation"
+    name.fr = "Synchronisation d'organisation et équipe"
+    name.de = "Organisation und Team Synchronisierung"
+    help.en = "Organisation and team member management. Note that after a creation of a team in Forgejo you will need to trigger the sync group mapping to have the correct mapping between your Forgejo team and your Yunohost groups."
+    help.fr = "Organisation et gestion des membres de l'équipe. Notez qu'après avoir créé une équipe dans Forgejo, vouz devrez lancer la synchronisation du mappage des groupes afin d'obtenir le mappage correct entre votre équipe Forgejo et vos groupes Yunohost."
+    help.de = "Organisation und Team Verwaltung. Beachte, dass nach der Erstellung eines Teams in Forgejo die Gruppenzuordnung synchronisiert werden muss, um die korrekte Zuordnung zwischen dem Forgejo-Team und den Yunohost-Gruppen sicherzustellen."
 
         [main.project.group_sync_enabled]
-        ask.en = "Enable group synchronisation from Yunohost to the organisation team members"
-        help.en = "When enabled, for all organisation teams which has the same name than a Yunohost group name, the members  will be synchronised."
+        ask.en = "Enable group synchronisation from Yunohost to the organisation team members?"
+        ask.fr = "Activer la synchronisation des groupes depuis Yunohost vers les membres de l'équipe de l'organisation ?"
+        ask.de = "Synchronisierung von Yunohost-Gruppen zu Teammitgliedern aktivieren?"
+        help.en = "When enabled, members of all organisation teams whose names match the name of a Yunohost group will be synchronised."
+        help.fr = "Lorsque cette option est activée, les membres de toutes les équipes de l'organisation dont le nom correspond à celui d'un groupe Yunohost seront synchronisés."
+        help.de = "Bei Aktivierung werden die Mitglieder aller Teams, deren Name mit dem Namen einer Yunohost-Gruppe übereinstimmt, synchronisiert."
         type = "boolean"
         yes = "true"
         no = "false"
 
         [main.project.group_sync_excluded_organisations]
         ask.en = "Excluded organisations to sync group member"
-        help.en = "A list of organisation name to exclude from the group/team synchronisation."
+        ask.fr = "Organisations exclues pour synchroniser les membres du groupe"
+        ask.de = "Organisationen, die **nicht** synchronisiert werden sollen"
+        help.en = "A list of organisation names to exclude from the group/team synchronisation."
+        help.fr = "Une liste des noms d'organisations à exclure de la synchronisation des groupes/équipes."
+        help.de = "Eine Liste von Organisationen, deren Teams von der Synchronisierung ausgeschlossen werden sollen."
         type = "tags"
         visible = "group_sync_enabled"
 
         [main.project.group_sync_included_organisations]
         ask.en = "Included organisations to sync group member"
+        ask.fr = "Organisations incluses pour synchroniser les membres du groupe"
+        ask.de = "Organisationen, die synchronisiert werden sollen"
         help.en = "A list of organisation name to include from the group/team synchronisation. If set, this will exclude all not listed organisations."
+        help.fr = "Une liste des noms d'organisations à inclure dans la synchronisation des groupes/équipes. Si cette option est activée, toutes les organisations qui ne figurent pas dans la liste seront exclues."
+        help.de = "Eine Liste der Organisationen, deren Teams bei der Synchronisierung berücksichtigt werden sollen. Wenn diese Option aktiviert ist, werden alle nicht aufgeführten Organisationen ausgeschlossen."
         type = "tags"
         visible = "group_sync_enabled"
 
         [main.project.group_sync_excluded_ynh_group]
         ask.en = "Excluded Yunohost group to sync group member"
+        ask.fr = "Des groupes Yunohost exclues pour synchroniser les membres du groupe"
+        ask.de = "Yunohost-Gruppen, die **nicht** synchronisiert werden sollen"
         help.en = "A list of Yunohost group name to exclude from the group/team synchronisation."
+        help.fr = "Une liste des noms des groupes Yunohost à exclure de la synchronisation des groupes/équipes."
+        help.de = "Eine Liste von Yunohost-Gruppen, die von der Synchronisierung ausgeschlossen werden sollen."
         type = "tags"
         visible = "group_sync_enabled"
 
         [main.project.group_sync_included_ynh_group]
         ask.en = "Included Yunohost group to sync group member"
+        ask.fr = "Des groupes Yunohost incluses pour synchroniser les membres du groupe"
+        ask.de = "Yunohost-Gruppen, die synchronisiert werden sollen"
         help.en = "A list of Yunohost group name to include from the group/team synchronisation. If set, this will exclude all not listed groups."
+        help.fr = "Une liste des noms des groupes Yunohost à inclure dans la synchronisation des groupes/équipes. Si cette option est activée, toutes les groupes qui ne figurent pas dans la liste seront exclues."
+        help.de = "Eine Liste der Yunohost-Gruppen, die bei der Synchronisierung berücksichtigt werden sollen. Wenn diese Option aktiviert ist, werden alle nicht aufgeführten Gruppen ausgeschlossen."
         type = "tags"
         visible = "group_sync_enabled"
 
@@ -222,33 +290,54 @@ help.fr = "Ici, vous pouvez facilement configurer certains éléments de votre i
         # visible = "group_sync_enabled"
 
     [main.actions]
-    name.en = "Gitea Actions and Webhook"
-    name.de = "Gitea Actions und Webhook"
-    name.fr = "Gitea Actions et Webhook"
+    name.en = "Forgejo Actions and Webhook"
+    name.fr = "Forgejo Actions et Webhook"
+    name.de = "Forgejo Actions und Webhook"
 
         [main.actions.actions_enabled]
-        ask.en = "Enable Gitea Actions"
-        ask.de = "Gitea Actions aktivieren"
-        ask.fr = "Activez Gitea Actions"
+        ask.en = "Enable Forgejo Actions?"
+        ask.fr = "Activez Forgejo Actions ?"
+        ask.de = "Forgejo Actions aktivieren?"
         type = "boolean"
         yes = "true"
         no = "false"
 
         [main.actions.webhook_allowed_hosts]
         ask.en = "List of hosts allowed to call via webhook"
-        ask.de = "Liste von Hosts, die per Webhook angesprochen werden dürfen"
         ask.fr = "Liste des hôtes pouvant être adressés via un webhook"
+        ask.de = "Liste von Hosts, die per Webhook angesprochen werden dürfen"
         help.en = "Webhook can only call allowed hosts for security reasons. Comma separated list (example.com,anotherexample.com)."
-        help.de = "Webhook kann nur erlaubte Hosts ansprechen. Durch Komma separierte Liste (beispiel.de,anderesbeispiel.de)."
         help.fr = "Pour des raisons de sécurité, le webhook ne peut appeler que les hôtes autorisés. Liste séparée par des virgules (example.fr, autreexample.fr)."
+        help.de = "Webhook kann nur erlaubte Hosts ansprechen. Durch Komma separierte Liste (beispiel.de,anderesbeispiel.de)."
         type = "string"
 
     [main.federation]
-    name = "Federation feature"
-    help = "All feature related to the federation. Keep in mind that currently the implementation is experimental and limited. To see https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md for the list of available feature."
+    name.en = "Federation feature"
+    name.fr = "Fonctionnalité de la fédération"
+    name.de = "Föderation"
+    help.en = "All feature related to the federation. Keep in mind that currently the implementation is experimental and limited. See https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md for the list of available feature."
+    help.fr = "Toutes les fonctionnalités liées à la fédération. N'oubliez pas qu'à l'heure actuelle, cette fonctionnalité est encore en phase expérimentale et son utilisation est limitée. Consultez https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md pour connaître la liste des fonctionnalités disponibles."
+    help.de = "Alle Funktionen im Zusammenhang mit der Föderation. Beachte, dass sich die Implementierung derzeit noch im Versuchsstadium befindet und nur eingeschränkt verfügbar ist. Siehe https://codeberg.org/forgejo-contrib/federation/src/branch/main/FederationRoadmap.md für eine Liste der verfügbaren Funktionen."
 
         [main.federation.federation_enabled]
-        ask.en = "Enable federation"
+        ask.en = "Enable federation?"
+        ask.fr = "Activer la fédération ?"
+        ask.de = "Föderation aktivieren?"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+    [main.lfs]
+    name.en = "Git LSF support"
+
+        [main.lfs.lfs_enable]
+        ask.en = "Enable LFS support on this instance"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
+        [main.lfs.lfs_ssh_support]
+        ask.en = "Enable support hover SSH protocol"
         type = "boolean"
         yes = "true"
         no = "false"
