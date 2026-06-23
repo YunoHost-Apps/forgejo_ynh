@@ -13,6 +13,12 @@ ynh_app_config_validate() {
 
 ynh_app_config_apply() {
     _ynh_app_config_apply
+    migration_enabled="$(ynh_app_setting_get --app="$app" --key=migration_enabled)"
+    if [[ "$migration_enabled" = "true" ]]; then
+        ynh_app_setting_set --key=migration_allowed_domains--value='*'
+    else
+        ynh_app_setting_set --key=migration_allowed_domains --value=''
+    fi
     ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
     set_forgejo_login_source
 }

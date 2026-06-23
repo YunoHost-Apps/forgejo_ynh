@@ -43,3 +43,45 @@ Don't forget to restart Forgejo `sudo systemctl restart forgejo.service`.
 ### Git command access with HTTPS
 
 If you want to use the Git command (like `git clone`, `git pull`, `git push`), you need to set this app as **public**.
+
+## Migrating from gitea
+
+> [!NOTE]
+> Fully automated migration from the gitea package is not yet supported. Repositories need to be migrated individually.
+
+Before migrating any repositories, you need to:
+
+### Setting up forgejo
+
+> [!WARNING]
+> forgejo needs to be setup on a different domain than gitea.
+
+If you'd like to keep your repository URLs, you need to change the URL that the gitea application uses. But because of a URL conflict (both apps claim `DOMAIN/v2`), you need to move the existing gitea app to a different domain.
+
+Once that is done, you can proceed with setting up forgejo. Make sure group synchronization is enabled in the forgejo settings. Now, from the forgejo admin interface, click the « Synchronize external user data » to create the forgejo users from Yunohost users.
+
+### Creating a gitea access key
+
+From your gitea personal account, go to *Settings*, then *Applications* in the sidebar. Click *Generate new token* with any name (eg. `forgejo`), then make sure *Repository and Organization access* is set to `All`, and set all permissions to `Read`.
+
+Now click *Generate token*, and copy the token printed on screen. You will need it later for each migration.
+
+### Migrating a repository manually
+
+> [!WARNING]
+> You can only migrate a repository to your own account or an organization you're a member of. Each user will have to migrate their own repositories.
+
+Once connected on forgejo, click the *New migration* button in the action bar in the top-right corner:
+
+![Top-right corner of forgejo interface](screenshots/new_migration.png)
+
+Now select *Gitea*, then:
+
+- write your changed gitea repository URL: `https://NEWGITEA.example.com/gitea/USER/REPOSITORY`
+- write your gitea access token
+- check all the boxes in *Migration items* so issues/PRs are also migrated
+- select yourself or your organization as owner of the  newrepository
+- write the repository name
+- check *Make repository private* if the repository was previously private
+
+Now you can click *Migrate repository* and the whole repository will be imported to forgejo.
