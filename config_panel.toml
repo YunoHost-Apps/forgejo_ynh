@@ -167,6 +167,15 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
     help.fr = "Configuration relative à la mise en miroir du dépôt."
     help.de = "Einstellungen für die Repo-Spiegelung."
 
+        [main.mirror.migration_enabled]
+        ask.en = "Enable migrations from 3rd-party repositories??"
+        ask.fr = "Autoriser les migrations depuis des dépôts tiers ?"
+        help.en = "Allows importing repositories from gitea_ynh, Github and other providers."
+        help.fr = "Permet d'importer des dépôts depuis gitea_ynh, Github et d'autres fournisseurs."
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
         [main.mirror.mirror_enabled]
         ask.en = "Enable the mirror functionality?"
         ask.fr = "Activer la fonctionnalité miroir ?"
