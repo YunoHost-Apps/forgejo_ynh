@@ -146,6 +146,10 @@ ensure_vars_set() {
     ynh_app_setting_set_default --key=group_sync_included_ynh_group --value=''
 
     ynh_app_setting_set_default --key=federation_enabled --value='false'
+
+    if ! [ -f "$install_dir"/custom/conf/custom.ini ]; then
+        touch "$install_dir"/custom/conf/custom.ini
+    fi
 }
 
 set_permissions() {
