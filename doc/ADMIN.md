@@ -1,5 +1,12 @@
 ## Additional informations
 
+### Customize configuration
+
+Default Yunohost configuration is stored in `INSTALL_DIR/custom/conf/yunohost_default.ini`. Do not erase this file. Custom configuration
+can be added to `INSTALL_DIR/custom/conf/custom.ini`, overriding default configuration keys.
+
+The file `INSTALL_DIR/custom/conf/app.ini` contains the merged configuration values, and is regenerated every time forgejo starts.
+
 ### User synchronization
 In order to allow access to Forgejo admin section, YunoHost users are automaticaly synchronized with Forgejo's.  
 You can use «Forgejo (admin)» permission to manage which user is considered as forgejo admin.
