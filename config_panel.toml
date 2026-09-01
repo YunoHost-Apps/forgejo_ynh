@@ -65,6 +65,34 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
         no = "false"
         visible = "!disable_registration && !register_email_confirm"
 
+    [main.repository]
+    name.en = "Repositories and organizations"
+    name.fr = "Dépôts et organisations"
+    name.de = "Repositories und Organisationen"
+
+        [main.repository.max_creation_limit]
+        ask.en = "Maximum number of repositories per user"
+        ask.fr = "Nombre maximum de dépôts par utilisateur"
+        ask.de = "Maximale Anzahl an Repositories pro Nutzer"
+        help.en = "Set to 0 to disable repository creation by users (admins can still create repositories), or -1 for no limit."
+        help.fr = "Mettre à 0 pour empêcher les utilisateurs de créer des dépôts (les administrateurs le peuvent toujours), ou -1 pour aucune limite."
+        help.de = "0 verhindert, dass Nutzer Repositories erstellen (Administratoren können dies weiterhin), -1 bedeutet keine Begrenzung."
+        # type = "number" doesn't support negative values (YunoHost normalize uses isdigit())
+        type = "string"
+        pattern.regexp = '^(-1|[0-9]+)$'
+        pattern.error = "Must be -1 (no limit), 0 (disable creation) or a positive number."
+
+        [main.repository.disable_regular_org_creation]
+        ask.en = "Disable organization creation by users?"
+        ask.fr = "Désactiver la création d'organisations par les utilisateurs ?"
+        ask.de = "Erstellen von Organisationen durch Nutzer deaktivieren?"
+        help.en = "Disallow regular (non-admin) users from creating organizations. Also prevents bypassing the repository limit by creating repositories in a new organization."
+        help.fr = "Interdire aux utilisateurs réguliers (non-administrateurs) de créer des organisations. Empêche aussi de contourner la limite de dépôts en créant des dépôts dans une nouvelle organisation."
+        help.de = "Regulären (Nicht-Admin-)Nutzern das Erstellen von Organisationen verbieten. Verhindert auch, dass das Repository-Limit durch Repositories in einer neuen Organisation umgangen wird."
+        type = "boolean"
+        yes = "true"
+        no = "false"
+
     [main.email]
     name.en = "Notifications"
     name.fr = "Notifications"
