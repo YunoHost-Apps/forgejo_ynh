@@ -84,7 +84,7 @@ set_forgejo_login_source
 # API user creation
 create_forgejo_api_user
 
-# Yunohost user creation
+# YunoHost user creation
 synchronize_users
 
 #=================================================
