@@ -25,6 +25,8 @@ helpers_version = "2.1"
 architectures = [ "amd64", "arm64", "armhf" ]
 multi_instance = true
 
+cpe = "cpe:2.3:a:forgejo:forgejo"
+
 ldap = true
 sso = true
 
