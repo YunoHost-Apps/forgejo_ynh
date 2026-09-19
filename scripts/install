@@ -24,6 +24,8 @@ mkdir -p "$install_dir/custom/conf" "$install_dir/.ssh"
 chmod -R o-rwx "$install_dir/custom"
 chown -R "$app:$app" "$install_dir/custom"
 
+cp "custom_config.py" "$install_dir/custom_config.py"
+
 #=================================================
 # KEYS GENERATION
 #=================================================
@@ -44,10 +46,10 @@ ynh_script_progression "Adding $app's configuration files..."
 
 ensure_vars_set
 
-ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
+ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/yunohost_default.ini"
 
-chmod 640 "$install_dir/custom/conf/app.ini"
-chown "$app:$app" "$install_dir/custom/conf/app.ini"
+chmod -R 640 "$install_dir/custom"
+chown -R "$app:$app" "$install_dir/custom"
 
 #=================================================
 # SYSTEM CONFIGURATION

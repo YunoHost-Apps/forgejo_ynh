@@ -7,6 +7,7 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
+ExecStartPre=__INSTALL_DIR__/custom_config.py __INSTALL_DIR__/custom/conf/yunohost_default.ini __INSTALL_DIR__/custom/conf/custom.ini __INSTALL_DIR__/custom/conf/app.ini
 ExecStart=__INSTALL_DIR__/forgejo web -p __PORT__
 Restart=always
 Environment=USER=__APP__
