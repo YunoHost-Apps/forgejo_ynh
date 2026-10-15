@@ -136,6 +136,7 @@ ensure_vars_set() {
 
     ynh_app_setting_set_default --key=enable_notify_mail --value=true
 
+    ynh_app_setting_set_default --key=migrations_allowed_domains --value=''
     ynh_app_setting_set_default --key=mirror_enabled --value=true
     ynh_app_setting_set_default --key=mirror_disable_new_pull --value=false
     ynh_app_setting_set_default --key=mirror_disable_new_push --value=false

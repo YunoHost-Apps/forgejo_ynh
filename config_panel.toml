@@ -195,6 +195,14 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
     help.fr = "Configuration relative à la mise en miroir du dépôt."
     help.de = "Einstellungen für die Repo-Spiegelung."
 
+        [main.mirror.migrations_allowed_domains]
+        ask.en = "List of allowed hosts for migrations"
+        ask.fr = "Liste de domaines approuvés pour les migrations"
+        help.en = "Allows to migrate projects from gitea_ynh, Github and other providers (use `*` to allow any provider)."
+        help.fr = "Permet de migrer des projets de gitea_ynh, Github et autres fournisseurs (utiliser `*` pour autoriser n'importe quel fournisseur)."
+        type = "string"
+        default = ""
+
         [main.mirror.mirror_enabled]
         ask.en = "Enable the mirror functionality?"
         ask.fr = "Activer la fonctionnalité miroir ?"
@@ -338,6 +346,7 @@ help.de = "Hier kannst du einige grundlegende Einstellungen für deine Forgejo-I
         help.fr = "Pour des raisons de sécurité, le webhook ne peut appeler que les hôtes autorisés. Liste séparée par des virgules (example.fr, autreexample.fr)."
         help.de = "Webhook kann nur erlaubte Hosts ansprechen. Durch Komma separierte Liste (beispiel.de,anderesbeispiel.de)."
         type = "string"
+        default = ""
 
     [main.federation]
     name.en = "Federation feature"

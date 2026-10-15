@@ -59,7 +59,7 @@ chmod +x "$install_dir/forgejo"
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
 
-ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
+ynh_config_add --jinja --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
 
 chmod 640 "$install_dir/custom/conf/app.ini"
 chown "$app:$app" "$install_dir/custom/conf/app.ini"
