@@ -13,7 +13,7 @@ ynh_app_config_validate() {
 
 ynh_app_config_apply() {
     _ynh_app_config_apply
-    ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
+    ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/yunohost_default.ini"
     set_forgejo_login_source
 }
 

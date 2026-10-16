@@ -23,10 +23,10 @@ ynh_config_change_url_nginx
 ynh_script_progression "Adding $app's configuration..."
 
 ssh_port=$(grep -P "Port\s+\d+" /etc/ssh/sshd_config | grep -P -o "\d+")
-ynh_hide_warnings ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/app.ini"
+ynh_config_add --template="app.ini" --destination="$install_dir/custom/conf/yunohost_default.ini"
 
-chmod 640 "$install_dir/custom/conf/app.ini"
-chown "$app:$app" "$install_dir/custom/conf/app.ini"
+chmod -R 640 "$install_dir/custom"
+chown -R "$app:$app" "$install_dir/custom"
 
 ynh_permission_url --permission=container_registry --url="$domain/v2"
 
